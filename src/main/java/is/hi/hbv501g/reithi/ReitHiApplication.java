@@ -1,6 +1,7 @@
 package is.hi.hbv501g.reithi;
 
 // this is team member Jónas Hákon Kjartansson
+// this is team member Eddi
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
