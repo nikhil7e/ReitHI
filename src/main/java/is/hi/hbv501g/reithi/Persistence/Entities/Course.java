@@ -1,8 +1,14 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "ccourses")
 public class Course {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
     private String name;
     private String number;
@@ -10,8 +16,10 @@ public class Course {
     private double credits;
     private String semester;
     private String level;
-    private String professor;
-    private List<Review> reviews;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Professor professor;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
     private double minimumGrade;
     private String assessment;
     private String lessons;
@@ -23,7 +31,7 @@ public class Course {
 
     }
 
-    public Course(String name, String number, String type, double credits, String semester, String level, String professor, List<Review> reviews, double minimumGrade, String assessment, String lessons, String finalExam, String school, String faculty) {
+    public Course(String name, String number, String type, double credits, String semester, String level, Professor professor, List<Review> reviews, double minimumGrade, String assessment, String lessons, String finalExam, String school, String faculty) {
         this.name = name;
         this.number = number;
         this.type = type;
@@ -96,11 +104,11 @@ public class Course {
         this.level = level;
     }
 
-    public String getProfessor() {
+    public Professor getProfessor() {
         return professor;
     }
 
-    public void setProfessor(String professor) {
+    public void setProfessor(Professor professor) {
         this.professor = professor;
     }
 
