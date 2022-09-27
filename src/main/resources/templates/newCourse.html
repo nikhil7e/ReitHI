@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a new Course</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/addcourse}" th:object="${course}" method="post">
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name">
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    <label for="number">Number</label>
+    <input type="text" th:field="*{number}" id="number" placeholder="Number">
+    <span th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></span>
+    <label for="credits">Credits</label>
+    <input type="text" th:field="*{credits}" id="credits" placeholder="Credits">
+    <span th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></span>
+    <input type="submit" value="Add Book">
+</form>
+
+</body>
+</html>

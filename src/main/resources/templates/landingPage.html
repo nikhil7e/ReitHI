@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Library System</title>
 </head>
 <body>
-  TESegoawnep
+
+<div th:switch="${courses}">
+    <h2 th:case="null">No Courses yet!</h2>
+    <div th:case="*">
+        <h2>Courses</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Credits</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="course : ${courses}">
+                <td th:text="${course.name}"></td>
+                <td th:text="${course.number}"></td>
+                <td th:text="${course.credits}"></td>
+                <td><a th:href="@{/delete/{id}(id=${course.ID})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/addcourse">Add a new course</a></p>
+</div>
+
 </body>
 </html>
