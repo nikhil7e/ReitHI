@@ -7,36 +7,12 @@
 <body>
 <h1>Rate HÍ</h1>
 <div>
-    <h2>Search for course</h2>
-    <input type="text" />
-    <a href="" class="button">Search</a>
+    <h2>Search for a course</h2>
+    <form action="#" th:action="@{/searchcourses}" method="post">
+        <label for="name">Course name</label>
+        <input name="name" type="text" id="name" placeholder="Search" />
+        <input type="submit" value="Search">
+    </form>
 </div>
-
-<div th:switch="${courses}">
-    <h2 th:case="null">No Courses yet!</h2>
-    <div th:case="*">
-        <h2>Courses</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Number</th>
-                <th>Credits</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="course : ${courses}">
-                <td th:text="${course.name}"></td>
-                <td th:text="${course.number}"></td>
-                <td th:text="${course.credits}"></td>
-                <td><a th:href="@{/delete/{id}(id=${course.ID})}">Delete</a></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <p><a href="/addcourse">Add a new course</a></p>
-</div>
-
 </body>
 </html>
