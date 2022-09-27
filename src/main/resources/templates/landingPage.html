@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Library System</title>
+    <title>Rate HÍ</title>
 </head>
 <body>
+<h1>Rate HÍ</h1>
+<div>
+    <h2>Search for course</h2>
+    <input type="text" />
+    <a href="" class="button">Search</a>
+</div>
 
 <div th:switch="${courses}">
     <h2 th:case="null">No Courses yet!</h2>

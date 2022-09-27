@@ -39,7 +39,7 @@ public class LandingPageController  {
     @RequestMapping(value = "/addcourse", method = RequestMethod.POST)
     public String addCoursePOST(Course course, BindingResult result, Model model){
         if(result.hasErrors()){
-            return "newCourse.html";
+            return "newCourse.html ";
         }
         courseService.save(course);
         return "redirect:/";
