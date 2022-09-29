@@ -10,28 +10,52 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
+
     private String name;
+
     private String number;
+
+    private String course_URL;
     private String type;
-    private double credits;
+
+    private Double credits;
+
     private String semester;
+
     private String level;
+
+    private String professor_Name;
     @ManyToOne(fetch = FetchType.LAZY)
     private Professor professor;
+
+    private Double minimumGrade;
+
+    private String assessment;
+
+    private String finalExam;
+
+    private String school;
+
+    private String faculty;
+
+    private String professor_Email;
+
+    private String professor_URL;
+
+
+
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
-    private double minimumGrade;
-    private String assessment;
-    private String lessons;
-    private String finalExam;
-    private String school;
-    private String faculty;
+
 
     public Course() {
 
     }
 
-    public Course(String name, String number, String type, double credits, String semester, String level, Professor professor, List<Review> reviews, double minimumGrade, String assessment, String lessons, String finalExam, String school, String faculty) {
+
+
+    public Course(String name, String number, String type, Double credits, String semester, String level, String professor_Name, Professor professor, List<Review> reviews, Double minimumGrade, String assessment, String finalExam, String school, String faculty, String professor_Email, String professor_URL, String course_URL) {
         this.name = name;
         this.number = number;
         this.type = type;
@@ -42,7 +66,10 @@ public class Course {
         this.reviews = reviews;
         this.minimumGrade = minimumGrade;
         this.assessment = assessment;
-        this.lessons = lessons;
+        this.professor_Name = professor_Name;
+        this.professor_Email = professor_Email;
+        this.professor_URL = professor_URL;
+        this.course_URL = course_URL;
         this.finalExam = finalExam;
         this.school = school;
         this.faculty = faculty;
@@ -80,11 +107,11 @@ public class Course {
         this.type = type;
     }
 
-    public double getCredits() {
+    public Double getCredits() {
         return credits;
     }
 
-    public void setCredits(double credits) {
+    public void setCredits(Double credits) {
         this.credits = credits;
     }
 
@@ -120,11 +147,11 @@ public class Course {
         this.reviews = reviews;
     }
 
-    public double getMinimumGrade() {
+    public Double getMinimumGrade() {
         return minimumGrade;
     }
 
-    public void setMinimumGrade(double minimumGrade) {
+    public void setMinimumGrade(Double minimumGrade) {
         this.minimumGrade = minimumGrade;
     }
 
@@ -134,14 +161,6 @@ public class Course {
 
     public void setAssessment(String assessment) {
         this.assessment = assessment;
-    }
-
-    public String getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(String lessons) {
-        this.lessons = lessons;
     }
 
     public String getFinalExam() {
@@ -166,6 +185,39 @@ public class Course {
 
     public void setFaculty(String faculty) {
         this.faculty = faculty;
+    }
+
+    public String getCourse_URL() {
+        return course_URL;
+    }
+
+    public void setCourse_URL(String course_URL) {
+        this.course_URL = course_URL;
+    }
+
+    public String getProfessor_Email() {
+        return professor_Email;
+    }
+
+    public void setProfessor_Email(String professor_Email) {
+        this.professor_Email = professor_Email;
+    }
+
+    public String getProfessor_URL() {
+        return professor_URL;
+    }
+
+    public void setProfessor_URL(String professor_URL) {
+        this.professor_URL = professor_URL;
+    }
+
+
+    public String getProfessor_Name() {
+        return professor_Name;
+    }
+
+    public void setProfessor_Name(String professor_Name) {
+        this.professor_Name = professor_Name;
     }
 
 }

@@ -28,6 +28,11 @@ public class CourseServiceImplementation implements CourseService {
     }
 
     @Override
+    public List<Course> findByNameContainingIgnoreCase(String name) {
+        return courseRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    @Override
     public List<Course> findAll() {
         return courseRepository.findAll();
     }

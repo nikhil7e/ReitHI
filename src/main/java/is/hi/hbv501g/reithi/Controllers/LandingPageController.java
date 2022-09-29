@@ -44,7 +44,7 @@ public class LandingPageController  {
 
     @RequestMapping(value = "/searchcourses", method = RequestMethod.POST)
     public String searchCoursesPOST(@RequestParam("name") String name, Model model){
-        List<Course> courseSearchResults = courseService.findByName(name);
+        List<Course> courseSearchResults = courseService.findByNameContainingIgnoreCase(name);
         model.addAttribute("courseSearchResults", courseSearchResults);
         return "searchResults.html";
     }
