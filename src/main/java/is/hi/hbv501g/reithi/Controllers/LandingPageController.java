@@ -9,6 +9,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+/*
+Landing Page controller is responsible for the front page of the website.
+*/
 
 @Controller
 public class LandingPageController  {
