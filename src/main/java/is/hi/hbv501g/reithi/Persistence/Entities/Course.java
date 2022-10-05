@@ -42,9 +42,6 @@ public class Course {
 
     private String professor_URL;
 
-
-
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
@@ -52,8 +49,6 @@ public class Course {
     public Course() {
 
     }
-
-
 
     public Course(String name, String number, String type, Double credits, String semester, String level, String professor_Name, Professor professor, List<Review> reviews, Double minimumGrade, String assessment, String finalExam, String school, String faculty, String professor_Email, String professor_URL, String course_URL) {
         this.name = name;

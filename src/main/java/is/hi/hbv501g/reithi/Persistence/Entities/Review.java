@@ -12,6 +12,7 @@ public class Review {
     private User user;
     private String content;
 
+
     public Review() {
     }
 

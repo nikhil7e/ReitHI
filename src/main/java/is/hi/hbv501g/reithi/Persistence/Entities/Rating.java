@@ -12,6 +12,7 @@ public class Rating {
     private User user;
     private int score;
 
+    
     public Rating() {
     }
 

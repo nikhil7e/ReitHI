@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * This controller handles HTTP requests from the landing page when the user uses the search engine.
+ */
 @Controller
-public class LandingPageController  {
+public class LandingPageController {
 
     private CourseService courseService;
 
@@ -20,37 +23,51 @@ public class LandingPageController  {
         this.courseService = courseService;
     }
 
+    /**
+     * Return the landing pages' template on root HTTP request
+     *
+     * @return The landing pages' template
+     */
     @RequestMapping("/")
-    public String landingPage(Model model) {
-        List<Course> allCourses = courseService.findAll();
-        model.addAttribute("courses", allCourses);
-
-        return "landingPage.html";
+    public String landingPage() {
+        return "landingPage";
     }
 
+    // TODO: For testing purposes only, remove eventually
     @RequestMapping(value = "/addcourse", method = RequestMethod.GET)
-    public String addCourseGET(Course course){
-        return "newCourse.html";
+    public String addCourseGET(Course course) {
+        return "newCourse";
     }
 
+    // TODO: For testing purposes only, remove eventually
     @RequestMapping(value = "/addcourse", method = RequestMethod.POST)
-    public String addCoursePOST(Course course, BindingResult result, Model model){
-        if(result.hasErrors()){
-            return "newCourse.html";
+    public String addCoursePOST(Course course, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "newCourse";
         }
+
         courseService.save(course);
-        return "searchResults.html";
+        return "searchResults";
     }
 
+    /**
+     * Update the model with the users' course search input and return the search results
+     * page template
+     *
+     * @param name  The users' course name search input
+     * @param model The applications' model
+     * @return The search results page template
+     */
     @RequestMapping(value = "/searchcourses", method = RequestMethod.POST)
-    public String searchCoursesPOST(@RequestParam("name") String name, Model model){
+    public String searchCoursesPOST(@RequestParam("name") String name, Model model) {
         List<Course> courseSearchResults = courseService.findByNameContainingIgnoreCase(name);
         model.addAttribute("courseSearchResults", courseSearchResults);
-        return "searchResults.html";
+        return "searchResults";
     }
 
+    // TODO: For testing purposes only, remove eventually
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteCourse(@PathVariable("id") long id, Model model) {
+    public String deleteCourseGET(@PathVariable("id") long id, Model model) {
         Course courseToDelete = courseService.findByID(id);
         courseService.delete(courseToDelete);
         return "redirect:/";
