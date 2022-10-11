@@ -17,14 +17,13 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
+
     public User() {
     }
 
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
-        this.ratings = ratings;
-        this.reviews = reviews;
     }
 
     public String getUserName() {
