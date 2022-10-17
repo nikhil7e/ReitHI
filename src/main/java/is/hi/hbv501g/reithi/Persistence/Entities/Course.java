@@ -44,6 +44,8 @@ public class Course {
 
     private String professor_URL;
 
+    private int totalOverallScore;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
@@ -69,6 +71,7 @@ public class Course {
         this.finalExam = finalExam;
         this.school = school;
         this.faculty = faculty;
+        this.totalOverallScore = 0;
     }
 
     public long getID() {
@@ -207,13 +210,20 @@ public class Course {
         this.professor_URL = professor_URL;
     }
 
-
     public String getProfessor_Name() {
         return professor_Name;
     }
 
     public void setProfessor_Name(String professor_Name) {
         this.professor_Name = professor_Name;
+    }
+
+    public int getTotalOverallScore() {
+        return totalOverallScore;
+    }
+
+    public void setTotalOverallScore(int totalOverallScore) {
+        this.totalOverallScore = totalOverallScore;
     }
 
 }
