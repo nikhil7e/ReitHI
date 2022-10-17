@@ -1,5 +1,7 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +46,7 @@ public class Course {
 
     private String professor_URL;
 
-    private int totalOverallScore;
+    private Integer totalOverallScore;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();

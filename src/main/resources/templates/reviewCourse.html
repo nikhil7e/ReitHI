@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1 th:text = "Rate ${selectedCourse.name}"></h1>
+<form action="#" th:action="@{/addreview}" th:object="${rating}" method="post">
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name">
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    <label for="number">Number</label>
+    <input type="text" th:field="*{number}" id="number" placeholder="Number">
+    <span th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></span>
+    <label for="credits">Credits</label>
+    <input type="text" th:field="*{credits}" id="credits" placeholder="Credits">
+    <span th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></span>
+    <input type="submit" value="Add Book">
+</form>
+
+</body>
+</html>
