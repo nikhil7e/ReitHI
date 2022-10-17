@@ -10,17 +10,26 @@ public class Rating {
     private long ID;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    private int score;
     @ManyToOne(fetch = FetchType.LAZY)
     private Course course;
+    private int overallScore;
+    private int difficulty;
+    private int workload;
+    private int teachingQuality;
+    private int courseMaterial;
 
-    
+
     public Rating() {
     }
 
-    public Rating(User user, int score) {
+    public Rating(User user, Course course, int overallScore, int difficulty, int workload, int teachingQuality, int courseMaterial) {
         this.user = user;
-        this.score = score;
+        this.course = course;
+        this.overallScore = overallScore;
+        this.difficulty = difficulty;
+        this.workload = workload;
+        this.teachingQuality = teachingQuality;
+        this.courseMaterial = courseMaterial;
     }
 
     public User getUser() {
@@ -31,11 +40,51 @@ public class Rating {
         this.user = user;
     }
 
-    public int getScore() {
-        return score;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public int getOverallScore() {
+        return overallScore;
+    }
+
+    public void setOverallScore(int overallScore) {
+        this.overallScore = overallScore;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public int getWorkload() {
+        return workload;
+    }
+
+    public void setWorkload(int workload) {
+        this.workload = workload;
+    }
+
+    public int getTeachingQuality() {
+        return teachingQuality;
+    }
+
+    public void setTeachingQuality(int teachingQuality) {
+        this.teachingQuality = teachingQuality;
+    }
+
+    public int getCourseMaterial() {
+        return courseMaterial;
+    }
+
+    public void setCourseMaterial(int courseMaterial) {
+        this.courseMaterial = courseMaterial;
     }
 }

@@ -19,14 +19,15 @@ public class Review {
     private int upvotes;
     private int downvotes;
 
-
-
     public Review() {
     }
 
-    public Review(User user, Comment comment) {
+    public Review(User user, Rating rating, Course course) {
         this.user = user;
-        this.comment = comment;
+        this.rating = rating;
+        this.course = course;
+        this.upvotes = 0;
+        this.downvotes = 0;
     }
 
     public User getUser() {
@@ -39,6 +40,42 @@ public class Review {
 
     public Comment getComment() {
         return comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
+    public int getUpvotes() {
+        return upvotes;
+    }
+
+    public void setUpvotes(int upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    public int getDownvotes() {
+        return downvotes;
+    }
+
+    public void setDownvotes(int downvotes) {
+        this.downvotes = downvotes;
     }
 
     public void setComment(String content) {
