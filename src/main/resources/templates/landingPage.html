@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Rate HÍ</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<h1>Rate HÍ</h1>
-<div>
-    <h2>Search for a course</h2>
-    <form action="#" th:action="@{/searchcourses}" method="post">
-        <label for="name">Course name</label>
-        <input name="name" type="text" id="name" placeholder="Search" />
-        <input type="submit" value="Search">
-    </form>
-</div>
+    <h1>Rate HÍ</h1>
+    <div>
+        <h2>Search for a course</h2>
+        <form action="#" th:action="@{/searchcourses}" method="post">
+            <label for="name">Course name</label>
+            <input name="name" type="text" id="name" placeholder="Search" />
+            <input type="submit" value="Search">
+        </form>
+    </div>
 </body>
 </html>

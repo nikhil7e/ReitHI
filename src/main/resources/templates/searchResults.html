@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Rate HÍ</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 <h1>Rate HÍ</h1>
@@ -43,6 +44,23 @@
         </table>
     </div>
     <p><a href="/addcourse">Add a new course</a></p>
+</div>
+
+<div>
+    <h2>Filter courses by:</h2>
+    <form action="/action_page.php">
+        <label for="Courses">Choose a course:</label>
+            <select name="Courses" id="courses" multiple>
+                <option value="Bachelor">Bachelor</option>
+                <option value="Master">Master</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Post-Doc">Post-Doc</option>
+                <option value="Spring">Spring</option>
+                <option value="Summer">Summer</option>
+                <option value="Fall">Fall</option>
+            </select>
+        <input type="submit" value="Submit">
+    </form>
 </div>
 
 </body>
