@@ -10,15 +10,23 @@ public class Review {
     private long ID;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    private String content;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Comment comment;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Course course;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Rating rating;
+    private int upvotes;
+    private int downvotes;
+
 
 
     public Review() {
     }
 
-    public Review(User user, String content) {
+    public Review(User user, Comment comment) {
         this.user = user;
-        this.content = content;
+        this.comment = comment;
     }
 
     public User getUser() {
@@ -29,11 +37,11 @@ public class Review {
         this.user = user;
     }
 
-    public String getContent() {
-        return content;
+    public Comment getComment() {
+        return comment;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setComment(String content) {
+        this.comment = comment;
     }
 }

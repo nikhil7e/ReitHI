@@ -13,7 +13,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     void delete(Course course);
     List<Course> findAll();
     List<Course> findByName(String name);
-
     List<Course> findByNameContainingIgnoreCase(String name);
     Course findByID(long ID);
 

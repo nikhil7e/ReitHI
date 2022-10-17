@@ -17,12 +17,12 @@ Landing Page controller is responsible for the front page of the website.
  * This controller handles HTTP requests from the landing page when the user uses the search engine.
  */
 @Controller
-public class LandingPageController {
+public class CourseController {
 
     private CourseService courseService;
 
     @Autowired
-    public LandingPageController(CourseService courseService) {
+    public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
@@ -38,7 +38,7 @@ public class LandingPageController {
 
     // TODO: For testing purposes only, remove eventually
     @RequestMapping(value = "/addcourse", method = RequestMethod.GET)
-    public String addCourseGET(Course course) {
+    public String addCourseGET() {
         return "newCourse";
     }
 
@@ -75,5 +75,12 @@ public class LandingPageController {
         courseService.delete(courseToDelete);
         return "redirect:/";
     }
+
+    @RequestMapping(value = "/viewcourse/{id}", method = RequestMethod.GET)
+    public String viewCourseGET(@PathVariable("id") long id, Model model) {
+        model.addAttribute("selectedCourse", courseService.findByID(id));
+        return "viewCourse";
+    }
+
 
 }

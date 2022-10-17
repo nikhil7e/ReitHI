@@ -10,7 +10,7 @@
     <h2>Search for a course</h2>
     <form action="#" th:action="@{/searchcourses}" method="post">
         <label for="name">Course name</label>
-        <input name="name" type="text" id="name" placeholder="Search" />
+        <input name="name" type="text" id="name" placeholder="Search"/>
         <input type="submit" value="Search">
     </form>
 </div>
@@ -30,7 +30,11 @@
             </thead>
             <tbody>
             <tr th:each="course : ${courseSearchResults}">
-                <td th:text="${course.name}"></td>
+                <td>
+                    <a th:href="@{/viewcourse/{id}(id=${course.ID})}">
+                        <div th:text="${course.name}"></div>
+                    </a>
+                </td>
                 <td th:text="${course.number}"></td>
                 <td th:text="${course.credits}"></td>
                 <td><a th:href="@{/delete/{id}(id=${course.ID})}">Delete</a></td>
