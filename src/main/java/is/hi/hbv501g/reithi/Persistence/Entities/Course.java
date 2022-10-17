@@ -71,6 +71,7 @@ public class Course {
         this.finalExam = finalExam;
         this.school = school;
         this.faculty = faculty;
+        this.totalOverallScore = 0;
     }
 
     public long getID() {
