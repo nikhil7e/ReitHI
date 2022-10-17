@@ -9,6 +9,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+/*
+Landing Page controller is responsible for the front page of the website.
+*/
 
 /**
  * This controller handles HTTP requests from the landing page when the user uses the search engine.
