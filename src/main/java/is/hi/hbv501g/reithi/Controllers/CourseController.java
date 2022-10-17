@@ -14,12 +14,12 @@ import java.util.List;
  * This controller handles HTTP requests from the landing page when the user uses the search engine.
  */
 @Controller
-public class LandingPageController {
+public class CourseController {
 
     private CourseService courseService;
 
     @Autowired
-    public LandingPageController(CourseService courseService) {
+    public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
