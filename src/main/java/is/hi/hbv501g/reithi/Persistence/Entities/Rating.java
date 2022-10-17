@@ -11,6 +11,8 @@ public class Rating {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     private int score;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Course course;
 
     
     public Rating() {

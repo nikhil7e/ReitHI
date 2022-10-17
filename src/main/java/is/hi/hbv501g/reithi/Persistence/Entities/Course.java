@@ -16,6 +16,7 @@ public class Course {
     private String number;
 
     private String course_URL;
+
     private String type;
 
     private Double credits;
@@ -25,6 +26,7 @@ public class Course {
     private String level;
 
     private String professor_Name;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Professor professor;
 
@@ -44,7 +46,6 @@ public class Course {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
-
 
     public Course() {
 

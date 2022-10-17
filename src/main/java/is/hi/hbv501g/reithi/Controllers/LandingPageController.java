@@ -35,7 +35,7 @@ public class LandingPageController {
 
     // TODO: For testing purposes only, remove eventually
     @RequestMapping(value = "/addcourse", method = RequestMethod.GET)
-    public String addCourseGET(Course course) {
+    public String addCourseGET() {
         return "newCourse";
     }
 
@@ -72,5 +72,12 @@ public class LandingPageController {
         courseService.delete(courseToDelete);
         return "redirect:/";
     }
+
+    @RequestMapping(value = "/viewcourse/{id}", method = RequestMethod.GET)
+    public String viewCourseGET(@PathVariable("id") long id, Model model) {
+        model.addAttribute("selectedCourse", courseService.findByID(id));
+        return "viewCourse";
+    }
+
 
 }
