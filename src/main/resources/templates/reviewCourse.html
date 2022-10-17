@@ -3,10 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{styles/styles.css}" rel="stylesheet" />
 </head>
 <body>
+<h1>Whatup</h1>
 
-<h1 th:text = "Rate ${selectedCourse.name}"></h1>
+<form action="#" th:action="@{/addreview}" method="post" th:object="${rating}">
+
+    <div>
+        <label>Overall Score</label><br/>
+        <div class="radioInput">
+            <input type="radio" field="*{overallScore}" name="overallScore" value=1 />
+            <input type="radio" field="*{overallScore}" name="overallScore" value=2 />
+            <input type="radio" field="*{overallScore}" name="overallScore" value=3 />
+            <input type="radio" field="*{overallScore}" name="overallScore" value=4 />
+            <input type="radio" field="*{overallScore}" name="overallScore" value=5 /><br/>
+        </div>
+    </div>
+
+
+    <div>
+        <label>Difficulty</label><br/>
+        <div class="radioInput">
+            <input type="radio" field="*{difficulty}" name="difficulty" value=1 />
+            <input type="radio" field="*{difficulty}" name="difficulty" value=2 />
+            <input type="radio" field="*{difficulty}" name="difficulty" value=3 />
+            <input type="radio" field="*{difficulty}" name="difficulty" value=4 />
+            <input type="radio" field="*{difficulty}" name="difficulty" value=5 /><br/>
+        </div>
+    </div>
+        <!--
+    <label>Difficulty:</label><br/>
+    <input type="range" field="*{difficulty}" name="difficulty" min="1" max="5" value="3"><br/>
+    </div>
+    -->
+    <div>
+    <label>Workload</label><br/>
+        <div class="radioInput">
+            <input type="radio" field="*{workload}" name="workload" value=1 />
+            <input type="radio" field="*{workload}" name="workload" value=2 />
+            <input type="radio" field="*{workload}" name="workload" value=3 />
+            <input type="radio" field="*{workload}" name="workload" value=4 />
+            <input type="radio" field="*{workload}" name="workload" value=5 /><br/>
+        </div>
+    </div>
+
+
+    <div>
+        <label>Teaching Quality</label><br/>
+        <div class="radioInput">
+            <input type="radio" field="*{teachingQuality}" name="teachingQuality" value=1 />
+            <input type="radio" field="*{teachingQuality}" name="teachingQuality" value=2 />
+            <input type="radio" field="*{teachingQuality}" name="teachingQuality" value=3 />
+            <input type="radio" field="*{teachingQuality}" name="teachingQuality" value=4 />
+            <input type="radio" field="*{teachingQuality}" name="teachingQuality" value=5 /><br/>
+        </div>
+    </div>
+
+    <div>
+        <label>Course Material</label><br/>
+        <div class="radioInput">
+            <input type="radio" field="*{courseMaterial}" name="courseMaterial" value=1 />
+            <input type="radio" field="*{courseMaterial}" name="courseMaterial" value=2 />
+            <input type="radio" field="*{courseMaterial}" name="courseMaterial" value=3 />
+            <input type="radio" field="*{courseMaterial}" name="courseMaterial" value=4 />
+            <input type="radio" field="*{courseMaterial}" name="courseMaterial" value=5 /><br/>
+        </div>
+    </div>
+    <!--
+    <input type="number" th:field="*{overallScore}" /><br/>
+
+    <label>Difficulty:</label>
+    <input type="text" th:field="*{difficulty}" /><br/>
+
+    <label>Workload:</label>
+    <input type="radio" th:field="*{workload}" value=1 />1
+    <input type="radio" th:field="*{workload}" value=2 />2
+    <input type="radio" th:field="*{workload}" value=3 />3
+    <input type="radio" th:field="*{workload}" value=4 />4
+    <input type="radio" th:field="*{workload}" value=5 />5<br/>
+
+    <label>Teaching Quality</label>
+    <input type="text" th:field="*{teachingQuality}" /><br/>
+
+    <label>Course Material</label>
+    <input type="text" th:field="*{courseMaterial}" /><br/>
+    -->
+    <div>
+    <button type="submit">Register</button>
+    </div>
+</form>
+<!--
 <form action="#" th:action="@{/addreview}" th:object="${rating}" method="post">
     <label for="name">Name</label>
     <input type="text" th:field="*{name}" id="name" placeholder="Name">
@@ -19,6 +106,6 @@
     <span th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></span>
     <input type="submit" value="Add Book">
 </form>
-
+-->
 </body>
 </html>

@@ -17,6 +17,7 @@ Landing Page controller is responsible for the front page of the website.
  * This controller handles HTTP requests from the landing page when the user uses the search engine.
  */
 @Controller
+@SessionAttributes("selectedCourse")
 public class LandingPageController {
 
     private CourseService courseService;
