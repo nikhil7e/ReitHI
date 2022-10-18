@@ -4,6 +4,9 @@ import is.hi.hbv501g.reithi.Persistence.Entities.Review;
 
 import java.util.List;
 
+import is.hi.hbv501g.reithi.Persistence.Entities.Course;
+import is.hi.hbv501g.reithi.Persistence.Entities.Review;
+
 public interface ReviewService {
     Double getAverageOverallScore(long ID);
     Double getAverageDifficulty(long ID);

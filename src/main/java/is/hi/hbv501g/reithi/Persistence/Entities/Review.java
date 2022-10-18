@@ -22,9 +22,10 @@ public class Review {
     public Review() {
     }
 
-    public Review(User user, Rating rating, Course course) {
+    public Review(User user, Rating rating, Comment comment, Course course) {
         this.user = user;
         this.rating = rating;
+        this.comment = comment;
         this.course = course;
         this.upvotes = 0;
         this.downvotes = 0;
