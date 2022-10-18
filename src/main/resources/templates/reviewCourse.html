@@ -8,16 +8,16 @@
 <body>
 <h1>Whatup</h1>
 
-<form action="#" th:action="@{/addreview}" method="post" th:object="${rating}">
+<form action="#" th:action="@{/addreview}" method="post">
 
     <div>
         <label>Overall Score</label><br/>
         <div class="radioInput">
-            <input type="radio" field="*{overallScore}" name="overallScore" value=1 />
-            <input type="radio" field="*{overallScore}" name="overallScore" value=2 />
-            <input type="radio" field="*{overallScore}" name="overallScore" value=3 />
-            <input type="radio" field="*{overallScore}" name="overallScore" value=4 />
-            <input type="radio" field="*{overallScore}" name="overallScore" value=5 /><br/>
+            <input type="radio" th:value="${rating.overallScore}" name="overallScore" value=1 />
+            <input type="radio" th:value="${rating.overallScore}" name="overallScore" value=2 />
+            <input type="radio" th:value="${rating.overallScore}" name="overallScore" value=3 />
+            <input type="radio" th:value="${rating.overallScore}" name="overallScore" value=4 />
+            <input type="radio" th:value="${rating.overallScore}" name="overallScore" value=5 /><br/>
         </div>
     </div>
 
@@ -25,11 +25,12 @@
     <div>
         <label>Difficulty</label><br/>
         <div class="radioInput">
-            <input type="radio" field="*{difficulty}" name="difficulty" value=1 />
-            <input type="radio" field="*{difficulty}" name="difficulty" value=2 />
-            <input type="radio" field="*{difficulty}" name="difficulty" value=3 />
-            <input type="radio" field="*{difficulty}" name="difficulty" value=4 />
-            <input type="radio" field="*{difficulty}" name="difficulty" value=5 /><br/>
+            <input type="radio" field="*{rating.overallScore}" name="overallScore" value=1 />
+            <input type="radio" field="*{rating.overallScore}" name="overallScore" value=2 />
+            <input type="radio" field="*{rating.overallScore}" name="overallScore" value=3 />
+            <input type="radio" field="*{rating.overallScore" name="overallScore" value=4 />
+            <input type="radio" field="*{rating.overallScore}" name="overallScore" value=5 /><br/>
+            <textarea th:value="${comment.text}" name="text"></textarea>
         </div>
     </div>
         <!--
