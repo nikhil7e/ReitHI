@@ -13,6 +13,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     void delete(Review review);
     List<Review> findAll();
     List<Review> findByCourse_Name(String name);
+    List<Review> findByCourse_ID(long ID);
     Review findByID(long ID);
+
+
 
 }

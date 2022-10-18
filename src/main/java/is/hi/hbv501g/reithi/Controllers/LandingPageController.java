@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 /*
 Landing Page controller is responsible for the front page of the website.
@@ -36,23 +37,6 @@ public class LandingPageController {
         return "landingPage";
     }
 
-    // TODO: For testing purposes only, remove eventually
-    @RequestMapping(value = "/addcourse", method = RequestMethod.GET)
-    public String addCourseGET(Course course) {
-        return "newCourse";
-    }
-
-    // TODO: For testing purposes only, remove eventually
-    @RequestMapping(value = "/addcourse", method = RequestMethod.POST)
-    public String addCoursePOST(Course course, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "newCourse";
-        }
-
-        courseService.save(course);
-        return "searchResults";
-    }
-
     /**
      * Update the model with the users' course search input and return the search results
      * page template
@@ -66,20 +50,6 @@ public class LandingPageController {
         List<Course> courseSearchResults = courseService.findByNameContainingIgnoreCase(name);
         model.addAttribute("courseSearchResults", courseSearchResults);
         return "searchResults";
-    }
-
-    // TODO: For testing purposes only, remove eventually
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteCourseGET(@PathVariable("id") long id, Model model) {
-        Course courseToDelete = courseService.findByID(id);
-        courseService.delete(courseToDelete);
-        return "redirect:/";
-    }
-
-    @RequestMapping(value = "/viewcourse/{id}", method = RequestMethod.GET)
-    public String viewCourseGET(@PathVariable("id") long id, Model model) {
-        model.addAttribute("selectedCourse", courseService.findByID(id));
-        return "viewCourse";
     }
 
 }

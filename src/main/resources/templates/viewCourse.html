@@ -5,21 +5,33 @@
     <title>Title</title>
 </head>
 <body>
-    <h1 th:text = "${selectedCourse.name}"></h1>
-    <p th:text = "${selectedCourse.credits}"></p>
-    <p th:text = "${selectedCourse.semester}"></p>
-    <p th:text = "${selectedCourse.course_URL}"></p>
-    <p th:text = "${selectedCourse.type}"></p>
-    <p th:text = "${selectedCourse.semester}"></p>
-    <p th:text = "${selectedCourse.level}"></p>
-    <p th:text = "${selectedCourse.professor_Name}"></p>
-    <p th:text = "${selectedCourse.professor}"></p>
-    <p th:text = "${selectedCourse.assessment}"></p>
-    <p th:text = "${selectedCourse.finalExam}"></p>
-    <p th:text = "${selectedCourse.school}"></p>
-    <p th:text = "${selectedCourse.faculty}"></p>
-    <p th:text = "${selectedCourse.professor_Email}"></p>
-    <p th:text = "${selectedCourse.professor_URL}"></p>
-    <a th:href="@{/ratecourse}">Rate course</a>
+    <div class='information'>
+        <h1 th:text = "${selectedCourse.name}"></h1>
+        <p th:text = "${selectedCourse.credits}"></p>
+        <p th:text = "${selectedCourse.semester}"></p>
+        <p th:text = "${selectedCourse.course_URL}"></p>
+        <p th:text = "${selectedCourse.type}"></p>
+        <p th:text = "${selectedCourse.semester}"></p>
+        <p th:text = "${selectedCourse.level}"></p>
+        <p th:text = "${selectedCourse.professor_Name}"></p>
+        <p th:text = "${selectedCourse.professor}"></p>
+        <p th:text = "${selectedCourse.assessment}"></p>
+        <p th:text = "${selectedCourse.finalExam}"></p>
+        <p th:text = "${selectedCourse.school}"></p>
+        <p th:text = "${selectedCourse.faculty}"></p>
+        <p th:text = "${selectedCourse.professor_Email}"></p>
+        <p th:text = "${selectedCourse.professor_URL}"></p>
+        <a th:href="@{/reviewcourse}">Review course</a>
+    </div>
+    <div class='statistics'>
+        <p th:text = "${avgOAS}"></p>
+        <p th:text = "${avgD}"></p>
+        <p th:text = "${avgW}"></p>
+        <p th:text = "${avgTQ}"></p>
+        <p th:text = "${avgCM}"></p>
+    </div>
+    <div class='reviews'>
+
+    </div>
 </body>
 </html>
