@@ -18,7 +18,6 @@ Landing Page controller is responsible for the front page of the website.
  * This controller handles HTTP requests from the landing page when the user uses the search engine.
  */
 @Controller
-@SessionAttributes("selectedCourse")
 public class LandingPageController {
 
     private CourseService courseService;
@@ -51,21 +50,6 @@ public class LandingPageController {
         List<Course> courseSearchResults = courseService.findByNameContainingIgnoreCase(name);
         model.addAttribute("courseSearchResults", courseSearchResults);
         return "searchResults";
-    }
-
-    // TODO: For testing purposes only, remove eventually
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteCourseGET(@PathVariable("id") long id, Model model) {
-        Course courseToDelete = courseService.findByID(id);
-        courseService.delete(courseToDelete);
-        return "redirect:/";
-    }
-
-    @RequestMapping(value = "/viewcourse/{id}", method = RequestMethod.GET)
-    public String viewCourseGET(@PathVariable("id") long id, Model model, HttpSession session) {
-        model.addAttribute("selectedCourse", courseService.findByID(id));
-        session.setAttribute("selectedCourse", courseService.findByID(id));
-        return "viewCourse";
     }
 
 }
