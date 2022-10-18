@@ -41,9 +41,33 @@
         <p th:if="${reviewsForCourse == null or reviewsForCourse.empty}">No Comments found!</p>
         <tr th:each="review : ${reviewsForCourse}">
             <div class = "review">
+                <div class="username">
+                    <td th:if="${review.user != null}", th:text="${review.user.userName}"></td>
+                </div>
+                <div class="rating">
+                    <div>
+                        <label>Overall rating</label>
+                        <p th:text = "${review.rating.overallScore}"></p>
+                    </div>
+                    <div>
+                        <label>Difficulty</label>
+                        <p th:text = "${review.rating.difficulty}"></p>
+                    </div>
+                    <div>
+                        <label>Work load</label>
+                        <p th:text = "${review.rating.workload}"></p>
+                    </div>
+                    <div>
+                        <label>Teaching quality</label>
+                        <p th:text = "${review.rating.teachingQuality}"></p>
+                    </div>
+                    <div>
+                        <label>Course material</label>
+                        <p th:text = "${review.rating.courseMaterial}"></p>
+                    </div>
+                </div>
                 <div class="comment">
                     <td th:text="${review.comment.text}"></td>
-
                 </div>
             </div>
         </tr>
