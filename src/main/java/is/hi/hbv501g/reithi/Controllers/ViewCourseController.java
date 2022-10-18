@@ -17,9 +17,9 @@ public class ViewCourseController {
         this.courseService = courseService;
     }
 
-    @RequestMapping(value = "/ratecourse", method = RequestMethod.GET)
-    public String rateCourseGET(Model model) {
-        return "rateCourse";
+    @RequestMapping(value = "/reviewcourse", method = RequestMethod.GET)
+    public String reviewCourseGET(Model model) {
+        return "reviewCourse";
     }
 
 }
