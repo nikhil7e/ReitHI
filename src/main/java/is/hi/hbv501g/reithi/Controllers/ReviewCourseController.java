@@ -2,6 +2,7 @@ package is.hi.hbv501g.reithi.Controllers;
 
 import is.hi.hbv501g.reithi.Persistence.Entities.Comment;
 import is.hi.hbv501g.reithi.Persistence.Entities.Course;
+import is.hi.hbv501g.reithi.Persistence.Entities.Course;
 import is.hi.hbv501g.reithi.Persistence.Entities.Rating;
 import is.hi.hbv501g.reithi.Persistence.Entities.Review;
 import is.hi.hbv501g.reithi.Services.CourseService;
@@ -28,6 +29,7 @@ public class ReviewCourseController {
         }
 
         reviewService.save(new Review(null, rating, comment, (Course) session.getAttribute("selectedCourse")));
+        Course c = (Course) session.getAttribute("selectedCourse");
         //courseService.save(course);
         return "landingPage";
     }

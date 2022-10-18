@@ -38,23 +38,6 @@ public class LandingPageController {
         return "landingPage";
     }
 
-    // TODO: For testing purposes only, remove eventually
-    @RequestMapping(value = "/addcourse", method = RequestMethod.GET)
-    public String addCourseGET(Course course) {
-        return "newCourse";
-    }
-
-    // TODO: For testing purposes only, remove eventually
-    @RequestMapping(value = "/addcourse", method = RequestMethod.POST)
-    public String addCoursePOST(Course course, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "newCourse";
-        }
-
-        courseService.save(course);
-        return "searchResults";
-    }
-
     /**
      * Update the model with the users' course search input and return the search results
      * page template
