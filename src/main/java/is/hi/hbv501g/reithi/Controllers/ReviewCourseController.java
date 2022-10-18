@@ -1,9 +1,6 @@
 package is.hi.hbv501g.reithi.Controllers;
 
-import is.hi.hbv501g.reithi.Persistence.Entities.Comment;
-import is.hi.hbv501g.reithi.Persistence.Entities.Course;
-import is.hi.hbv501g.reithi.Persistence.Entities.Rating;
-import is.hi.hbv501g.reithi.Persistence.Entities.Review;
+import is.hi.hbv501g.reithi.Persistence.Entities.*;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +31,7 @@ public class ReviewCourseController {
             return "newCourse";
         }
 
-        reviewService.save(new Review(null, rating, comment, (Course) session.getAttribute("selectedCourse")));
+        reviewService.save(new Review(new User("userName", "password"), rating, comment, (Course) session.getAttribute("selectedCourse")));
         //Course c = (Course) session.getAttribute("selectedCourse");
         //courseService.save(c);
         return "landingPage";
