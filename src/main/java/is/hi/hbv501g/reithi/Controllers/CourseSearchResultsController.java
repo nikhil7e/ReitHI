@@ -2,6 +2,7 @@ package is.hi.hbv501g.reithi.Controllers;
 
 import is.hi.hbv501g.reithi.Persistence.Entities.Course;
 import is.hi.hbv501g.reithi.Services.CourseService;
+import is.hi.hbv501g.reithi.Services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class CourseSearchResultsController {
+
+    private ReviewService reviewService;
 
     private CourseService courseService;
 
@@ -52,6 +56,14 @@ public class CourseSearchResultsController {
     public String viewCourseGET(@PathVariable("id") long id, Model model, HttpSession session) {
         // update html to use session instead of model and delete line 43
         model.addAttribute("selectedCourse", courseService.findByID(id));
+        // Get course rating from selected course
+        Course selectedCourse = (Course) model.getAttribute("selectedCourse");
+        // Include rating data course in HTML
+        model.addAttribute("avgOAS",reviewService.getAverageOverallScore(selectedCourse.getID()));
+        model.addAttribute("avgD",reviewService.getAverageDifficulty(selectedCourse.getID()));
+        model.addAttribute("avgW",reviewService.getAverageWorkload(selectedCourse.getID()));
+        model.addAttribute("avgTQ",reviewService.getAverageTeachingQuality(selectedCourse.getID()));
+        model.addAttribute("avgCM",reviewService.getAverageCourseMaterial(selectedCourse.getID()));
         session.setAttribute("selectedCourse", courseService.findByID(id));
         return "viewCourse";
     }
