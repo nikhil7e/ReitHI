@@ -1,5 +1,7 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,10 +14,15 @@ public class Rating {
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
     private Course course;
+    @ColumnDefault("0")
     private int overallScore;
+    @ColumnDefault("0")
     private int difficulty;
+    @ColumnDefault("0")
     private int workload;
+    @ColumnDefault("0")
     private int teachingQuality;
+    @ColumnDefault("0")
     private int courseMaterial;
 
 

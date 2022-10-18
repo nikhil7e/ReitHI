@@ -22,8 +22,9 @@ public class CourseSearchResultsController {
     private CourseService courseService;
 
     @Autowired
-    public CourseSearchResultsController(CourseService courseService) {
+    public CourseSearchResultsController(CourseService courseService, ReviewService reviewService) {
         this.courseService = courseService;
+        this.reviewService = reviewService;
     }
 
     // TODO: For testing purposes only, remove eventually

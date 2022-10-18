@@ -1,8 +1,10 @@
 package is.hi.hbv501g.reithi.Services.Implementation;
 
 import is.hi.hbv501g.reithi.Persistence.Entities.Review;
+import is.hi.hbv501g.reithi.Persistence.Repositories.CourseRepository;
 import is.hi.hbv501g.reithi.Persistence.Repositories.ReviewRepository;
 import is.hi.hbv501g.reithi.Services.ReviewService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +12,15 @@ import java.util.List;
 public class ReviewServiceImplementation implements ReviewService {
 
     private ReviewRepository reviewRepository;
+    private int id_counter = 0;
+
+    @Autowired
+    public ReviewServiceImplementation(ReviewRepository reviewRepository) {
+        this.reviewRepository = reviewRepository;
+    }
+
+    public ReviewServiceImplementation() {
+    }
 
     @Override
     public Double getAverageOverallScore(long ID) {
