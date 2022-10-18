@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 /*
 Landing Page controller is responsible for the front page of the website.
@@ -78,8 +79,9 @@ public class LandingPageController {
     }
 
     @RequestMapping(value = "/viewcourse/{id}", method = RequestMethod.GET)
-    public String viewCourseGET(@PathVariable("id") long id, Model model) {
+    public String viewCourseGET(@PathVariable("id") long id, Model model, HttpSession session) {
         model.addAttribute("selectedCourse", courseService.findByID(id));
+        session.setAttribute("selectedCourse", courseService.findByID(id));
         return "viewCourse";
     }
 

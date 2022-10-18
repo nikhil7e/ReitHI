@@ -3,23 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{styles/styles.css}" rel="stylesheet" />
 </head>
 <body>
+<div class="CourseHeader">
     <h1 th:text = "${selectedCourse.name}"></h1>
     <p th:text = "${selectedCourse.credits}"></p>
     <p th:text = "${selectedCourse.semester}"></p>
     <p th:text = "${selectedCourse.course_URL}"></p>
+</div>
+<div class="CourseProfessor">
+    <p th:text = "${selectedCourse.professor_Name}"></p>
+    <p th:text = "${selectedCourse.professor}"></p>
+    <p th:text = "${selectedCourse.professor_Email}"></p>
+    <p th:text = "${selectedCourse.professor_URL}"></p>
+</div>
+<div class="CourseAbout">
     <p th:text = "${selectedCourse.type}"></p>
     <p th:text = "${selectedCourse.semester}"></p>
     <p th:text = "${selectedCourse.level}"></p>
-    <p th:text = "${selectedCourse.professor_Name}"></p>
-    <p th:text = "${selectedCourse.professor}"></p>
     <p th:text = "${selectedCourse.assessment}"></p>
     <p th:text = "${selectedCourse.finalExam}"></p>
     <p th:text = "${selectedCourse.school}"></p>
     <p th:text = "${selectedCourse.faculty}"></p>
-    <p th:text = "${selectedCourse.professor_Email}"></p>
-    <p th:text = "${selectedCourse.professor_URL}"></p>
+</div>
+
     <a th:href="@{/reviewcourse}">Review course</a>
 </body>
 </html>
