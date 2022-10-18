@@ -35,20 +35,41 @@ html {
     --gutter: 30px;
     --offset: 20px;
 }
+
+/* Leturgerðir */
+
+@font-face {
+  font-family: 'Domine';
+  font-style: normal;
+  font-display: swap;
+  src: url(./fonts/domine.ttf) format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-display: swap;
+  src: url(./fonts/nunito.ttf) format('woff');
+}
+
 h1{
+    font-family: var(--font-family-heading);
     text-align: center;
 }
 body{
+    font-family: var(--font-family-base);
     text-align: center;
 }
 
 form{
+    font-family: var(--font-family-base);
     text-align: center;
     background-color: #eeee;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: var(--gutter);
+    padding: 1rem 1rem;
 }
 form > div{
     display: flex;
@@ -65,7 +86,29 @@ form >div >label{
     margin-top: 10px;
     font-size: 25px;
 }
+
+.searchbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.input-size{
+    font-family: var(--font-family-base);
+    width: 20rem;
+    border-radius: 5px;
+}
+
+.searchsubmit{
+    font-family: var(--font-family-base);
+    border-radius: 5px;
+    width: 5rem;
+}
+
+
 form button{
+    font-family: var(--font-family-base);
     width: 15%;
     min-height: 60px;
     font-size: 20px

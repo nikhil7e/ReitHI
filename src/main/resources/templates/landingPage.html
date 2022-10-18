@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Rate HÍ</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link th:href="@{/styles/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
     <h1>Rate HÍ</h1>
@@ -11,8 +11,11 @@
         <h2>Search for a course</h2>
         <form action="#" th:action="@{/searchcourses}" method="post">
             <label for="name">Course name</label>
-            <input name="name" type="text" id="name" placeholder="Search" />
-            <input type="submit" value="Search">
+            <div class="searchbar">
+                <input name="name" type="text" id="name" placeholder="Search" class="input-size"/>
+                <input type="submit" value="Search" class="searchsubmit">
+            </div>
+
         </form>
     </div>
 </body>
