@@ -1,6 +1,7 @@
 package is.hi.hbv501g.reithi.Controllers;
 
 import is.hi.hbv501g.reithi.Persistence.Entities.Course;
+import is.hi.hbv501g.reithi.Persistence.Entities.Review;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class CourseSearchResultsController {
@@ -64,6 +66,9 @@ public class CourseSearchResultsController {
         model.addAttribute("avgTQ",reviewService.getAverageTeachingQuality(selectedCourse.getID()));
         model.addAttribute("avgCM",reviewService.getAverageCourseMaterial(selectedCourse.getID()));
         session.setAttribute("selectedCourse", courseService.findByID(id));
+
+        List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) model.getAttribute("selectedCourse")).getName());
+        model.addAttribute("reviewsForCourse", reviewSearchResults);
         return "viewCourse";
     }
 

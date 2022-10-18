@@ -10,11 +10,11 @@ public class Review {
     private long ID;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
     private Comment comment;
     @ManyToOne(fetch = FetchType.LAZY)
     private Course course;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
     private Rating rating;
     private int upvotes;
     private int downvotes;
