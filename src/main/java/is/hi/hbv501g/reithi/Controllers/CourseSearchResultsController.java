@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 public class CourseSearchResultsController {
 
     private ReviewService reviewService;
-
     private CourseService courseService;
 
     @Autowired
@@ -34,7 +33,6 @@ public class CourseSearchResultsController {
         courseService.delete(courseToDelete);
         return "redirect:/";
     }
-
 
     // TODO: For testing purposes only, remove eventually
     @RequestMapping(value = "/addcourse", method = RequestMethod.GET)
