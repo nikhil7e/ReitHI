@@ -25,16 +25,27 @@
         <a th:href="@{/reviewcourse}">Review course</a>
     </div>
     <div class='statistics'>
-        <label>Overall</label>
-        <p th:text = "${avgOAS}"></p>
-        <label>Difficulty</label>
-        <p th:text = "${avgD}"></p>
-        <label>Workload</label>
-        <p th:text = "${avgW}"></p>
-        <label>Teaching Quality</label>
-        <p th:text = "${avgTQ}"></p>
-        <label>Course Material</label>
-        <p th:text = "${avgCM}"></p>
+        <div>
+            <label>Overall</label>
+            <p th:text = "${#numbers.formatDecimal(avgOAS, 0, 'COMMA', 2, 'POINT')}"></p>
+        </div>
+        <div>
+            <label>Difficulty</label>
+            <p th:text = "${#numbers.formatDecimal(avgD, 0, 'COMMA', 2, 'POINT')}"></p>
+        </div>
+        <div>
+            <label>Workload</label>
+            <p th:text = "${#numbers.formatDecimal(avgW, 0, 'COMMA', 2, 'POINT')}"></p>
+        </div>
+        <div>
+            <label>Teaching Quality</label>
+            <p th:text = "${#numbers.formatDecimal(avgTQ, 0, 'COMMA', 2, 'POINT')}"></p>
+        </div>
+        <div>
+            <label>Course Material</label>
+            <p th:text = "${#numbers.formatDecimal(avgCM, 0, 'COMMA', 2, 'POINT')}"></p>
+        </div>
+
     </div>
 
     <div class='reviews'>

@@ -42,7 +42,7 @@ body{
     --offset: 20px;
 }
 
-/* LeturgerÃƒÂ°ir */
+/* LeturgerÃ°ir */
 
 @font-face {
     font-family: 'Domine';
@@ -67,17 +67,10 @@ body{
     text-align: center;
 }
 
-
-.logo{
-    max-width: 600px;
-    width: 60%;
-    min-width: 300px;
-}
-
 form{
     font-family: var(--font-family-base);
     text-align: center;
-
+    background-color: #eeee;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -102,95 +95,33 @@ form >div >label{
 }
 
 .searchbar {
-    position: relative;
     display: flex;
-    min-width: 300px;
+    flex-direction: row;
     align-items: center;
-    padding-top: 6rem;
-    filter: drop-shadow(0px 2px 4px #c7c7c7);
-}
-
-.search-icon {
-    position: absolute;
-    left: 28%;
-    width: 18px;
-    z-index: 1;
-    filter: invert(100%);
+    gap: 1rem;
 }
 
 .input-size{
     font-family: var(--font-family-base);
-    width: 50%;
-    border: 0;
-    border-radius: 50px;
-    background-color: #3c26cc;
-    color: white;
-    padding-left: 4rem;
-}
-
-.input-size:hover, .input-size:focus {
-    background-color: #2200ffa8;
-}
-
-.allSearchResults{
-    padding-top: 2rem;
-}
-
-.searchResult >a{
-    text-align: left;
-    display: flex;
-    border-bottom: solid;
-    border-color: lightgrey;
-    gap: 1rem;
-    font-size: 16px;
-    color: black;
-    text-decoration: none;
-}
-
-.searchResult>a:hover, .searchResult>a:focus {
-    padding: 1rem;
-    border: 0;
-    background-color: white;
-    filter: drop-shadow(0px 2px 4px #c7c7c7);
-}
-
-.extraInfo{
-    display: flex;
-    flex-direction: row;
-}
-
-.extraInfo >p{
-    padding: 0;
-    margin: 0;
-    margin-right: 2rem;
-    font-size: 14px;
-}
-
-.courseId{
-    background-color: #3c26cc;
-    color: white;
-    padding: 1rem;
+    width: 20rem;
     border-radius: 5px;
-    width: 12%;
-    min-width: 110px;
-    text-align: center;
-}
 
-::placeholder {
-    color: white;
 }
 
 .searchsubmit{
     font-family: var(--font-family-base);
     border-radius: 5px;
     width: 5rem;
+
 }
 
 .information{
     display: flex;
     flex-direction: column;
+
     text-align: left;
 }
+
 
 form button{
     font-family: var(--font-family-base);
@@ -202,37 +133,45 @@ form button{
     font-size: 30px;
     padding-bottom: 1rem;
     text-decoration: underline;
+
+
 }
+
+
 
 .reviews{
     display: flex;
     flex-direction: column;
     margin: 0 auto;
 }
-
 .review{
     padding: 1rem;
     border: solid;
     border-color: lightgray;
+
     margin: 1rem;
     border-radius: 5px;
     background-color: lightgray
-}
 
+
+}
 .statistics{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
 }
 
 .statistics > div{
     display: flex;
     flex-direction: column;
     font-variant: small-caps;
+
 }
 
 .statistics > div > label{
     order: 1;
+
 }
 
 .statistics > div > p{
@@ -261,7 +200,10 @@ form button{
     margin: 0 auto;
     text-align: left;
     background-color: white
+
+
 }
+
 
 .CourseHeader{
 
