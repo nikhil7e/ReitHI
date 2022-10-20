@@ -1,6 +1,9 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "comments")
@@ -22,6 +25,8 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Course course;
+
+
 
     public Comment() {
 
@@ -72,4 +77,7 @@ public class Comment {
     public void setCourse(Course course) {
         this.course = course;
     }
+
+
+
 }

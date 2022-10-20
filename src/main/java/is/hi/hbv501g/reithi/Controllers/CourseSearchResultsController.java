@@ -66,9 +66,14 @@ public class CourseSearchResultsController {
         model.addAttribute("avgTQ",reviewService.getAverageTeachingQuality(selectedCourse.getID()));
         model.addAttribute("avgCM",reviewService.getAverageCourseMaterial(selectedCourse.getID()));
         session.setAttribute("selectedCourse", courseService.findByID(id));
+        session.setAttribute("avgOAS",reviewService.getAverageOverallScore(selectedCourse.getID()));
+        session.setAttribute("avgD",reviewService.getAverageDifficulty(selectedCourse.getID()));
+        session.setAttribute("avgW",reviewService.getAverageWorkload(selectedCourse.getID()));
+        session.setAttribute("avgTQ",reviewService.getAverageTeachingQuality(selectedCourse.getID()));
+        session.setAttribute("avgCM",reviewService.getAverageCourseMaterial(selectedCourse.getID()));
 
         List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) model.getAttribute("selectedCourse")).getName());
-        model.addAttribute("reviewsForCourse", reviewSearchResults);
+        session.setAttribute("reviewsForCourse", reviewSearchResults);
         return "viewCourse";
     }
 

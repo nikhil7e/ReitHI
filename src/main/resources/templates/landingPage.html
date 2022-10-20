@@ -7,6 +7,20 @@
 </head>
 <body>
 <!--<h1>Rate HÍ</h1>-->
+    <header>
+        <form action="#" th:action="@{/login}" th:object="${user}"  method="post">
+            <input type="text" name="username" id="userNameL" th:field="*{userName}"/>
+            <input type="text" name="password" id="passwordL" th:value="*{password}"/>
+            <input type="submit" value="Login"/>
+        </form>
+        <form action="#" th:action="@{/signup}" th:object="${user}"  method="post">
+            <input type="text" name="username" id="userNameS" th:field="*{userName}"/>
+            <input type="text" name="password" id="passwordS" th:value="*{password}"/>
+            <input type="submit" value="Sign up"/>
+        </form>
+        <p th:text="${LoggedInUser.userName}"></p>
+    </header>
+
     <img class="logo" th:src="@{/images/reit_hi_logo_blue.png}"/>
     <div>
         <!--<h2>Search for a course</h2>-->

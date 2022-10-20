@@ -1,6 +1,8 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "reviews")
@@ -16,8 +18,12 @@ public class Review {
     private Course course;
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
     private Rating rating;
-    private int upvotes;
-    private int downvotes;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<User> upvoters;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<User> downvoters;
 
     public Review() {
     }
@@ -27,10 +33,12 @@ public class Review {
         this.rating = rating;
         this.comment = comment;
         this.course = course;
-        this.upvotes = 0;
-        this.downvotes = 0;
+        this.upvoters = new ArrayList<>();
+        this.downvoters = new ArrayList<>();
     }
-
+    public long getID() {
+        return ID;
+    }
     public User getUser() {
         return user;
     }
@@ -64,22 +72,21 @@ public class Review {
     }
 
     public int getUpvotes() {
-        return upvotes;
+        return upvoters.size() - downvoters.size();
     }
 
-    public void setUpvotes(int upvotes) {
-        this.upvotes = upvotes;
+    public void addUpvote(User user){
+        upvoters.add(user);
     }
 
-    public int getDownvotes() {
-        return downvotes;
-    }
-
-    public void setDownvotes(int downvotes) {
-        this.downvotes = downvotes;
+    public void addDownvote(User user){
+        downvoters.add(user);
     }
 
     public void setComment(String content) {
         this.comment = comment;
     }
+
+
+
 }

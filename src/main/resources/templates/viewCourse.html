@@ -7,50 +7,50 @@
 </head>
 <body>
     <div class='information'>
-        <h1 th:text = "${selectedCourse.name}"></h1>
-        <p th:text = "${selectedCourse.credits}"></p>
-        <p th:text = "${selectedCourse.semester}"></p>
-        <p th:text = "${selectedCourse.course_URL}"></p>
-        <p th:text = "${selectedCourse.type}"></p>
-        <p th:text = "${selectedCourse.semester}"></p>
-        <p th:text = "${selectedCourse.level}"></p>
-        <p th:text = "${selectedCourse.professor_Name}"></p>
-        <p th:text = "${selectedCourse.professor}"></p>
-        <p th:text = "${selectedCourse.assessment}"></p>
-        <p th:text = "${selectedCourse.finalExam}"></p>
-        <p th:text = "${selectedCourse.school}"></p>
-        <p th:text = "${selectedCourse.faculty}"></p>
-        <p th:text = "${selectedCourse.professor_Email}"></p>
-        <p th:text = "${selectedCourse.professor_URL}"></p>
+        <h1 th:text = "${session.selectedCourse.name}"></h1>
+        <p th:text = "${session.selectedCourse.credits}"></p>
+        <p th:text = "${session.selectedCourse.semester}"></p>
+        <p th:text = "${session.selectedCourse.course_URL}"></p>
+        <p th:text = "${session.selectedCourse.type}"></p>
+        <p th:text = "${session.selectedCourse.semester}"></p>
+        <p th:text = "${session.selectedCourse.level}"></p>
+        <p th:text = "${session.selectedCourse.professor_Name}"></p>
+        <p th:text = "${session.selectedCourse.professor}"></p>
+        <p th:text = "${session.selectedCourse.assessment}"></p>
+        <p th:text = "${session.selectedCourse.finalExam}"></p>
+        <p th:text = "${session.selectedCourse.school}"></p>
+        <p th:text = "${session.selectedCourse.faculty}"></p>
+        <p th:text = "${session.selectedCourse.professor_Email}"></p>
+        <p th:text = "${session.selectedCourse.professor_URL}"></p>
         <a th:href="@{/reviewcourse}">Review course</a>
     </div>
     <div class='statistics'>
         <div>
             <label>Overall</label>
-            <p th:text = "${#numbers.formatDecimal(avgOAS, 0, 'COMMA', 2, 'POINT')}"></p>
+            <p th:text = "${#numbers.formatDecimal(session.avgOAS, 0, 'COMMA', 2, 'POINT')}"></p>
         </div>
         <div>
             <label>Difficulty</label>
-            <p th:text = "${#numbers.formatDecimal(avgD, 0, 'COMMA', 2, 'POINT')}"></p>
+            <p th:text = "${#numbers.formatDecimal(session.avgD, 0, 'COMMA', 2, 'POINT')}"></p>
         </div>
         <div>
             <label>Workload</label>
-            <p th:text = "${#numbers.formatDecimal(avgW, 0, 'COMMA', 2, 'POINT')}"></p>
+            <p th:text = "${#numbers.formatDecimal(session.avgW, 0, 'COMMA', 2, 'POINT')}"></p>
         </div>
         <div>
             <label>Teaching Quality</label>
-            <p th:text = "${#numbers.formatDecimal(avgTQ, 0, 'COMMA', 2, 'POINT')}"></p>
+            <p th:text = "${#numbers.formatDecimal(session.avgTQ, 0, 'COMMA', 2, 'POINT')}"></p>
         </div>
         <div>
             <label>Course Material</label>
-            <p th:text = "${#numbers.formatDecimal(avgCM, 0, 'COMMA', 2, 'POINT')}"></p>
+            <p th:text = "${#numbers.formatDecimal(session.avgCM, 0, 'COMMA', 2, 'POINT')}"></p>
         </div>
 
     </div>
 
     <div class='reviews'>
-        <p th:if="${reviewsForCourse == null or reviewsForCourse.empty}">No Comments found!</p>
-        <tr th:each="review : ${reviewsForCourse}">
+        <p th:if="${session.reviewsForCourse == null or session.reviewsForCourse.empty}">No Comments found!</p>
+        <tr th:each="review : ${session.reviewsForCourse}">
             <div class = "review">
                 <div class="username">
                     <td th:if="${review.user != null}", th:text="${review.user.userName}"></td>
@@ -75,6 +75,13 @@
                     <div>
                         <label>Course material</label>
                         <p th:text = "${review.rating.courseMaterial}"></p>
+                    </div>
+                    <div>
+                        <a class="upvote" th:href = "@{/upvote/{id}(id=${review.ID})}">Upvote</a>
+                        <p th:text = "${review.getUpvotes()}" ></pth:text>
+                    </div>
+                    <div>
+                        <a class="downvote" th:href = "@{/downvote/{id}(id=${review.ID})}">Downvote</a>
                     </div>
                 </div>
                 <div class="comment">
