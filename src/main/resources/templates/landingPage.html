@@ -5,25 +5,36 @@
     <title>Rate HÍ</title>
     <link th:href="@{/styles/css/styles.css}" rel="stylesheet" />
 </head>
-<body>
-<!--<h1>Rate HÍ</h1>-->
-    <header>
-        <form action="#" th:action="@{/login}" th:object="${user}"  method="post">
-            <input type="text" name="username" id="userNameL" th:field="*{userName}"/>
-            <input type="text" name="password" id="passwordL" th:value="*{password}"/>
-            <input type="submit" value="Login"/>
-        </form>
-        <form action="#" th:action="@{/signup}" th:object="${user}"  method="post">
-            <input type="text" name="username" id="userNameS" th:field="*{userName}"/>
-            <input type="text" name="password" id="passwordS" th:value="*{password}"/>
-            <input type="submit" value="Sign up"/>
-        </form>
-        <p th:text="${LoggedInUser.userName}"></p>
-    </header>
 
-    <img class="logo" th:src="@{/images/reit_hi_logo_blue.png}"/>
+<body>
+
+
+<header>
+    <img class="headerLogo" th:src="@{/images/reit_hi_logo_secondary.svg}"/>
+     <form action="#" th:action="@{/login}" modelAttribute="user"  method="post">
+         <input type="text" name="userName" id="userNameL" field="*{user.userName}"/>
+         <input type="password" name="password" id="passwordL" placeholder="pass"/>
+         <input type="submit" value="Login"/>
+     </form>
+
+     <form action="#" th:action="@{/signup}" modelAttribute="user"  method="post">
+         <input type="text" name="userName" id="userNameS" field="*{user.userName}"/>
+         <input type="password" name="password" id="passwordS" placeholder="pass"/>
+         <input type="submit" value="Sign up"/>
+     </form>
+
+    <p class="loggedInUser" th:if="${session.LoggedInUser != null}", th:text="${session.LoggedInUser.userName}"></p>
+    <p class="loggedInUser" th:unless="${session.LoggedInUser != null}", th:text="Login"></p>
+    <!--
+    <p>login</p>-->
+
+</header>
+<!--<h1>Rate HÍ</h1>-->
+
+<section class="content">
+    <img class="logo" th:src="@{/images/reit_hi_logo_blue.svg}"/>
     <div>
-        <!--<h2>Search for a course</h2>-->
+    <!--<h2>Search for a course</h2>-->
         <form action="#" th:action="@{/searchcourses}" method="post">
             <!--<label for="name">Course name</label>-->
             <div class="searchbar">
@@ -34,5 +45,6 @@
 
         </form>
     </div>
+</section>
 </body>
 </html>

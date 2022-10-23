@@ -6,8 +6,29 @@
     <link th:href="@{/styles/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
+
+<header>
+
+    <form action="#" th:action="@{/login}" modelAttribute="user"  method="post">
+        <input type="text" name="userName" id="userNameL" field="*{user.userName}"/>
+        <input type="password" name="password" id="passwordL" placeholder="pass"/>
+        <input type="submit" value="Login"/>
+    </form>
+
+    <form action="#" th:action="@{/signup}" modelAttribute="user"  method="post">
+        <input type="text" name="userName" id="userNameS" field="*{user.userName}"/>
+        <input type="password" name="password" id="passwordS" placeholder="pass"/>
+        <input type="submit" value="Sign up"/>
+    </form>
+
+    <p class="loggedInUser" th:if="${session.LoggedInUser != null}", th:text="${session.LoggedInUser.userName}"></p>
+
+    <img class="headerLogo" th:src="@{/images/reit_hi_logo_secondary.svg}"/>
+    <p>login</p>
+
+</header>
 <!--<h1>Rate HÍ</h1>-->
-<img class="logo" th:src="@{/images/reit_hi_logo_blue.png}"/>
+<img class="logo" th:src="@{/images/reit_hi_logo_blue.svg}"/>
 <div>
     <!--<h2>Search for a course</h2>-->
     <form action="#" th:action="@{/searchcourses}" method="post">

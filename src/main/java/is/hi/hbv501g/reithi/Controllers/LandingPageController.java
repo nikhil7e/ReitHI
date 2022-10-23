@@ -2,6 +2,7 @@ package is.hi.hbv501g.reithi.Controllers;
 
 import is.hi.hbv501g.reithi.Persistence.Entities.Course;
 import is.hi.hbv501g.reithi.Services.CourseService;
+import is.hi.hbv501g.reithi.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +22,12 @@ Landing Page controller is responsible for the front page of the website.
 public class LandingPageController {
 
     private CourseService courseService;
+    private UserService userService;
 
     @Autowired
-    public LandingPageController(CourseService courseService) {
+    public LandingPageController(CourseService courseService, UserService userService) {
         this.courseService = courseService;
+        this.userService = userService;
     }
 
     /**

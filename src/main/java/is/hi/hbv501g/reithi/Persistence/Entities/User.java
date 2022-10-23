@@ -12,9 +12,9 @@ public class User {
     private long ID;
     private String userName;
     private String password;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Rating> ratings = new ArrayList<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
 

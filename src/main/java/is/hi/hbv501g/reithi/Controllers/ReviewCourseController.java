@@ -3,6 +3,7 @@ package is.hi.hbv501g.reithi.Controllers;
 import is.hi.hbv501g.reithi.Persistence.Entities.*;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
+import is.hi.hbv501g.reithi.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +32,7 @@ public class ReviewCourseController {
             return "newCourse";
         }
 
-        reviewService.save(new Review(new User("userName", "password"), rating, comment, (Course) session.getAttribute("selectedCourse")));
+        reviewService.save(new Review((User) session.getAttribute("LoggedInUser"), rating, comment, (Course) session.getAttribute("selectedCourse")));
         //Course c = (Course) session.getAttribute("selectedCourse");
         //courseService.save(c);
         return "landingPage";

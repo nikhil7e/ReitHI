@@ -38,8 +38,14 @@ public class ViewCourseController {
     @RequestMapping(value = "/upvote/{id}", method = RequestMethod.GET)
     public String upvotePOST(@PathVariable("id") long id, HttpSession session){
         Review review = reviewService.findByID(id);
-        User user = new User("eddi", "ercringe");
-        review.addUpvote(user);
+        User currentUser = (User) session.getAttribute("LoggedInUser");
+        if(review.getUpvoters().contains(currentUser)){
+            review.removeUpvote(currentUser);
+        }
+        else{
+            review.addUpvote(currentUser);
+        }
+
         reviewService.save(review);
         List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
         session.setAttribute("reviewsForCourse", reviewSearchResults);
@@ -48,8 +54,13 @@ public class ViewCourseController {
     @RequestMapping(value = "/downvote/{id}", method = RequestMethod.GET)
     public String downvotePOST(@PathVariable("id") long id, HttpSession session){
         Review review = reviewService.findByID(id);
-        User user = new User("eddi", "ercringe");
-        review.addDownvote(user);
+        User currentUser = (User) session.getAttribute("LoggedInUser");
+        if(review.getUpvoters().contains(currentUser)){
+            review.removeDownvote(currentUser);
+        }
+        else{
+            review.addDownvote(currentUser);
+        }
         reviewService.save(review);
         List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
         session.setAttribute("reviewsForCourse", reviewSearchResults);

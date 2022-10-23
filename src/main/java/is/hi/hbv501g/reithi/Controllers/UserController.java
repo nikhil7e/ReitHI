@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -33,12 +35,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String signupPOST(User user, BindingResult result, Model model){
-        if(result.hasErrors()){
+    public String signupPOST(@ModelAttribute("user") User user, BindingResult result, Model model) {
+        if (result.hasErrors()) {
             return "redirect:/signup";
         }
         User exists = userService.findByUserName(user.getUserName());
-        if(exists == null){
+        if (exists == null) {
             userService.save(user);
         }
         return "redirect:/";
@@ -50,7 +52,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPOST(User user, BindingResult result, Model model, HttpSession session){
+    public String loginPOST(@ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session){
         if(result.hasErrors()){
             return "landingPage";
         }
@@ -58,7 +60,7 @@ public class UserController {
         if(exists != null){
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
-            return "LoggedInUser";
+            return "redirect:/loggedin";
         }
         return "redirect:/";
     }
@@ -68,7 +70,6 @@ public class UserController {
         User sessionUser = (User) session.getAttribute("LoggedInUser");
         if(sessionUser  != null){
             model.addAttribute("LoggedInUser", sessionUser);
-            return "loggedInUser";
         }
         return "redirect:/";
     }
