@@ -27,23 +27,23 @@
     <div class='statistics'>
         <div>
             <label>Overall</label>
-            <p th:text = "${#numbers.formatDecimal(session.avgOAS, 0, 'COMMA', 2, 'POINT')}"></p>
+            <p th:text = "${#numbers.formatDecimal(session.avgOAS, 1, 'COMMA', 2, 'POINT')}"></p>
         </div>
         <div>
             <label>Difficulty</label>
-            <p th:text = "${#numbers.formatDecimal(session.avgD, 0, 'COMMA', 2, 'POINT')}"></p>
+            <p th:text = "${#numbers.formatDecimal(session.avgD, 1, 'COMMA', 2, 'POINT')}"></p>
         </div>
         <div>
             <label>Workload</label>
-            <p th:text = "${#numbers.formatDecimal(session.avgW, 0, 'COMMA', 2, 'POINT')}"></p>
+            <p th:text = "${#numbers.formatDecimal(session.avgW, 1, 'COMMA', 2, 'POINT')}"></p>
         </div>
         <div>
             <label>Teaching Quality</label>
-            <p th:text = "${#numbers.formatDecimal(session.avgTQ, 0, 'COMMA', 2, 'POINT')}"></p>
+            <p th:text = "${#numbers.formatDecimal(session.avgTQ, 1, 'COMMA', 2, 'POINT')}"></p>
         </div>
         <div>
             <label>Course Material</label>
-            <p th:text = "${#numbers.formatDecimal(session.avgCM, 0, 'COMMA', 2, 'POINT')}"></p>
+            <p th:text = "${#numbers.formatDecimal(session.avgCM, 1, 'COMMA', 2, 'POINT')}"></p>
         </div>
 
     </div>

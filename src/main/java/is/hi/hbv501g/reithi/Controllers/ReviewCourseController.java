@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class ReviewCourseController {
@@ -35,7 +36,9 @@ public class ReviewCourseController {
         reviewService.save(new Review((User) session.getAttribute("LoggedInUser"), rating, comment, (Course) session.getAttribute("selectedCourse")));
         //Course c = (Course) session.getAttribute("selectedCourse");
         //courseService.save(c);
-        return "landingPage";
+        List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
+        session.setAttribute("reviewsForCourse", reviewSearchResults);
+        return "viewCourse";
     }
 
 }

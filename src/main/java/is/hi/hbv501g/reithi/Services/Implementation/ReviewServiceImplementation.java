@@ -29,6 +29,9 @@ public class ReviewServiceImplementation implements ReviewService {
         for(int i = 0;i < list.size(); i++ ) {
             sum += list.get(i).getRating().getOverallScore();
         }
+        if (list.size() == 0) {
+            return 0.0;
+        }
         return sum / list.size();
     }
 
@@ -38,6 +41,9 @@ public class ReviewServiceImplementation implements ReviewService {
         double sum = 0;
         for(int i = 0;i < list.size(); i++ ) {
             sum += list.get(i).getRating().getDifficulty();
+        }
+        if (list.size() == 0) {
+            return 0.0;
         }
         return sum / list.size();
     }
@@ -49,6 +55,9 @@ public class ReviewServiceImplementation implements ReviewService {
         for(int i = 0;i < list.size(); i++ ) {
             sum += list.get(i).getRating().getWorkload();
         }
+        if (list.size() == 0) {
+            return 0.0;
+        }
         return sum / list.size();
     }
 
@@ -59,6 +68,9 @@ public class ReviewServiceImplementation implements ReviewService {
         for(int i = 0;i < list.size(); i++ ) {
             sum += list.get(i).getRating().getTeachingQuality();
         }
+        if (list.size() == 0) {
+            return 0.0;
+        }
         return sum / list.size();
     }
 
@@ -68,6 +80,9 @@ public class ReviewServiceImplementation implements ReviewService {
         double sum = 0;
         for(int i = 0;i < list.size(); i++ ) {
             sum += list.get(i).getRating().getCourseMaterial();
+        }
+        if (list.size() == 0) {
+            return 0.0;
         }
         return sum / list.size();
     }

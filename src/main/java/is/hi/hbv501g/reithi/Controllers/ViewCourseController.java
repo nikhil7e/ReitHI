@@ -49,7 +49,7 @@ public class ViewCourseController {
         reviewService.save(review);
         List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
         session.setAttribute("reviewsForCourse", reviewSearchResults);
-        return "viewcourse";
+        return "viewCourse";
     }
     @RequestMapping(value = "/downvote/{id}", method = RequestMethod.GET)
     public String downvotePOST(@PathVariable("id") long id, HttpSession session){
@@ -64,7 +64,7 @@ public class ViewCourseController {
         reviewService.save(review);
         List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
         session.setAttribute("reviewsForCourse", reviewSearchResults);
-        return "viewcourse";
+        return "viewCourse";
     }
 
 
