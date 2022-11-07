@@ -3,103 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link th:href="@{/styles/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/styles/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
-    <div class='information'>
-        <h1 th:text = "${session.selectedCourse.name}"></h1>
-        <p th:text = "${session.selectedCourse.credits}"></p>
-        <p th:text = "${session.selectedCourse.semester}"></p>
-        <p th:text = "${session.selectedCourse.course_URL}"></p>
-        <p th:text = "${session.selectedCourse.type}"></p>
-        <p th:text = "${session.selectedCourse.semester}"></p>
-        <p th:text = "${session.selectedCourse.level}"></p>
-        <p th:text = "${session.selectedCourse.professor_Name}"></p>
-        <p th:text = "${session.selectedCourse.professor}"></p>
-        <p th:text = "${session.selectedCourse.assessment}"></p>
-        <p th:text = "${session.selectedCourse.finalExam}"></p>
-        <p th:text = "${session.selectedCourse.school}"></p>
-        <p th:text = "${session.selectedCourse.faculty}"></p>
-        <p th:text = "${session.selectedCourse.professor_Email}"></p>
-        <p th:text = "${session.selectedCourse.professor_URL}"></p>
-        <a th:href="@{/reviewcourse}">Review course</a>
-    </div>
-    <div class='statistics'>
-        <div>
-            <label>Overall</label>
-            <p th:text = "${#numbers.formatDecimal(session.avgOAS, 1, 'COMMA', 2, 'POINT')}"></p>
-        </div>
-        <div>
-            <label>Difficulty</label>
-            <p th:text = "${#numbers.formatDecimal(session.avgD, 1, 'COMMA', 2, 'POINT')}"></p>
-        </div>
-        <div>
-            <label>Workload</label>
-            <p th:text = "${#numbers.formatDecimal(session.avgW, 1, 'COMMA', 2, 'POINT')}"></p>
-        </div>
-        <div>
-            <label>Teaching Quality</label>
-            <p th:text = "${#numbers.formatDecimal(session.avgTQ, 1, 'COMMA', 2, 'POINT')}"></p>
-        </div>
-        <div>
-            <label>Course Material</label>
-            <p th:text = "${#numbers.formatDecimal(session.avgCM, 1, 'COMMA', 2, 'POINT')}"></p>
-        </div>
+<header>
+    <a th:href="@{/}">
+        <img class="headerLogo" th:src="@{/images/reit_hi_logo_secondary.svg}"/>
+    </a>
+    <form th:if="${session.LoggedInUser == null}" action="#" th:action="@{/login}" modelAttribute="user" method="post">
+        <input type="text" name="userName" id="userNameL" field="*{user.userName}"/>
+        <input type="password" name="password" id="passwordL" placeholder="pass"/>
+        <input type="submit" value="Log in"/>
+        <input type="submit" value="Sign up" th:formaction="@{/signup}"/>
+    </form>
 
+    <p class="loggedInUser" th:if="${session.LoggedInUser != null}" , th:text="${session.LoggedInUser.userName}"></p>
+    <form action="#" th:action="@{/logout}" method="get">
+        <input th:if="${session.LoggedInUser != null}" type="submit" value="Log out"/>
+    </form>
+    <!--    <p class="loggedInUser" th:unless="${session.LoggedInUser != null}", th:text="Login"></p>-->
+    <!--
+    <p>login</p>-->
+
+</header>
+
+<div class='information'>
+    <h1 th:text="${session.selectedCourse.name}"></h1>
+    <p th:text="${session.selectedCourse.credits}"></p>
+    <p th:text="${session.selectedCourse.semester}"></p>
+    <p th:text="${session.selectedCourse.course_URL}"></p>
+    <p th:text="${session.selectedCourse.type}"></p>
+    <p th:text="${session.selectedCourse.semester}"></p>
+    <p th:text="${session.selectedCourse.level}"></p>
+    <p th:text="${session.selectedCourse.professor_Name}"></p>
+    <p th:text="${session.selectedCourse.professor}"></p>
+    <p th:text="${session.selectedCourse.assessment}"></p>
+    <p th:text="${session.selectedCourse.finalExam}"></p>
+    <p th:text="${session.selectedCourse.school}"></p>
+    <p th:text="${session.selectedCourse.faculty}"></p>
+    <p th:text="${session.selectedCourse.professor_Email}"></p>
+    <p th:text="${session.selectedCourse.professor_URL}"></p>
+    <a th:href="@{/reviewcourse}">Review course</a>
+</div>
+<div class='statistics'>
+    <div>
+        <label>Overall</label>
+        <p th:text="${#numbers.formatDecimal(session.avgOAS, 1, 'COMMA', 2, 'POINT')}"></p>
+    </div>
+    <div>
+        <label>Difficulty</label>
+        <p th:text="${#numbers.formatDecimal(session.avgD, 1, 'COMMA', 2, 'POINT')}"></p>
+    </div>
+    <div>
+        <label>Workload</label>
+        <p th:text="${#numbers.formatDecimal(session.avgW, 1, 'COMMA', 2, 'POINT')}"></p>
+    </div>
+    <div>
+        <label>Teaching Quality</label>
+        <p th:text="${#numbers.formatDecimal(session.avgTQ, 1, 'COMMA', 2, 'POINT')}"></p>
+    </div>
+    <div>
+        <label>Course Material</label>
+        <p th:text="${#numbers.formatDecimal(session.avgCM, 1, 'COMMA', 2, 'POINT')}"></p>
     </div>
 
-    <div class='reviews'>
-        <p th:if="${session.reviewsForCourse == null or session.reviewsForCourse.empty}">No Comments found!</p>
-        <tr th:each="review : ${session.reviewsForCourse}">
-            <div class = "review">
-                <div class="username">
-                    <td th:if="${review.user != null}", th:text="${review.user.userName}"></td>
+</div>
+
+<div class='reviews'>
+    <p th:if="${session.reviewsForCourse == null or session.reviewsForCourse.empty}">No Comments found!</p>
+    <tr th:each="review : ${session.reviewsForCourse}">
+        <div class="review">
+            <div class="username">
+                <td th:if="${review.user != null}" , th:text="${review.user.userName}"></td>
+            </div>
+            <div class="rating">
+                <div>
+                    <label>Overall rating</label>
+                    <p th:text="${review.rating.overallScore}"></p>
                 </div>
-                <div class="rating">
-                    <div>
-                        <label>Overall rating</label>
-                        <p th:text = "${review.rating.overallScore}"></p>
-                    </div>
-                    <div>
-                        <label>Difficulty</label>
-                        <p th:text = "${review.rating.difficulty}"></p>
-                    </div>
-                    <div>
-                        <label>Work load</label>
-                        <p th:text = "${review.rating.workload}"></p>
-                    </div>
-                    <div>
-                        <label>Teaching quality</label>
-                        <p th:text = "${review.rating.teachingQuality}"></p>
-                    </div>
-                    <div>
-                        <label>Course material</label>
-                        <p th:text = "${review.rating.courseMaterial}"></p>
-                    </div>
-                    <div>
-                        <a class="upvote" th:href = "@{/upvote/{id}(id=${review.ID})}">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-thumb-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <div>
+                    <label>Difficulty</label>
+                    <p th:text="${review.rating.difficulty}"></p>
+                </div>
+                <div>
+                    <label>Work load</label>
+                    <p th:text="${review.rating.workload}"></p>
+                </div>
+                <div>
+                    <label>Teaching quality</label>
+                    <p th:text="${review.rating.teachingQuality}"></p>
+                </div>
+                <div>
+                    <label>Course material</label>
+                    <p th:text="${review.rating.courseMaterial}"></p>
+                </div>
+                <div>
+                    <a class="upvote" th:href="@{/upvote/{id}(id=${review.ID})}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-thumb-up" width="24"
+                             height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                             stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3"></path>
-                            </svg>
-                        </a>
-                        <p th:text = "${review.getUpvotes()}" ></p>
-                    </div>
-                    <div>
-                        <a class="downvote" th:href = "@{/downvote/{id}(id=${review.ID})}">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-thumb-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2 -2h-7a3 3 0 0 0 -3 3"></path>
-                            </svg>
-                        </a>
-                    </div>
+                        </svg>
+                    </a>
+                    <p th:text="${review.getUpvotes()}"></p>
                 </div>
-                <div class="comment">
-                    <td th:text="${review.comment.text}"></td>
+                <div>
+                    <a class="downvote" th:href="@{/downvote/{id}(id=${review.ID})}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-thumb-down"
+                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                             fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2 -2h-7a3 3 0 0 0 -3 3"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
-        </tr>
-    </div>
+            <div class="comment">
+                <td th:text="${review.comment.text}"></td>
+            </div>
+        </div>
+    </tr>
+</div>
 
 
 </body>

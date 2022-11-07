@@ -8,23 +8,23 @@
 <body>
 
 <header>
-
-    <form action="#" th:action="@{/login}" modelAttribute="user"  method="post">
+    <a th:href="@{/}">
+        <img class="headerLogo" th:src="@{/images/reit_hi_logo_secondary.svg}"/>
+    </a>
+    <form th:if="${session.LoggedInUser == null}" action="#" th:action="@{/login}" modelAttribute="user" method="post">
         <input type="text" name="userName" id="userNameL" field="*{user.userName}"/>
         <input type="password" name="password" id="passwordL" placeholder="pass"/>
-        <input type="submit" value="Login"/>
-    </form>
-
-    <form action="#" th:action="@{/signup}" modelAttribute="user"  method="post">
-        <input type="text" name="userName" id="userNameS" field="*{user.userName}"/>
-        <input type="password" name="password" id="passwordS" placeholder="pass"/>
-        <input type="submit" value="Sign up"/>
+        <input type="submit" value="Log in"/>
+        <input type="submit" value="Sign up" th:formaction="@{/signup}"/>
     </form>
 
     <p class="loggedInUser" th:if="${session.LoggedInUser != null}", th:text="${session.LoggedInUser.userName}"></p>
-
-    <img class="headerLogo" th:src="@{/images/reit_hi_logo_secondary.svg}"/>
-    <p>login</p>
+    <form action="#" th:action="@{/logout}" method="get">
+        <input th:if="${session.LoggedInUser != null}" type="submit" value="Log out"/>
+    </form>
+    <!--    <p class="loggedInUser" th:unless="${session.LoggedInUser != null}", th:text="Login"></p>-->
+    <!--
+    <p>login</p>-->
 
 </header>
 <!--<h1>Rate HÍ</h1>-->
