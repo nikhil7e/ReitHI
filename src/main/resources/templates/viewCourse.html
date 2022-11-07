@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link th:href="@{/styles/css/styles.css}" rel="stylesheet" />
+    <script th:href="@{/scripts/main.js}" rel="stylesheet" type="module"></script>
 </head>
 <body>
     <div class='information'>
@@ -47,8 +48,7 @@
         </div>
 
     </div>
-
-    <div class='reviews'>
+    <div class='reviews', th:onload="checkIfUserHasLeftComment([[${session.LoggedInUser}]])">
         <p th:if="${session.reviewsForCourse == null or session.reviewsForCourse.empty}">No Comments found!</p>
         <tr th:each="review : ${session.reviewsForCourse}">
             <div class = "review">

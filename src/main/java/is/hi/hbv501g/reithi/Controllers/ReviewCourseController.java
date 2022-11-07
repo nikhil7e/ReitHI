@@ -40,5 +40,13 @@ public class ReviewCourseController {
         session.setAttribute("reviewsForCourse", reviewSearchResults);
         return "viewCourse";
     }
+    @RequestMapping(value = "/deletereview", method = RequestMethod.POST)
+    public String deleteReviewPOST(Review review){
+        reviewService.delete(review);
+        return "viewCourse";
+    }
+
+
+
 
 }
