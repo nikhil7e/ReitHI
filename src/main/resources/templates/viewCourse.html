@@ -23,7 +23,7 @@
         <p th:text = "${session.selectedCourse.faculty}"></p>
         <p th:text = "${session.selectedCourse.professor_Email}"></p>
         <p th:text = "${session.selectedCourse.professor_URL}"></p>
-        <a th:href="@{/reviewcourse}">Review course</a>
+        <a th:if="${ session.LoggedInUser != null}", th:href="@{/reviewcourse}">Review course</a>
     </div>
     <div class='statistics'>
         <div>
@@ -48,10 +48,13 @@
         </div>
 
     </div>
-    <div class='reviews', th:onload="checkIfUserHasLeftComment([[${session.LoggedInUser}]])">
+    <div class='reviews'>
         <p th:if="${session.reviewsForCourse == null or session.reviewsForCourse.empty}">No Comments found!</p>
         <tr th:each="review : ${session.reviewsForCourse}">
             <div class = "review">
+                <form action="#" th:action="@{/deletereview/{id}(id=${review.ID})}" method="get" th:if="${session.LoggedInUser != null}">
+                    <input type="submit" value="X" class="deleteReview" th:if="${review.user.userName == session.LoggedInUser.userName}">
+                </form>
                 <div class="username">
                     <td th:if="${review.user != null}", th:text="${review.user.userName}"></td>
                 </div>

@@ -1,4 +1,5 @@
 function checkIfUserHasLeftComment(username) {
+   debugger
    const reviews = document.querySelector('.review');
    console.log("wtf")
    let i = 0;
