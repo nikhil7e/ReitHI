@@ -288,6 +288,17 @@ form button{
     margin: 0 auto;
 }
 
+.deleteReview{
+    border: solid 2px black;
+    border-radius: 50%;
+    font-size: x-large;
+}
+
+.deleteReview:hover{
+    font-size: large;
+    background-color: lightgrey;
+}
+
 .comment{
     padding: 1rem;
     border: solid;
