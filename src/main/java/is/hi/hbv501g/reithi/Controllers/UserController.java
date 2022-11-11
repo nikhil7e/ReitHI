@@ -20,59 +20,65 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    //End points to add
-    // signup (GET, POST)
-    // login (GET, POST)
-    // loggedin (GET)
-
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String signupGET(User user){
+    public String signupGET(User user) {
         return "landingPage";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String signupPOST(@ModelAttribute("user") User user, BindingResult result, Model model) {
+    public String signupPOST(@ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             return "redirect:/signup";
         }
         User exists = userService.findByUserName(user.getUserName());
         if (exists == null) {
-            userService.save(user);
+            exists = userService.save(user);
+            session.setAttribute("LoggedInUser", exists);
+            model.addAttribute("LoggedInUser", exists);
         }
+
         return "redirect:/";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginGET(User user){
+    public String loginGET(User user) {
         return "landingPage";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPOST(@ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session){
-        if(result.hasErrors()){
+    public String loginPOST(@ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session) {
+        if (result.hasErrors()) {
             return "landingPage";
         }
         User exists = userService.login(user);
-        if(exists != null){
+        if (exists != null) {
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
             return "redirect:/loggedin";
         }
+        // TODO: case when user does not exist
         return "redirect:/";
     }
 
     @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
-    public String loggedinGET(HttpSession session, Model model){
+    public String loggedinGET(HttpSession session, Model model) {
         User sessionUser = (User) session.getAttribute("LoggedInUser");
-        if(sessionUser  != null){
+        if (sessionUser != null) {
             model.addAttribute("LoggedInUser", sessionUser);
         }
         return "redirect:/";
     }
 
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutGET(HttpSession session, Model model) {
+        session.setAttribute("LoggedInUser", null);
+        model.addAttribute("LoggedInUser", null);
+
+        return "redirect:/";
+    }
 
 }

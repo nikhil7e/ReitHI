@@ -30,12 +30,17 @@ public class ReviewCourseController {
     @RequestMapping(value = "/addreview", method = RequestMethod.POST)
     public String addReviewPOST(Comment comment, Rating rating, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
-            return "newCourse";
+            return "reviewCourse";
         }
 
         reviewService.save(new Review((User) session.getAttribute("LoggedInUser"), rating, comment, (Course) session.getAttribute("selectedCourse")));
-        //Course c = (Course) session.getAttribute("selectedCourse");
-        //courseService.save(c);
+
+        long id = ((Course) session.getAttribute("selectedCourse")).getID();
+        session.setAttribute("avgOAS",reviewService.getAverageOverallScore(id));
+        session.setAttribute("avgD",reviewService.getAverageDifficulty(id));
+        session.setAttribute("avgW",reviewService.getAverageWorkload(id));
+        session.setAttribute("avgTQ",reviewService.getAverageTeachingQuality(id));
+        session.setAttribute("avgCM",reviewService.getAverageCourseMaterial(id));
         List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
         session.setAttribute("reviewsForCourse", reviewSearchResults);
         return "viewCourse";

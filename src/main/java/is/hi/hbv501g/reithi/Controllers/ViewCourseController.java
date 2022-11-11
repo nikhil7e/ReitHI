@@ -29,6 +29,7 @@ public class ViewCourseController {
         this.reviewService = reviewService;
     }
 
+
     @RequestMapping(value = "/reviewcourse", method = RequestMethod.GET)
     public String reviewCourseGET(Model model) {
         return "reviewCourse";
@@ -47,25 +48,49 @@ public class ViewCourseController {
         }
 
         reviewService.save(review);
-        List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
-        session.setAttribute("reviewsForCourse", reviewSearchResults);
+        refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
         return "viewCourse";
     }
+
     @RequestMapping(value = "/downvote/{id}", method = RequestMethod.GET)
     public String downvotePOST(@PathVariable("id") long id, HttpSession session){
         Review review = reviewService.findByID(id);
         User currentUser = (User) session.getAttribute("LoggedInUser");
-        if(review.getUpvoters().contains(currentUser)){
+        if(review.getDownvoters().contains(currentUser)){
             review.removeDownvote(currentUser);
         }
         else{
             review.addDownvote(currentUser);
         }
         reviewService.save(review);
-        List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
-        session.setAttribute("reviewsForCourse", reviewSearchResults);
+        refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
         return "viewCourse";
     }
+
+    public void refreshViewCourse(HttpSession session, long id){
+        session.setAttribute("avgOAS",reviewService.getAverageOverallScore(id));
+        session.setAttribute("avgD",reviewService.getAverageDifficulty(id));
+        session.setAttribute("avgW",reviewService.getAverageWorkload(id));
+        session.setAttribute("avgTQ",reviewService.getAverageTeachingQuality(id));
+        session.setAttribute("avgCM",reviewService.getAverageCourseMaterial(id));
+        List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
+        session.setAttribute("reviewsForCourse", reviewSearchResults);
+    }
+
+    @RequestMapping(value = "/deletereview/{id}", method = RequestMethod.GET)
+    public String deleteReviewGET(@PathVariable("id") long id,HttpSession session){
+        Review review = reviewService.findByID(id);
+        User user = review.getUser();
+        List<Review> allReviews = user.getReviews();
+        allReviews.remove(review);
+        user.setReviews(allReviews);
+
+        reviewService.delete(review);
+        refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
+        return "viewCourse";
+    }
+
+
 
 
 
