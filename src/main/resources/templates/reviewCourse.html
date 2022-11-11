@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link th:href="@{/styles/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/styles/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
 <header>
@@ -17,7 +17,7 @@
         <input type="submit" value="Sign up" th:formaction="@{/signup}"/>
     </form>
 
-    <p class="loggedInUser" th:if="${session.LoggedInUser != null}", th:text="${session.LoggedInUser.userName}"></p>
+    <p class="loggedInUser" th:if="${session.LoggedInUser != null}" , th:text="${session.LoggedInUser.userName}"></p>
     <form action="#" th:action="@{/logout}" method="get">
         <input th:if="${session.LoggedInUser != null}" type="submit" value="Log out"/>
     </form>
@@ -27,75 +27,77 @@
 
 </header>
 
-<h1 th:text="${session.selectedCourse.name}"> </h1>
+<main>
 
-<form action="#" th:action="@{/addreview}" method="post" >
+    <h1 th:text="${session.selectedCourse.name}"></h1>
 
-    <div th:object="${course}">
-       <label>Overall Score</label><br/>
-       <div class="radioInput">
-           <input type="radio" field="${rating.overallScore}" name="overallScore" value=1 />
-           <input type="radio" field="*{rating.overallScore}" name="overallScore" value=2 />
-           <input type="radio" field="*{rating.overallScore}" name="overallScore" value=3 />
-           <input type="radio" field="*{rating.overallScore}" name="overallScore" value=4 />
-           <input type="radio" field="*{rating.overallScore}" name="overallScore" value=5 /><br/>
-       </div>
-    </div>
+    <form action="#" th:action="@{/addreview}" method="post">
 
-    <div th:object="${course}">
-      <label>Difficulty</label><br/>
-      <div class="radioInput">
-          <input type="radio" field="*{rating.difficulty}" name="difficulty" value=1 />
-          <input type="radio" field="*{rating.difficulty}" name="difficulty" value=2 />
-          <input type="radio" field="*{rating.difficulty}" name="difficulty" value=3 />
-          <input type="radio" field="*{rating.difficulty}" name="difficulty" value=4 />
-          <input type="radio" field="*{rating.difficulty}" name="difficulty" value=5 /><br/>
-      </div>
-    </div>
+        <div th:object="${course}">
+            <label>Overall Score</label><br/>
+            <div class="radioInput">
+                <input type="radio" field="${rating.overallScore}" name="overallScore" value=1/>
+                <input type="radio" field="*{rating.overallScore}" name="overallScore" value=2/>
+                <input type="radio" field="*{rating.overallScore}" name="overallScore" value=3/>
+                <input type="radio" field="*{rating.overallScore}" name="overallScore" value=4/>
+                <input type="radio" field="*{rating.overallScore}" name="overallScore" value=5/><br/>
+            </div>
+        </div>
 
-   <div th:object="${course}">
-   <label>Workload</label><br/>
-       <div class="radioInput">
-           <input type="radio" field="*{rating.workload}" name="workload" value=1 />
-           <input type="radio" field="*{rating.workload}" name="workload" value=2 />
-           <input type="radio" field="*{rating.workload}" name="workload" value=3 />
-           <input type="radio" field="*{rating.workload}" name="workload" value=4 />
-           <input type="radio" field="*{rating.workload}" name="workload" value=5 /><br/>
-       </div>
-   </div>
+        <div th:object="${course}">
+            <label>Difficulty</label><br/>
+            <div class="radioInput">
+                <input type="radio" field="*{rating.difficulty}" name="difficulty" value=1/>
+                <input type="radio" field="*{rating.difficulty}" name="difficulty" value=2/>
+                <input type="radio" field="*{rating.difficulty}" name="difficulty" value=3/>
+                <input type="radio" field="*{rating.difficulty}" name="difficulty" value=4/>
+                <input type="radio" field="*{rating.difficulty}" name="difficulty" value=5/><br/>
+            </div>
+        </div>
 
-   <div th:object="${course}">
-       <label>Teaching Quality</label><br/>
-       <div class="radioInput">
-           <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=1 />
-           <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=2 />
-           <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=3 />
-           <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=4 />
-           <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=5 /><br/>
-       </div>
-   </div>
+        <div th:object="${course}">
+            <label>Workload</label><br/>
+            <div class="radioInput">
+                <input type="radio" field="*{rating.workload}" name="workload" value=1/>
+                <input type="radio" field="*{rating.workload}" name="workload" value=2/>
+                <input type="radio" field="*{rating.workload}" name="workload" value=3/>
+                <input type="radio" field="*{rating.workload}" name="workload" value=4/>
+                <input type="radio" field="*{rating.workload}" name="workload" value=5/><br/>
+            </div>
+        </div>
 
-   <div th:object="${course}">
-       <label>Course Material</label><br/>
-       <div class="radioInput">
-           <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=1 />
-           <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=2 />
-           <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=3 />
-           <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=4 />
-           <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=5 /><br/>
-       </div>
-   </div>
+        <div th:object="${course}">
+            <label>Teaching Quality</label><br/>
+            <div class="radioInput">
+                <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=1/>
+                <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=2/>
+                <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=3/>
+                <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=4/>
+                <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=5/><br/>
+            </div>
+        </div>
 
-    <div th:object="${comment}">
-        <label>Additional Comments:</label>
-        <textarea rows="5" cols="25" field="${comment.text}" name="text"></textarea>
-    </div>
- -->
-    <div>
-    <button type="submit">Register</button>
-    </div>
-</form>
+        <div th:object="${course}">
+            <label>Course Material</label><br/>
+            <div class="radioInput">
+                <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=1/>
+                <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=2/>
+                <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=3/>
+                <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=4/>
+                <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=5/><br/>
+            </div>
+        </div>
 
+        <div th:object="${comment}">
+            <label>Additional Comments:</label>
+            <textarea rows="5" cols="25" field="${comment.text}" name="text"></textarea>
+        </div>
+        -->
+        <div>
+            <button type="submit">Register</button>
+        </div>
+    </form>
 
+</main>
 </body>
 </html>
