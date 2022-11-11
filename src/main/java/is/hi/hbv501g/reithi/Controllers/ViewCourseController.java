@@ -51,11 +51,12 @@ public class ViewCourseController {
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
         return "viewCourse";
     }
+
     @RequestMapping(value = "/downvote/{id}", method = RequestMethod.GET)
     public String downvotePOST(@PathVariable("id") long id, HttpSession session){
         Review review = reviewService.findByID(id);
         User currentUser = (User) session.getAttribute("LoggedInUser");
-        if(review.getUpvoters().contains(currentUser)){
+        if(review.getDownvoters().contains(currentUser)){
             review.removeDownvote(currentUser);
         }
         else{

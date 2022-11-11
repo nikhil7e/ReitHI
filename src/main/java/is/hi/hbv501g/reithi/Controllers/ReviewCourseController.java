@@ -29,9 +29,9 @@ public class ReviewCourseController {
     // TODO: For testing purposes only, remove eventually
     @RequestMapping(value = "/addreview", method = RequestMethod.POST)
     public String addReviewPOST(Comment comment, Rating rating, BindingResult result, Model model, HttpSession session) {
-//        if (result.hasErrors()) {
-//            return "reviewCourse";
-//        }
+        if (result.hasErrors()) {
+            return "reviewCourse";
+        }
 
         reviewService.save(new Review((User) session.getAttribute("LoggedInUser"), rating, comment, (Course) session.getAttribute("selectedCourse")));
 
@@ -45,9 +45,5 @@ public class ReviewCourseController {
         session.setAttribute("reviewsForCourse", reviewSearchResults);
         return "viewCourse";
     }
-
-
-
-
 
 }
