@@ -302,3 +302,8 @@ form button{
 .CourseHeader{
 
 }
+
+.searchResult .hide {
+    display: none;
+    visibility: hidden;
+}
