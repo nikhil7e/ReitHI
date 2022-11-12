@@ -10,7 +10,7 @@
 
 
 <header>
-    <a href="landingPage.html">
+    <a th:href="@{/}">
         <img class="headerLogo" th:src="@{/images/reit_hi_logo_secondary.svg}"/>
     </a>
     <form th:if="${session.LoggedInUser == null}" action="#" th:action="@{/login}" modelAttribute="user" method="post">
