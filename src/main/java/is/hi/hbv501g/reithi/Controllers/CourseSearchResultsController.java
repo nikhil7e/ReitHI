@@ -2,6 +2,7 @@ package is.hi.hbv501g.reithi.Controllers;
 
 import is.hi.hbv501g.reithi.Persistence.Entities.Course;
 import is.hi.hbv501g.reithi.Persistence.Entities.Review;
+import is.hi.hbv501g.reithi.Persistence.Entities.User;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This controller handles HTTP requests for the course search results page, such as selecting
@@ -70,6 +71,9 @@ public class CourseSearchResultsController {
     public String viewCourseGET(@PathVariable("id") long id, Model model, HttpSession session) {
         // update html to use session instead of model and delete line 43
         model.addAttribute("selectedCourse", courseService.findByID(id));
+        setHasReviewedCourse(id, session);
+
+        // model.addAttribute("hasReviewedCourse", );
         // Get course rating from selected course
         Course selectedCourse = (Course) model.getAttribute("selectedCourse");
         // Include rating data course in HTML
@@ -88,6 +92,19 @@ public class CourseSearchResultsController {
         List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) model.getAttribute("selectedCourse")).getName());
         session.setAttribute("reviewsForCourse", reviewSearchResults);
         return "viewCourse";
+    }
+
+    public void setHasReviewedCourse(long id, HttpSession session) {
+        User user = (User) session.getAttribute("LoggedInUser");
+        if(user != null) {
+            for (Review review : reviewService.findByCourse_ID(id)) {
+                if (Objects.equals(review.getUser().getUserName(), user.getUserName())) {
+                    session.setAttribute("hasReviewedCourse", true);
+                    return;
+                }
+            }
+            session.setAttribute("hasReviewedCourse", false);
+        }
     }
 
 }

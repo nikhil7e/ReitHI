@@ -36,55 +36,90 @@
         <div th:object="${course}">
             <label>Overall Score</label><br/>
             <div class="radioInput">
-                <input type="radio" field="${rating.overallScore}" name="overallScore" value=1>
-                <input type="radio" field="*{rating.overallScore}" name="overallScore" value=2>
-                <input type="radio" field="*{rating.overallScore}" name="overallScore" value=3>
-                <input type="radio" field="*{rating.overallScore}" name="overallScore" value=4>
-                <input type="radio" field="*{rating.overallScore}" name="overallScore" value=5><br/>
+                <!--<input type="radio" class="radioReview" field="${rating.overallScore}" name="overallScore" value=1>
+                <input type="radio" class="radioReview" field="*{rating.overallScore}" name="overallScore" value=2>
+                <input type="radio" class="radioReview" field="*{rating.overallScore}" name="overallScore" value=3>
+                <input type="radio" class="radioReview" field="*{rating.overallScore}" name="overallScore" value=4>
+                <input type="radio" class="radioReview" field="*{rating.overallScore}" name="overallScore" value=5>-->
+                <input type="radio" class="radioReview" id="score1" field="${rating.overallScore}" name="overallScore" value=5>
+                <label for="score1"></label>
+                <input type="radio" class="radioReview" id="score2" field="*{rating.overallScore}" name="overallScore" value=4>
+                <label for="score2"></label>
+                <input type="radio" class="radioReview" id="score3" field="*{rating.overallScore}" name="overallScore" value=3>
+                <label for="score3"></label>
+                <input type="radio" class="radioReview" id="score4" field="*{rating.overallScore}" name="overallScore" value=2>
+                <label for="score4"></label>
+                <input type="radio" class="radioReview" id="score5" field="*{rating.overallScore}" name="overallScore" value=1>
+                <label for="score5"></label>
+                <br/>
             </div>
         </div>
 
         <div th:object="${course}">
             <label>Difficulty</label><br/>
             <div class="radioInput">
-                <input type="radio" field="*{rating.difficulty}" name="difficulty" value=1>
-                <input type="radio" field="*{rating.difficulty}" name="difficulty" value=2>
-                <input type="radio" field="*{rating.difficulty}" name="difficulty" value=3>
-                <input type="radio" field="*{rating.difficulty}" name="difficulty" value=4>
-                <input type="radio" field="*{rating.difficulty}" name="difficulty" value=5><br/>
+                <input type="radio" class="radioReview" id="difficulty1" field="*{rating.difficulty}" name="difficulty" value=5>
+                <label for="difficulty1"></label>
+                <input type="radio" class="radioReview" id="difficulty2" field="*{rating.difficulty}" name="difficulty" value=4>
+                <label for="difficulty2"></label>
+                <input type="radio" class="radioReview" id="difficulty3" field="*{rating.difficulty}" name="difficulty" value=3>
+                <label for="difficulty3"></label>
+                <input type="radio" class="radioReview" id="difficulty4" field="*{rating.difficulty}" name="difficulty" value=2>
+                <label for="difficulty4"></label>
+                <input type="radio" class="radioReview" id="difficulty5" field="*{rating.difficulty}" name="difficulty" value=1>
+                <label for="difficulty5"></label>
+                <br/>
             </div>
         </div>
 
         <div th:object="${course}">
             <label>Workload</label><br/>
             <div class="radioInput">
-                <input type="radio" field="*{rating.workload}" name="workload" value=1>
-                <input type="radio" field="*{rating.workload}" name="workload" value=2>
-                <input type="radio" field="*{rating.workload}" name="workload" value=3>
-                <input type="radio" field="*{rating.workload}" name="workload" value=4>
-                <input type="radio" field="*{rating.workload}" name="workload" value=5><br/>
+                <input type="radio" class="radioReview" id="workload1" field="*{rating.workload}" name="workload" value=5>
+                <label for="workload1"></label>
+                <input type="radio" class="radioReview" id="workload2" field="*{rating.workload}" name="workload" value=4>
+                <label for="workload2"></label>
+                <input type="radio" class="radioReview" id="workload3" field="*{rating.workload}" name="workload" value=3>
+                <label for="workload3"></label>
+                <input type="radio" class="radioReview" id="workload4" field="*{rating.workload}" name="workload" value=2>
+                <label for="workload4"></label>
+                <input type="radio" class="radioReview" id="workload5" field="*{rating.workload}" name="workload" value=1>
+                <label for="workload5"></label>
+                <br/>
             </div>
         </div>
 
         <div th:object="${course}">
             <label>Teaching Quality</label><br/>
             <div class="radioInput">
-                <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=1>
-                <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=2>
-                <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=3>
-                <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=4>
-                <input type="radio" field="*{rating.teachingQuality}" name="teachingQuality" value=5><br/>
+                <input type="radio" class="radioReview" id="TQ1" field="*{rating.teachingQuality}" name="teachingQuality" value=5>
+                <label for="TQ1"></label>
+                <input type="radio" class="radioReview" id="TQ2" field="*{rating.teachingQuality}" name="teachingQuality" value=4>
+                <label for="TQ2"></label>
+                <input type="radio" class="radioReview" id="TQ3" field="*{rating.teachingQuality}" name="teachingQuality" value=3>
+                <label for="TQ3"></label>
+                <input type="radio" class="radioReview" id="TQ4" field="*{rating.teachingQuality}" name="teachingQuality" value=2>
+                <label for="TQ4"></label>
+                <input type="radio" class="radioReview" id="TQ5" field="*{rating.teachingQuality}" name="teachingQuality" value=1>
+                <label for="TQ5"></label>
+                <br/>
             </div>
         </div>
 
         <div th:object="${course}">
             <label>Course Material</label><br/>
             <div class="radioInput">
-                <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=1>
-                <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=2>
-                <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=3>
-                <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=4>
-                <input type="radio" field="*{rating.courseMaterial}" name="courseMaterial" value=5><br/>
+                <input type="radio" class="radioReview" id="CM1" field="*{rating.courseMaterial}" name="courseMaterial" value=5>
+                <label for="CM1"></label>
+                <input type="radio" class="radioReview" id="CM2" field="*{rating.courseMaterial}" name="courseMaterial" value=4>
+                <label for="CM2"></label>
+                <input type="radio" class="radioReview" id="CM3" field="*{rating.courseMaterial}" name="courseMaterial" value=3>
+                <label for="CM3"></label>
+                <input type="radio" class="radioReview" id="CM4" field="*{rating.courseMaterial}" name="courseMaterial" value=2>
+                <label for="CM4"></label>
+                <input type="radio" class="radioReview" id="CM5" field="*{rating.courseMaterial}" name="courseMaterial" value=1>
+                <label for="CM5"></label>
+                <br/>
             </div>
         </div>
 
