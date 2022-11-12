@@ -5,7 +5,6 @@ import is.hi.hbv501g.reithi.Persistence.Entities.Review;
 import is.hi.hbv501g.reithi.Persistence.Entities.User;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This controller handles HTTP requests for the course search results page, such as selecting
+ * a course to be viewed.
+ */
 @Controller
 public class CourseSearchResultsController {
 
@@ -56,6 +58,15 @@ public class CourseSearchResultsController {
         return "searchResults";
     }
 
+    /**
+     * Gets the ViewCourse template and sets model and session attributes
+     * to course details that will be displayed
+     *
+     * @param id      The id of the course to be viewed
+     * @param model   The applications model
+     * @param session The applications session
+     * @return the ViewCourse template
+     */
     @RequestMapping(value = "/viewcourse/{id}", method = RequestMethod.GET)
     public String viewCourseGET(@PathVariable("id") long id, Model model, HttpSession session) {
         // update html to use session instead of model and delete line 43

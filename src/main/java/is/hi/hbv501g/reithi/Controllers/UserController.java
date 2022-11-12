@@ -8,29 +8,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * This controller handles HTTP requests for user functionality, such as logging in, signing up and logging out.
+ */
 @Controller
 public class UserController {
 
-    UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String signupGET(User user) {
-        return "landingPage";
-    }
+
+//    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+//    public String signupGET(User user) {
+//        return "landingPage";
+//    }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String signupPOST(@ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session) {
+    public String signupPOST(@ModelAttribute("user") User user, BindingResult result, Model model,
+                             HttpSession session) {
         if (result.hasErrors()) {
             return "redirect:/signup";
         }
@@ -44,10 +48,10 @@ public class UserController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginGET(User user) {
-        return "landingPage";
-    }
+//    @RequestMapping(value = "/login", method = RequestMethod.GET)
+//    public String loginGET(User user) {
+//        return "landingPage";
+//    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPOST(@ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session) {
