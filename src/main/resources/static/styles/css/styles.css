@@ -105,7 +105,6 @@ body{
 form{
     font-family: var(--font-family-base);
     text-align: center;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -116,6 +115,7 @@ form > div{
     display: flex;
     flex-direction: column;
     justify-content: center;
+
 }
 header input{
     position: relative;
@@ -139,29 +139,39 @@ form >div >label{
 .searchbar {
     position: relative;
     display: flex;
-    min-width: 300px;
+    max-width: 500px;
+    align-self: center;
     align-items: center;
+
     padding-top: 6rem;
     filter: drop-shadow(0px 2px 4px #c7c7c7);
+
 }
 
 .search-icon {
     position: absolute;
-    left: 28%;
+    top: 112px;
+    left: 23px;
     width: 18px;
     z-index: 1;
-    filter: invert(100%);
+    filter: invert(100%)
+
+
 }
 
 .input-size{
     font-family: var(--font-family-base);
-    width: 50%;
+
+    width: 100%;
     border: 0;
     border-radius: 50px;
     background-color: #3c26cc;
     color: white;
     padding-left: 4rem;
+    padding-right: 12rem;
+
 }
+
 
 .input-size:hover, .input-size:focus {
     background-color: #2200ffa8;
