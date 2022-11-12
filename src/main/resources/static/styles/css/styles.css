@@ -306,14 +306,18 @@ form button{
 }
 
 .deleteReview{
+    position: absolute;
+    right: 30px;
+    width: 30px;
+    height: 30px;
     border: solid 2px black;
     border-radius: 50%;
-    font-size: x-large;
+    font-size: large;
 }
 
 .deleteReview:hover{
-    font-size: large;
-    background-color: lightgrey;
+    background-color: black;
+    color: white;
 }
 
 .comment{
