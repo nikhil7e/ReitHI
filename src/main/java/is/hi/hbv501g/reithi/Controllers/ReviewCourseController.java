@@ -33,17 +33,24 @@ public class ReviewCourseController {
             return "reviewCourse";
         }
 
-        reviewService.save(new Review((User) session.getAttribute("LoggedInUser"), rating, comment, (Course) session.getAttribute("selectedCourse")));
+        User user = (User) session.getAttribute("LoggedInUser");
+        Course selectedCourse = (Course) session.getAttribute("selectedCourse");
+        reviewService.save(new Review(user, rating, comment, selectedCourse));
+        session.setAttribute("hasReviewedCourse", true);
 
         long id = ((Course) session.getAttribute("selectedCourse")).getID();
-        session.setAttribute("avgOAS",reviewService.getAverageOverallScore(id));
-        session.setAttribute("avgD",reviewService.getAverageDifficulty(id));
-        session.setAttribute("avgW",reviewService.getAverageWorkload(id));
-        session.setAttribute("avgTQ",reviewService.getAverageTeachingQuality(id));
-        session.setAttribute("avgCM",reviewService.getAverageCourseMaterial(id));
-        List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
+        setScores(session, id, reviewService);
+        List<Review> reviewSearchResults = reviewService.findByCourse_Name((selectedCourse.getName()));
         session.setAttribute("reviewsForCourse", reviewSearchResults);
         return "viewCourse";
+    }
+
+    public static void setScores(HttpSession session, long id, ReviewService reviewService) {
+        session.setAttribute("avgOAS", reviewService.getAverageOverallScore(id));
+        session.setAttribute("avgD", reviewService.getAverageDifficulty(id));
+        session.setAttribute("avgW", reviewService.getAverageWorkload(id));
+        session.setAttribute("avgTQ", reviewService.getAverageTeachingQuality(id));
+        session.setAttribute("avgCM", reviewService.getAverageCourseMaterial(id));
     }
 
 }

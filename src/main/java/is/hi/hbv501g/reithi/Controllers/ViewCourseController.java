@@ -68,11 +68,7 @@ public class ViewCourseController {
     }
 
     public void refreshViewCourse(HttpSession session, long id){
-        session.setAttribute("avgOAS",reviewService.getAverageOverallScore(id));
-        session.setAttribute("avgD",reviewService.getAverageDifficulty(id));
-        session.setAttribute("avgW",reviewService.getAverageWorkload(id));
-        session.setAttribute("avgTQ",reviewService.getAverageTeachingQuality(id));
-        session.setAttribute("avgCM",reviewService.getAverageCourseMaterial(id));
+        ReviewCourseController.setScores(session, id, reviewService);
         List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
         session.setAttribute("reviewsForCourse", reviewSearchResults);
     }
@@ -86,6 +82,7 @@ public class ViewCourseController {
         user.setReviews(allReviews);
 
         reviewService.delete(review);
+        session.setAttribute("hasReviewedCourse", false);
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
         return "viewCourse";
     }
