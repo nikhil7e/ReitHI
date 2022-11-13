@@ -1,3 +1,11 @@
+import {hide} from "./filter";
+import {updateTextInput} from "./filter";
+
+window.hide = hide;
+window.updateTextInput = updateTextInput;
+
+
+
 function checkIfUserHasLeftComment(username) {
    debugger
    const reviews = document.querySelector('.review');
@@ -11,3 +19,4 @@ function checkIfUserHasLeftComment(username) {
       }
    }
 }
+
