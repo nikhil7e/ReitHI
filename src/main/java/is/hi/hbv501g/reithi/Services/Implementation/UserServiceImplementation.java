@@ -3,8 +3,6 @@ package is.hi.hbv501g.reithi.Services.Implementation;
 import is.hi.hbv501g.reithi.Persistence.Entities.User;
 import is.hi.hbv501g.reithi.Persistence.Repositories.UserRepository;
 import is.hi.hbv501g.reithi.Services.UserService;
-import org.springframework.stereotype.Service;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +13,11 @@ public class UserServiceImplementation implements UserService {
 
     private UserRepository userRepository;
 
+
     @Autowired
-    public UserServiceImplementation(UserRepository userRepository){
+    public UserServiceImplementation(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
 
     @Override
     public User save(User user) {
@@ -41,11 +39,17 @@ public class UserServiceImplementation implements UserService {
         return userRepository.findByUserName(userName);
     }
 
+    /**
+     * Returns the given user if it exists in the database
+     *
+     * @param user The user to log-in
+     * @return The user if it exists, else null
+     */
     @Override
     public User login(User user) {
         User doesExist = findByUserName(user.getUserName());
-        if(doesExist != null){
-            if(doesExist.getPassword().equals(user.getPassword())){
+        if (doesExist != null) {
+            if (doesExist.getPassword().equals(user.getPassword())) {
                 return doesExist;
             }
         }

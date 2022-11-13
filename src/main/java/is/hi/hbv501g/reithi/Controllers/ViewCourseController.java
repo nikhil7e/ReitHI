@@ -44,11 +44,11 @@ public class ViewCourseController {
     }
 
     /**
+     * Upvotes a review
      *
-     *
-     * @param id
-     * @param session
-     * @return
+     * @param id      The id of the review to be upvoted
+     * @param session The applications session
+     * @return The view course page template
      */
     @RequestMapping(value = "/upvote/{id}", method = RequestMethod.GET)
     public String upvotePOST(@PathVariable("id") long id, HttpSession session) {
@@ -79,6 +79,13 @@ public class ViewCourseController {
         return "viewCourse";
     }
 
+    /**
+     * Downvotes a review
+     *
+     * @param id      The id of the review to be downvoted
+     * @param session The applications session
+     * @return The view course page template
+     */
     @RequestMapping(value = "/downvote/{id}", method = RequestMethod.GET)
     public String downvotePOST(@PathVariable("id") long id, HttpSession session) {
         Review review = reviewService.findByID(id);
@@ -108,12 +115,25 @@ public class ViewCourseController {
         return "viewCourse";
     }
 
+    /**
+     * Refreshes model and session attributes to be displayed for the course
+     *
+     * @param session The applications session
+     * @param id      The courses id
+     */
     public void refreshViewCourse(HttpSession session, long id) {
         ReviewCourseController.setScores(session, id, reviewService);
         List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
         session.setAttribute("reviewsForCourse", reviewSearchResults);
     }
 
+    /**
+     * Deletes a review
+     *
+     * @param id      The id of the review to be deleted
+     * @param session The applications session
+     * @return The view course page template
+     */
     @RequestMapping(value = "/deletereview/{id}", method = RequestMethod.GET)
     public String deleteReviewGET(@PathVariable("id") long id, HttpSession session) {
         Review review = reviewService.findByID(id);

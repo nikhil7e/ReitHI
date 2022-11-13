@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+
 @Service
 public class ReviewServiceImplementation implements ReviewService {
 
@@ -23,8 +24,6 @@ public class ReviewServiceImplementation implements ReviewService {
     private HashMap<Long, Double> latestTeachingQuality = new HashMap();
 
     private HashMap<Long, Double> latestCourseMaterial = new HashMap();
-
-
 
 
     private ReviewRepository reviewRepository;
@@ -42,11 +41,10 @@ public class ReviewServiceImplementation implements ReviewService {
     public Double getAverageOverallScore(long ID) {
         if (latestOverall.containsKey(ID) && !(changes.get(ID).booleanValue())) {
             return latestOverall.get(ID).doubleValue();
-        }
-        else {
+        } else {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
-            for(int i = 0;i < list.size(); i++ ) {
+            for (int i = 0; i < list.size(); i++) {
                 sum += list.get(i).getRating().getDifficulty();
             }
             if (list.size() == 0) {
@@ -66,11 +64,10 @@ public class ReviewServiceImplementation implements ReviewService {
     public Double getAverageDifficulty(long ID) {
         if (latestDifficulty.containsKey(ID) && !(changes.get(ID).booleanValue())) {
             return latestDifficulty.get(ID).doubleValue();
-        }
-        else {
+        } else {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
-            for(int i = 0;i < list.size(); i++ ) {
+            for (int i = 0; i < list.size(); i++) {
                 sum += list.get(i).getRating().getDifficulty();
             }
             if (list.size() == 0) {
@@ -90,11 +87,10 @@ public class ReviewServiceImplementation implements ReviewService {
     public Double getAverageWorkload(long ID) {
         if (latestWorkload.containsKey(ID) && !(changes.get(ID).booleanValue())) {
             return latestWorkload.get(ID).doubleValue();
-        }
-        else {
+        } else {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
-            for(int i = 0;i < list.size(); i++ ) {
+            for (int i = 0; i < list.size(); i++) {
                 sum += list.get(i).getRating().getWorkload();
             }
             if (list.size() == 0) {
@@ -114,11 +110,10 @@ public class ReviewServiceImplementation implements ReviewService {
     public Double getAverageTeachingQuality(long ID) {
         if (latestTeachingQuality.containsKey(ID) && !(changes.get(ID).booleanValue())) {
             return latestTeachingQuality.get(ID).doubleValue();
-        }
-        else {
+        } else {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
-            for(int i = 0;i < list.size(); i++ ) {
+            for (int i = 0; i < list.size(); i++) {
                 sum += list.get(i).getRating().getTeachingQuality();
             }
             if (list.size() == 0) {
@@ -138,11 +133,10 @@ public class ReviewServiceImplementation implements ReviewService {
     public Double getAverageCourseMaterial(long ID) {
         if (latestCourseMaterial.containsKey(ID) && !(changes.get(ID).booleanValue())) {
             return latestCourseMaterial.get(ID).doubleValue();
-        }
-        else {
+        } else {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
-            for(int i = 0;i < list.size(); i++ ) {
+            for (int i = 0; i < list.size(); i++) {
                 sum += list.get(i).getRating().getTeachingQuality();
             }
             if (list.size() == 0) {
@@ -180,7 +174,9 @@ public class ReviewServiceImplementation implements ReviewService {
     }
 
     @Override
-    public List<Review> findByCourse_ID(long ID) { return reviewRepository.findByCourse_ID(ID); }
+    public List<Review> findByCourse_ID(long ID) {
+        return reviewRepository.findByCourse_ID(ID);
+    }
 
     @Override
     public Review findByID(long ID) {

@@ -94,6 +94,12 @@ public class CourseSearchResultsController {
         return "viewCourse";
     }
 
+    /**
+     * Checks if the logged-in user has reviewed a given course and updates the session
+     *
+     * @param id      The id of the course to check reviews for
+     * @param session The applications session
+     */
     public void setHasReviewedCourse(long id, HttpSession session) {
         User user = (User) session.getAttribute("LoggedInUser");
         if (user != null) {
