@@ -13,8 +13,8 @@
         <img class="headerLogo" th:src="@{/images/reit_hi_logo_secondary.svg}"/>
     </a>
     <form th:if="${session.LoggedInUser == null}" action="#" th:action="@{/login}" modelAttribute="user" method="post">
-        <input type="text" name="userName" id="userNameL" field="*{user.userName}"/>
-        <input type="password" name="password" id="passwordL" placeholder="pass"/>
+        <input type="text" name="userName" id="userNameL" field="*{user.userName}" required/>
+        <input type="password" name="password" id="passwordL" placeholder="pass" required/>
         <input type="submit" value="Log in"/>
         <input type="submit" value="Sign up" th:formaction="@{/signup}"/>
     </form>
@@ -43,85 +43,186 @@
             </div>
         </form>
     </div>
-    <div class="filters">
-        <div class="typeFilter">
-            <label for="bothTypes">Both types</label>
-            <input type="radio" name="type" id="bothTypes" onclick="hide()">
-            <label for="graduate">Graduate</label>
-            <input type="radio" name="type" id="graduate" onclick="hide()">
-            <label for="underGraduate">Undergraduate</label>
-            <input type="radio" name="type" id="underGraduate" onclick="hide()">
-        </div>
-        <div class="creditsFilter filter">
-            <p>Credits</p>
-            <div class = mix>
-                <label>Max: <span id="creditsMaxSpan"></span></label>
-                <input type="range" id="creditsMax" min="0" max="30" step="1" value="30" oninput="updateTextInput()" onmouseup="hide()" name="Credits-max">
-            </div>
-            <div class = mix>
-                <label>Min: <span id="creditsMinSpan"></span></label>
-                <input type="range" id="creditsMin" min="0" max="30" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Credits-min">
-            </div>
-        </div>
-        <div class="overallFilter filter">
-            <p>Overall score</p>
-            <div class = mix>
-                <label>Max: <span id="overallMaxSpan"></span></label>
-                <input type="range" id="overallMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Overall-max">
-            </div>
-            <div class = mix>
-                <label>Min: <span id="overallMinSpan"></span></label>
-                <input type="range" id="overallMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Overall-min">
-            </div>
-        </div>
-        <div class="difficultyFilter filter">
-            <p>Difficulty</p>
-            <div class="mix">
-                <label>Max: <span id="difficultyMaxSpan"></span></label>
-                <input type="range" id="difficultyMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-max">
-            </div>
-            <div class="mix">
-                <label>Min: <span id="difficultyMinSpan"></span></label>
-                <input type="range" id="difficultyMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-min">
-            </div>
-        </div>
-        <div class="workloadFilter filter">
-            <p>Workload</p>
-            <div class="mix">
-                <label>Max: <span id="workloadMaxSpan"></span></label>
-                <input type="range" id="workloadMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Workload-max">
-            </div>
-            <div class="mix">
-                <label>Min: <span id="workloadMinSpan"></span></label>
-                <input type="range" id="workloadMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Workload-min">
-            </div>
-        </div>
-        <div class="teachingQualityFilter filter">
-            <p>Teaching Quality</p>
-            <div class="mix">
-                <label>Max: <span id="teachingQualityMaxSpan"></span></label>
-                <input type="range" id="teachingQualityMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Teaching Quality-max">
-            </div>
-            <div class="mix">
-                <label>Min: <span id="teachingQualityMinSpan"></span></label>
-                <input type="range" id="teachingQualityMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Teaching Quality-min">
-            </div>
-        </div>
-        <div class="courseMaterialFilter filter">
-            <p>Course Material</p>
-            <div class="mix">
-                <label>Max: <span id="courseMaterialMaxSpan"></span></label>
-                <input type="range" id="courseMaterialMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Course Material-max">
-            </div>
-            <div class="mix">
-                <label>Min: <span id="courseMaterialMinSpan"></span></label>
-                <input type="range" id="courseMaterialMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Course Material-min">
-            </div>
-        </div>
-    </div>
-    <h2 th:if="${courseSearchResults == null or courseSearchResults.empty}">No Courses found!</h2>
-    <div class="allSearchResults" th:unless="${courseSearchResults == null or courseSearchResults.empty}">
 
+    <h2 th:if="${courseSearchResults == null or courseSearchResults.empty}">No Courses found!</h2>
+    <div class="resultsAndFilter">
+        <div class="filters">
+            <div class="typeFilter">
+                <div>
+                    <label for="bothTypes">Both types</label>
+                    <input type="radio" name="type" id="bothTypes" onclick="hide()">
+                </div>
+                <div>
+                    <label for="graduate">Graduate</label>
+                    <input type="radio" name="type" id="graduate" onclick="hide()">
+                </div>
+                <div>
+                    <label for="underGraduate">Undergraduate</label>
+                    <input type="radio" name="type" id="underGraduate" onclick="hide()">
+                </div>
+            </div>
+            <div class="creditsFilter filter">
+                <p>Credits</p>
+                <div class="range_container">
+                    <div class="form_control_container">
+                        <div class="form_control_container__time">Min</div>
+                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="30" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Credits-min"/>
+                    </div>
+                    <div class="sliders_control">
+                        <input class="creditsSlideMin slideMin" type="range" min="0" max="30" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Credits-min"/>
+                        <input class="creditsSlideMax slideMax" type="range" min="0" max="30" step="1" value="30" oninput="updateTextInput()" onmouseup="hide()" name="Credits-max"/>
+                    </div>
+                    <div class="form_control_container">
+                        <div class="form_control_container__time">Max</div>
+                        <input class="form_control_container__time__input toInput" type="number" min="0" max="30" step="1" value="30" oninput="updateTextInput()" onmouseup="hide()" name="Credits-max"/>
+                    </div>
+                </div>
+
+
+                <!--<div class = mix>
+                    <label>Min: <span id="creditsMinSpan"></span></label>
+                    <input type="range" id="creditsMin" min="0" max="30" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Credits-min">
+                </div>
+                <div class = mix>
+                    <label>Max: <span id="creditsMaxSpan"></span></label>
+                    <input type="range" id="creditsMax" min="0" max="30" step="1" value="30" oninput="updateTextInput()" onmouseup="hide()" name="Credits-max">
+                </div>-->
+
+            </div>
+            <div class="overallFilter filter">
+                <p>Overall score</p>
+                <div class="range_container">
+                    <div class="form_control_container">
+                        <div class="form_control_container__time">Min</div>
+                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Overall-min"/>
+                    </div>
+                    <div class="sliders_control">
+                        <input class="overallSlideMin slideMin" type="range" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Overall-min"/>
+                        <input class="overallSlideMax slideMax" type="range" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Overall-max"/>
+                    </div>
+                    <div class="form_control_container">
+                        <div class="form_control_container__time">Max</div>
+                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Overall-max"/>
+                    </div>
+                </div>
+
+                <!--<div class = mix>
+                    <label>Min: <span id="overallMinSpan"></span></label>
+                    <input type="range" id="overallMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Overall-min">
+                </div>
+                <div class = mix>
+                    <label>Max: <span id="overallMaxSpan"></span></label>
+                    <input type="range" id="overallMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Overall-max">
+                </div>-->
+
+            </div>
+            <div class="difficultyFilter filter">
+                <p>Difficulty</p>
+
+                <div class="range_container">
+                    <div class="form_control_container">
+                        <div class="form_control_container__time">Min</div>
+                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-min"/>
+                    </div>
+                    <div class="sliders_control">
+                        <input class="difficultySlideMin slideMin" type="range" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-min"/>
+                        <input class="difficultySlideMax slideMax" type="range" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-max"/>
+                    </div>
+                    <div class="form_control_container">
+                        <div class="form_control_container__time">Max</div>
+                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-max"/>
+                    </div>
+                </div>
+                <!--<div class="mix">
+                    <label>Min: <span id="difficultyMinSpan"></span></label>
+                    <input type="range" id="difficultyMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-min">
+                </div>
+                <div class="mix">
+                    <label>Max: <span id="difficultyMaxSpan"></span></label>
+                    <input type="range" id="difficultyMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-max">
+                </div>
+                -->
+            </div>
+            <div class="workloadFilter filter">
+                <p>Workload</p>
+                <div class="range_container">
+                    <div class="form_control_container">
+                        <div class="form_control_container__time">Min</div>
+                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Workload-min"/>
+                    </div>
+                    <div class="sliders_control">
+                        <input class="workloadSlideMin slideMin" type="range" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Workload-min"/>
+                        <input class="workloadSlideMax slideMax" type="range" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Workload-max"/>
+                    </div>
+                    <div class="form_control_container">
+                        <div class="form_control_container__time">Max</div>
+                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Workload-max"/>
+                    </div>
+                </div>
+
+                <!--<div class="mix">
+                    <label>Min: <span id="workloadMinSpan"></span></label>
+                    <input type="range" id="workloadMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Workload-min">
+                </div>
+                <div class="mix">
+                    <label>Max: <span id="workloadMaxSpan"></span></label>
+                    <input type="range" id="workloadMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Workload-max">
+                </div>-->
+
+            </div>
+            <div class="teachingQualityFilter filter">
+                <p>Teaching Quality</p>
+                <div class="range_container">
+                    <div class="form_control_container">
+                        <div class="form_control_container__time">Min</div>
+                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="TeachingQuality-min"/>
+                    </div>
+                    <div class="sliders_control">
+                        <input class="teachingQualitySlideMin slideMin" type="range" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Overall-min"/>
+                        <input class="teachingQualitySlideMax slideMax" type="range" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Overall-max"/>
+                    </div>
+                    <div class="form_control_container">
+                        <div class="form_control_container__time">Max</div>
+                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="TeachingQuality-max"/>
+                    </div>
+                </div>
+                <!--<div class="mix">
+                    <label>Min: <span id="teachingQualityMinSpan"></span></label>
+                    <input type="range" id="teachingQualityMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Teaching Quality-min">
+                </div>
+                <div class="mix">
+                    <label>Max: <span id="teachingQualityMaxSpan"></span></label>
+                    <input type="range" id="teachingQualityMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Teaching Quality-max">
+                </div>-->
+
+            </div>
+            <div class="courseMaterialFilter filter">
+                <p>Course Material</p>
+                <div class="range_container">
+                    <div class="form_control_container">
+                        <div class="form_control_container__time">Min</div>
+                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="CourseMaterial-min"/>
+                    </div>
+                    <div class="sliders_control">
+                        <input class="courseMaterialSlideMin slideMin" type="range" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="CourseMaterial-min"/>
+                        <input class="courseMaterialSlideMax slideMax" type="range" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="CourseMaterial-max"/>
+                    </div>
+                    <div class="form_control_container">
+                        <div class="form_control_container__time">Max</div>
+                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="CourseMaterial-max"/>
+                    </div>
+                </div>
+                <!--<div class="mix">
+                    <label>Min: <span id="courseMaterialMinSpan"></span></label>
+                    <input type="range" id="courseMaterialMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Course Material-min">
+                </div>
+                <div class="mix">
+                    <label>Max: <span id="courseMaterialMaxSpan"></span></label>
+                    <input type="range" id="courseMaterialMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Course Material-max">
+                </div>-->
+
+            </div>
+        </div>
         <!--
         <h2>Courses</h2>
 
@@ -154,7 +255,7 @@
         </table>
 
         -->
-
+    <div class="allSearchResults" th:unless="${courseSearchResults == null or courseSearchResults.empty}">
             <div class="searchResult" th:each="course : ${courseSearchResults}">
                 <a th:href="@{/viewcourse/{id}(id=${course.ID})}">
                     <p class="courseId" th:text="${course.number}"></p>
@@ -184,6 +285,7 @@
         <!--<p><a th:href="@{/delete/{id}(id=${course.ID})}">Delete</a></p>-->
 
 
+    </div>
     </div>
     <!--
     <p><a href="/addcourse">Add a new course</a></p>
