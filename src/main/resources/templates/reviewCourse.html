@@ -11,8 +11,8 @@
         <img class="headerLogo" th:src="@{/images/reit_hi_logo_secondary.svg}"/>
     </a>
     <form th:if="${session.LoggedInUser == null}" action="#" th:action="@{/login}" modelAttribute="user" method="post">
-        <input type="text" name="userName" id="userNameL" field="*{user.userName}"/>
-        <input type="password" name="password" id="passwordL" placeholder="pass"/>
+        <input type="text" name="userName" id="userNameL" field="*{user.userName}" required/>
+        <input type="password" name="password" id="passwordL" placeholder="pass" required/>
         <input type="submit" value="Log in"/>
         <input type="submit" value="Sign up" th:formaction="@{/signup}"/>
     </form>
@@ -41,7 +41,7 @@
                 <input type="radio" class="radioReview" field="*{rating.overallScore}" name="overallScore" value=3>
                 <input type="radio" class="radioReview" field="*{rating.overallScore}" name="overallScore" value=4>
                 <input type="radio" class="radioReview" field="*{rating.overallScore}" name="overallScore" value=5>-->
-                <input type="radio" class="radioReview" id="score1" field="${rating.overallScore}" name="overallScore" value=5>
+                <input type="radio" class="radioReview" id="score1" field="${rating.overallScore}" name="overallScore" value=5 required>
                 <label for="score1"></label>
                 <input type="radio" class="radioReview" id="score2" field="*{rating.overallScore}" name="overallScore" value=4>
                 <label for="score2"></label>
@@ -58,7 +58,7 @@
         <div th:object="${course}">
             <label>Difficulty</label><br/>
             <div class="radioInput">
-                <input type="radio" class="radioReview" id="difficulty1" field="*{rating.difficulty}" name="difficulty" value=5>
+                <input type="radio" class="radioReview" id="difficulty1" field="*{rating.difficulty}" name="difficulty" value=5 required>
                 <label for="difficulty1"></label>
                 <input type="radio" class="radioReview" id="difficulty2" field="*{rating.difficulty}" name="difficulty" value=4>
                 <label for="difficulty2"></label>
@@ -75,7 +75,7 @@
         <div th:object="${course}">
             <label>Workload</label><br/>
             <div class="radioInput">
-                <input type="radio" class="radioReview" id="workload1" field="*{rating.workload}" name="workload" value=5>
+                <input type="radio" class="radioReview" id="workload1" field="*{rating.workload}" name="workload" value=5 required>
                 <label for="workload1"></label>
                 <input type="radio" class="radioReview" id="workload2" field="*{rating.workload}" name="workload" value=4>
                 <label for="workload2"></label>
@@ -92,7 +92,7 @@
         <div th:object="${course}">
             <label>Teaching Quality</label><br/>
             <div class="radioInput">
-                <input type="radio" class="radioReview" id="TQ1" field="*{rating.teachingQuality}" name="teachingQuality" value=5>
+                <input type="radio" class="radioReview" id="TQ1" field="*{rating.teachingQuality}" name="teachingQuality" value=5 required>
                 <label for="TQ1"></label>
                 <input type="radio" class="radioReview" id="TQ2" field="*{rating.teachingQuality}" name="teachingQuality" value=4>
                 <label for="TQ2"></label>
@@ -109,7 +109,7 @@
         <div th:object="${course}">
             <label>Course Material</label><br/>
             <div class="radioInput">
-                <input type="radio" class="radioReview" id="CM1" field="*{rating.courseMaterial}" name="courseMaterial" value=5>
+                <input type="radio" class="radioReview" id="CM1" field="*{rating.courseMaterial}" name="courseMaterial" value=5 required>
                 <label for="CM1"></label>
                 <input type="radio" class="radioReview" id="CM2" field="*{rating.courseMaterial}" name="courseMaterial" value=4>
                 <label for="CM2"></label>
@@ -128,7 +128,8 @@
             <textarea rows="5" cols="25" field="${comment.text}" name="text"></textarea>
         </div>
         <div>
-            <button type="submit">Register</button>
+            <button class=reviewButton type="submit" th:if="${ session.LoggedInUser != null && !session.hasReviewedCourse}">Submit Review</button>
+            <a class=reviewButton id="loggedOut" data-hover="Must be logged in to perform this action" th:unless="${ session.LoggedInUser != null}">Submit Review</a>
         </div>
     </form>
 

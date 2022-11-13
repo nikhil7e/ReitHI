@@ -51,14 +51,13 @@ public class ViewCourseController {
         }
 
         if (!removed){
-            review.addUpvote(currentUser);
-
             for (int i = 0; i<review.getDownvoters().size(); i++){
                 if(review.getDownvoters().get(i).getUserName().equals(currentUser.getUserName())){
                     review.removeDownvote(review.getDownvoters().get(i));
                     break;
                 }
             }
+            review.addUpvote(currentUser);
         }
         reviewService.save(review);
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
@@ -80,13 +79,13 @@ public class ViewCourseController {
         }
 
         if (!removed){
-            review.addDownvote(currentUser);
             for (int i = 0; i<review.getUpvoters().size(); i++){
                 if(review.getUpvoters().get(i).getUserName().equals(currentUser.getUserName())){
                     review.removeUpvote(review.getUpvoters().get(i));
                     break;
                 }
             }
+            review.addDownvote(currentUser);
         }
 
         reviewService.save(review);
@@ -107,7 +106,13 @@ public class ViewCourseController {
         List<Review> allReviews = user.getReviews();
         allReviews.remove(review);
         user.setReviews(allReviews);
-
+        for (int i = 0; i<review.getUpvoters().size(); i++){
+            review.removeUpvote(review.getUpvoters().get(i));
+        }
+        for (int i = 0; i<review.getDownvoters().size(); i++){
+            review.removeDownvote(review.getDownvoters().get(i));
+        }
+        reviewService.save(review);
         reviewService.delete(review);
         session.setAttribute("hasReviewedCourse", false);
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
