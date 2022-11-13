@@ -32,6 +32,15 @@ public class UserController {
 //        return "landingPage";
 //    }
 
+    /**
+     * Saves a new user in the database
+     *
+     * @param user    The user to be saved in the database
+     * @param result  The requests binding result
+     * @param model   The applications model
+     * @param session The applications session
+     * @return The landing page template
+     */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signupPOST(@ModelAttribute("user") User user, BindingResult result, Model model,
                              HttpSession session) {
@@ -53,30 +62,54 @@ public class UserController {
 //        return "landingPage";
 //    }
 
+    /**
+     * Logs a user in if the user account exists
+     *
+     * @param user    The user to be logged in
+     * @param result  The requests binding result
+     * @param model   The applications model
+     * @param session The applications session
+     * @return If the user account exists, send a GET request to /loggedin, else return the landing page template
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPOST(@ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             return "landingPage";
         }
+
         User exists = userService.login(user);
         if (exists != null) {
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
-            return "redirect:/loggedin";
         }
-        // TODO: case when user does not exist
+
+        // TODO: Notify user if account does not exist
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
-    public String loggedinGET(HttpSession session, Model model) {
-        User sessionUser = (User) session.getAttribute("LoggedInUser");
-        if (sessionUser != null) {
-            model.addAttribute("LoggedInUser", sessionUser);
-        }
-        return "redirect:/";
-    }
+//    /**
+//     *
+//     *
+//     * @param session
+//     * @param model
+//     * @return
+//     */
+//    @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
+//    public String loggedinGET(HttpSession session, Model model) {
+//        User sessionUser = (User) session.getAttribute("LoggedInUser");
+//        if (sessionUser != null) {
+//            model.addAttribute("LoggedInUser", sessionUser);
+//        }
+//        return "redirect:/";
+//    }
 
+    /**
+     * Logs a user out
+     *
+     * @param session The applications session
+     * @param model   The applications model
+     * @return The landing page template
+     */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logoutGET(HttpSession session, Model model) {
         session.setAttribute("LoggedInUser", null);
