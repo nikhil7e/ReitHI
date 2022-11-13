@@ -47,7 +47,7 @@ public class ReviewServiceImplementation implements ReviewService {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
             for(int i = 0;i < list.size(); i++ ) {
-                sum += list.get(i).getRating().getDifficulty();
+                sum += list.get(i).getRating().getOverallScore();
             }
             if (list.size() == 0) {
                 double overall = 0.0;
@@ -57,7 +57,7 @@ public class ReviewServiceImplementation implements ReviewService {
             }
             double overall = sum / list.size();
             changes.put(ID, false);
-            latestDifficulty.put(ID, overall);
+            latestOverall.put(ID, overall);
             return overall;
         }
     }
@@ -100,12 +100,12 @@ public class ReviewServiceImplementation implements ReviewService {
             if (list.size() == 0) {
                 double workload = 0.0;
                 changes.put(ID, false);
-                latestTeachingQuality.put(ID, workload);
+                latestWorkload.put(ID, workload);
                 return workload;
             }
             double workload = sum / list.size();
             changes.put(ID, false);
-            latestTeachingQuality.put(ID, workload);
+            latestWorkload.put(ID, workload);
             return workload;
         }
     }
@@ -143,7 +143,7 @@ public class ReviewServiceImplementation implements ReviewService {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
             for(int i = 0;i < list.size(); i++ ) {
-                sum += list.get(i).getRating().getTeachingQuality();
+                sum += list.get(i).getRating().getCourseMaterial();
             }
             if (list.size() == 0) {
                 double courseMaterial = 0.0;
@@ -171,6 +171,7 @@ public class ReviewServiceImplementation implements ReviewService {
 
     @Override
     public void delete(Review review) {
+        changes.put(review.getID(), true);
         reviewRepository.delete(review);
     }
 
