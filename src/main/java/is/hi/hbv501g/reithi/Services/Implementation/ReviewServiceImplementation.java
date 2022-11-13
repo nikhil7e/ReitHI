@@ -180,6 +180,9 @@ public class ReviewServiceImplementation implements ReviewService {
     }
 
     @Override
+    public List<Review> findByCourse_ID(long ID) { return reviewRepository.findByCourse_ID(ID); }
+
+    @Override
     public Review findByID(long ID) {
         return reviewRepository.findByID(ID);
     }

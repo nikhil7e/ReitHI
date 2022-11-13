@@ -28,14 +28,36 @@
 </header>
 
 <body>
-<main>
+<main class="viewCourseMain">
     <div class='information'>
-        <h1 th:text="${session.selectedCourse.name}"></h1>
-        <p th:text="${session.selectedCourse.credits}"></p>
-        <p th:text="${session.selectedCourse.semester}"></p>
-        <p th:text="${session.selectedCourse.course_URL}"></p>
+        <h1 >
+            <a th:href= "${session.selectedCourse.course_URL}" th:text="${session.selectedCourse.name}"></a>
+        </h1>
+        <div>
+        <p th:text="${session.selectedCourse.credits +' credits'}"></p>
+        <p th:text="${session.selectedCourse.semester + ' ' + session.selectedCourse.level + ' ' +  session.selectedCourse.type}"></p>
+        </div>
+        <div>
+            <p th:text="${session.selectedCourse.school}"></p>
+            <p th:text="${session.selectedCourse.faculty}"></p>
+        </div>
+        <div>
+            <p>
+            <a th:href="${session.selectedCourse.professor_URL}" th:text="${session.selectedCourse.professor_Name}"></a>
+            </p>
+            <p th:text="${session.selectedCourse.professor_Email}"></p>
+        </div>
+        <div>
+            <p th:text="${session.selectedCourse.assessment}"></p>
+        </div>
+        <div>
+            <p th:text="${session.selectedCourse.finalExam}"></p>
+        </div>
+
+
+        <!--<p th:text="${session.selectedCourse.semester}"></p>
         <p th:text="${session.selectedCourse.type}"></p>
-        <p th:text="${session.selectedCourse.semester}"></p>
+        <p th:text="${session.selectedCourse.course_URL}"></p>
         <p th:text="${session.selectedCourse.level}"></p>
         <p th:text="${session.selectedCourse.professor_Name}"></p>
         <p th:text="${session.selectedCourse.professor}"></p>
@@ -44,8 +66,10 @@
         <p th:text="${session.selectedCourse.school}"></p>
         <p th:text="${session.selectedCourse.faculty}"></p>
         <p th:text="${session.selectedCourse.professor_Email}"></p>
-        <p th:text="${session.selectedCourse.professor_URL}"></p>
-        <a th:if="${ session.LoggedInUser != null}" th:href="@{/reviewcourse}">Review course</a>
+        <p th:text="${session.selectedCourse.professor_URL}"></p>-->
+        <a class=reviewButton th:if="${ session.LoggedInUser != null && !session.hasReviewedCourse}" th:href="@{/reviewcourse}">Review This Course</a>
+        <a class=reviewButton id="loggedOut" data-hover="Must be logged in to perform this action" th:unless="${ session.LoggedInUser != null}">Review This Course</a>
+        <a class=reviewButton id="loggedOut" data-hover="You have already reviewed this course" th:if="${session.LoggedInUser != null && session.hasReviewedCourse}">Review This Course</a>
     </div>
     <div class='statistics'>
         <div>
@@ -74,13 +98,21 @@
         <p th:if="${session.reviewsForCourse == null or session.reviewsForCourse.empty}">No Comments found!</p>
         <tr th:each="review : ${session.reviewsForCourse}">
             <div class="review">
-                <form action="#" th:action="@{/deletereview/{id}(id=${review.ID})}" method="get"
-                      th:if="${session.LoggedInUser != null}">
-                    <input type="submit" value="X" class="deleteReview"
-                           th:if="${review.user.userName == session.LoggedInUser.userName}">
-                </form>
-                <div class="username">
-                    <td th:if="${review.user != null}" , th:text="${review.user.userName}"></td>
+                <div class="reviewHeader">
+                    <div class="invisible">
+                        <p>I am invisible</p>
+                    </div>
+                    <div class="username">
+                        <td th:if="${review.user != null}" , th:text="${review.user.userName}"></td>
+                    </div>
+                    <form class="deleteForm" action="#" th:action="@{/deletereview/{id}(id=${review.ID})}" method="get"
+                          th:if="${session.LoggedInUser != null}">
+                        <input type="submit" value="X" class="deleteReview"
+                               th:if="${review.user.userName == session.LoggedInUser.userName}">
+                    </form>
+                    <div class="invisible" th:unless="${session.LoggedInUser != null}">
+                        <p>I am invisible</p>
+                    </div>
                 </div>
                 <div class="rating">
                     <div>

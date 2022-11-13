@@ -18,5 +18,6 @@ public interface ReviewService {
     Review save(Review review);
     void delete(Review review);
     List<Review> findByCourse_Name(String name);
+    List<Review> findByCourse_ID(long ID);
     Review findByID(long ID);
 }

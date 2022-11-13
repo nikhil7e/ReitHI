@@ -15,12 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-/*
-Landing Page controller is responsible for the front page of the website.
-*/
 
 /**
- * This controller handles HTTP requests from the landing page when the user uses the search engine.
+ * This controller handles HTTP requests for searching for courses
  */
 @Controller
 public class LandingPageController {
@@ -50,8 +47,8 @@ public class LandingPageController {
      * Update the model with the users' course search input and return the search results
      * page template
      *
-     * @param name  The users' course name search input
-     * @param model The applications' model
+     * @param name  The users course name search input
+     * @param model The applications model
      * @return The search results page template
      */
     @RequestMapping(value = "/searchcourses", method = RequestMethod.POST)
