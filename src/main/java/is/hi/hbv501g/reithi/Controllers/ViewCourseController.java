@@ -40,13 +40,26 @@ public class ViewCourseController {
     public String upvotePOST(@PathVariable("id") long id, HttpSession session){
         Review review = reviewService.findByID(id);
         User currentUser = (User) session.getAttribute("LoggedInUser");
-        if(review.getUpvoters().contains(currentUser)){
-            review.removeUpvote(currentUser);
-        }
-        else{
-            review.addUpvote(currentUser);
+        boolean removed = false;
+
+        for (int i = 0; i<review.getUpvoters().size(); i++){
+            if(review.getUpvoters().get(i).getUserName().equals(currentUser.getUserName())){
+                review.removeUpvote(review.getUpvoters().get(i));
+                removed = true;
+                break;
+            }
         }
 
+        if (!removed){
+            review.addUpvote(currentUser);
+
+            for (int i = 0; i<review.getDownvoters().size(); i++){
+                if(review.getDownvoters().get(i).getUserName().equals(currentUser.getUserName())){
+                    review.removeDownvote(review.getDownvoters().get(i));
+                    break;
+                }
+            }
+        }
         reviewService.save(review);
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
         return "viewCourse";
@@ -56,12 +69,26 @@ public class ViewCourseController {
     public String downvotePOST(@PathVariable("id") long id, HttpSession session){
         Review review = reviewService.findByID(id);
         User currentUser = (User) session.getAttribute("LoggedInUser");
-        if(review.getDownvoters().contains(currentUser)){
-            review.removeDownvote(currentUser);
+        boolean removed = false;
+
+        for (int i = 0; i<review.getDownvoters().size(); i++){
+            if(review.getDownvoters().get(i).getUserName().equals(currentUser.getUserName())){
+                review.removeDownvote(review.getDownvoters().get(i));
+                removed = true;
+                break;
+            }
         }
-        else{
+
+        if (!removed){
             review.addDownvote(currentUser);
+            for (int i = 0; i<review.getUpvoters().size(); i++){
+                if(review.getUpvoters().get(i).getUserName().equals(currentUser.getUserName())){
+                    review.removeUpvote(review.getUpvoters().get(i));
+                    break;
+                }
+            }
         }
+
         reviewService.save(review);
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
         return "viewCourse";
