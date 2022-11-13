@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Rate HÍ</title>
-    <link th:href="@{/styles/css/styles.css}" rel="stylesheet"/>
+    <link th:href="@{/styles/css/styles.css}" rel="stylesheet" />
+    <script src="/scripts/filter.js" type="module"></script>
 </head>
 <body>
 
@@ -40,8 +41,83 @@
                 <input name="name" type="text" id="name" placeholder="Search" class="input-size" autocomplete="off"/>
                 <!--<input type="submit" value="Search" class="searchsubmit">-->
             </div>
-
         </form>
+    </div>
+    <div class="filters">
+        <div class="typeFilter">
+            <label for="bothTypes">Both types</label>
+            <input type="radio" name="type" id="bothTypes" onclick="hide()">
+            <label for="graduate">Graduate</label>
+            <input type="radio" name="type" id="graduate" onclick="hide()">
+            <label for="underGraduate">Undergraduate</label>
+            <input type="radio" name="type" id="underGraduate" onclick="hide()">
+        </div>
+        <div class="creditsFilter filter">
+            <p>Credits</p>
+            <div class = mix>
+                <label>Max: <span id="creditsMaxSpan"></span></label>
+                <input type="range" id="creditsMax" min="0" max="30" step="1" value="30" oninput="updateTextInput()" onmouseup="hide()" name="Credits-max">
+            </div>
+            <div class = mix>
+                <label>Min: <span id="creditsMinSpan"></span></label>
+                <input type="range" id="creditsMin" min="0" max="30" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Credits-min">
+            </div>
+        </div>
+        <div class="overallFilter filter">
+            <p>Overall score</p>
+            <div class = mix>
+                <label>Max: <span id="overallMaxSpan"></span></label>
+                <input type="range" id="overallMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Overall-max">
+            </div>
+            <div class = mix>
+                <label>Min: <span id="overallMinSpan"></span></label>
+                <input type="range" id="overallMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Overall-min">
+            </div>
+        </div>
+        <div class="difficultyFilter filter">
+            <p>Difficulty</p>
+            <div class="mix">
+                <label>Max: <span id="difficultyMaxSpan"></span></label>
+                <input type="range" id="difficultyMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-max">
+            </div>
+            <div class="mix">
+                <label>Min: <span id="difficultyMinSpan"></span></label>
+                <input type="range" id="difficultyMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-min">
+            </div>
+        </div>
+        <div class="workloadFilter filter">
+            <p>Workload</p>
+            <div class="mix">
+                <label>Max: <span id="workloadMaxSpan"></span></label>
+                <input type="range" id="workloadMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Workload-max">
+            </div>
+            <div class="mix">
+                <label>Min: <span id="workloadMinSpan"></span></label>
+                <input type="range" id="workloadMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Workload-min">
+            </div>
+        </div>
+        <div class="teachingQualityFilter filter">
+            <p>Teaching Quality</p>
+            <div class="mix">
+                <label>Max: <span id="teachingQualityMaxSpan"></span></label>
+                <input type="range" id="teachingQualityMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Teaching Quality-max">
+            </div>
+            <div class="mix">
+                <label>Min: <span id="teachingQualityMinSpan"></span></label>
+                <input type="range" id="teachingQualityMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Teaching Quality-min">
+            </div>
+        </div>
+        <div class="courseMaterialFilter filter">
+            <p>Course Material</p>
+            <div class="mix">
+                <label>Max: <span id="courseMaterialMaxSpan"></span></label>
+                <input type="range" id="courseMaterialMax" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Course Material-max">
+            </div>
+            <div class="mix">
+                <label>Min: <span id="courseMaterialMinSpan"></span></label>
+                <input type="range" id="courseMaterialMin" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Course Material-min">
+            </div>
+        </div>
     </div>
     <h2 th:if="${courseSearchResults == null or courseSearchResults.empty}">No Courses found!</h2>
     <div class="allSearchResults" th:unless="${courseSearchResults == null or courseSearchResults.empty}">
@@ -79,15 +155,28 @@
 
         -->
 
+            <div class="searchResult" th:each="course : ${courseSearchResults}">
+                <a th:href="@{/viewcourse/{id}(id=${course.ID})}">
+                    <p class="courseId" th:text="${course.number}"></p>
+                    <div class="columnizeResults">
+                        <p class="courseName" th:text="${course.name}"></p>
+                        <div class="extraInfo">
+                            <p class="courseCredits" th:text="${course.credits}+' credits'"> credits</p>
+                            <p th:text="${course.professor_Name}"></p>
+                            <p class="level" th:text="${course.level}">  </p>
+                        </div>
+                        <div class="extraInfo">
+                            <p class="overall" th:text="'Overall rating: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgOverall()}">Overall rating</p>
+                            <p class="difficulty" th:text="'Difficulty: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgDifficulty()}">Difficulty</p>
+                            <p class="workload" th:text="'Workload: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgWorkload()}">Workload</p>
 
-        <div class="searchResult" th:each="course : ${courseSearchResults}">
-            <a th:href="@{/viewcourse/{id}(id=${course.ID})}">
-                <p class="courseId" th:text="${course.number}"></p>
-                <div class="columnizeResults">
-                    <p class="courseName" th:text="${course.name}"></p>
-                    <div class="extraInfo">
-                        <p class="courseCredits" th:text="${course.credits}+' credits'"> credits</p>
-                        <p th:text="${course.professor_Name}"></p>
+                        </div>
+                        <div class="extraInfo">
+                            <p class="teachingQuality" th:text="'Teaching quality: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgTeachingQuality()}">Teaching quality</p>
+                            <p class="courseMaterial" th:text="'Course material: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgCourseMaterial()}">Course material</p>
+                        </div>
+                        <div class="rating">
+                            <p class="overall"></p>
                     </div>
                 </div>
             </a>

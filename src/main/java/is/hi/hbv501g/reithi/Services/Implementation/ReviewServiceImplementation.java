@@ -7,9 +7,25 @@ import is.hi.hbv501g.reithi.Services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 @Service
 public class ReviewServiceImplementation implements ReviewService {
+
+    private HashMap<Long, Boolean> changes = new HashMap();
+
+    private HashMap<Long, Double> latestOverall = new HashMap();
+
+    private HashMap<Long, Double> latestDifficulty = new HashMap();
+
+    private HashMap<Long, Double> latestWorkload = new HashMap();
+
+    private HashMap<Long, Double> latestTeachingQuality = new HashMap();
+
+    private HashMap<Long, Double> latestCourseMaterial = new HashMap();
+
+
+
 
     private ReviewRepository reviewRepository;
     private int id_counter = 0;
@@ -24,67 +40,122 @@ public class ReviewServiceImplementation implements ReviewService {
 
     @Override
     public Double getAverageOverallScore(long ID) {
-        List<Review> list = reviewRepository.findByCourse_ID(ID);
-        double sum = 0;
-        for(int i = 0;i < list.size(); i++ ) {
-            sum += list.get(i).getRating().getOverallScore();
+        if (latestOverall.containsKey(ID) && !(changes.get(ID).booleanValue())) {
+            return latestOverall.get(ID).doubleValue();
         }
-        if (list.size() == 0) {
-            return 0.0;
+        else {
+            List<Review> list = reviewRepository.findByCourse_ID(ID);
+            double sum = 0;
+            for(int i = 0;i < list.size(); i++ ) {
+                sum += list.get(i).getRating().getDifficulty();
+            }
+            if (list.size() == 0) {
+                double overall = 0.0;
+                changes.put(ID, false);
+                latestOverall.put(ID, overall);
+                return overall;
+            }
+            double overall = sum / list.size();
+            changes.put(ID, false);
+            latestDifficulty.put(ID, overall);
+            return overall;
         }
-        return sum / list.size();
     }
 
     @Override
     public Double getAverageDifficulty(long ID) {
-        List<Review> list = reviewRepository.findByCourse_ID(ID);
-        double sum = 0;
-        for(int i = 0;i < list.size(); i++ ) {
-            sum += list.get(i).getRating().getDifficulty();
+        if (latestDifficulty.containsKey(ID) && !(changes.get(ID).booleanValue())) {
+            return latestDifficulty.get(ID).doubleValue();
         }
-        if (list.size() == 0) {
-            return 0.0;
+        else {
+            List<Review> list = reviewRepository.findByCourse_ID(ID);
+            double sum = 0;
+            for(int i = 0;i < list.size(); i++ ) {
+                sum += list.get(i).getRating().getDifficulty();
+            }
+            if (list.size() == 0) {
+                double difficulty = 0.0;
+                changes.put(ID, false);
+                latestDifficulty.put(ID, difficulty);
+                return difficulty;
+            }
+            double difficulty = sum / list.size();
+            changes.put(ID, false);
+            latestDifficulty.put(ID, difficulty);
+            return difficulty;
         }
-        return sum / list.size();
     }
 
     @Override
     public Double getAverageWorkload(long ID) {
-        List<Review> list = reviewRepository.findByCourse_ID(ID);
-        double sum = 0;
-        for(int i = 0;i < list.size(); i++ ) {
-            sum += list.get(i).getRating().getWorkload();
+        if (latestWorkload.containsKey(ID) && !(changes.get(ID).booleanValue())) {
+            return latestWorkload.get(ID).doubleValue();
         }
-        if (list.size() == 0) {
-            return 0.0;
+        else {
+            List<Review> list = reviewRepository.findByCourse_ID(ID);
+            double sum = 0;
+            for(int i = 0;i < list.size(); i++ ) {
+                sum += list.get(i).getRating().getWorkload();
+            }
+            if (list.size() == 0) {
+                double workload = 0.0;
+                changes.put(ID, false);
+                latestTeachingQuality.put(ID, workload);
+                return workload;
+            }
+            double workload = sum / list.size();
+            changes.put(ID, false);
+            latestTeachingQuality.put(ID, workload);
+            return workload;
         }
-        return sum / list.size();
     }
 
     @Override
     public Double getAverageTeachingQuality(long ID) {
-        List<Review> list = reviewRepository.findByCourse_ID(ID);
-        double sum = 0;
-        for(int i = 0;i < list.size(); i++ ) {
-            sum += list.get(i).getRating().getTeachingQuality();
+        if (latestTeachingQuality.containsKey(ID) && !(changes.get(ID).booleanValue())) {
+            return latestTeachingQuality.get(ID).doubleValue();
         }
-        if (list.size() == 0) {
-            return 0.0;
+        else {
+            List<Review> list = reviewRepository.findByCourse_ID(ID);
+            double sum = 0;
+            for(int i = 0;i < list.size(); i++ ) {
+                sum += list.get(i).getRating().getTeachingQuality();
+            }
+            if (list.size() == 0) {
+                double teachingQuality = 0.0;
+                changes.put(ID, false);
+                latestTeachingQuality.put(ID, teachingQuality);
+                return teachingQuality;
+            }
+            double teachingQuality = sum / list.size();
+            changes.put(ID, false);
+            latestTeachingQuality.put(ID, teachingQuality);
+            return teachingQuality;
         }
-        return sum / list.size();
     }
 
     @Override
     public Double getAverageCourseMaterial(long ID) {
-        List<Review> list = reviewRepository.findByCourse_ID(ID);
-        double sum = 0;
-        for(int i = 0;i < list.size(); i++ ) {
-            sum += list.get(i).getRating().getCourseMaterial();
+        if (latestCourseMaterial.containsKey(ID) && !(changes.get(ID).booleanValue())) {
+            return latestCourseMaterial.get(ID).doubleValue();
         }
-        if (list.size() == 0) {
-            return 0.0;
+        else {
+            List<Review> list = reviewRepository.findByCourse_ID(ID);
+            double sum = 0;
+            for(int i = 0;i < list.size(); i++ ) {
+                sum += list.get(i).getRating().getTeachingQuality();
+            }
+            if (list.size() == 0) {
+                double courseMaterial = 0.0;
+                changes.put(ID, false);
+                latestCourseMaterial.put(ID, courseMaterial);
+                return courseMaterial;
+            }
+            double courseMaterial = sum / list.size();
+            changes.put(ID, false);
+            latestCourseMaterial.put(ID, courseMaterial);
+            return courseMaterial;
         }
-        return sum / list.size();
     }
 
     @Override
@@ -94,6 +165,7 @@ public class ReviewServiceImplementation implements ReviewService {
 
     @Override
     public Review save(Review review) {
+        changes.put(review.getID(), true);
         return reviewRepository.save(review);
     }
 
