@@ -56,6 +56,13 @@ public class ReviewCourseController {
         return "viewCourse";
     }
 
+    /**
+     * Saves the average scores for the viewed course in the session
+     *
+     * @param session       The applications session
+     * @param id            The courses id
+     * @param reviewService The review service
+     */
     public static void setScores(HttpSession session, long id, ReviewService reviewService) {
         session.setAttribute("avgOAS", reviewService.getAverageOverallScore(id));
         session.setAttribute("avgD", reviewService.getAverageDifficulty(id));

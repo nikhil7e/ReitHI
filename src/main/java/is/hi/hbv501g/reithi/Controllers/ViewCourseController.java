@@ -1,10 +1,8 @@
 package is.hi.hbv501g.reithi.Controllers;
 
-import is.hi.hbv501g.reithi.Persistence.Entities.Comment;
 import is.hi.hbv501g.reithi.Persistence.Entities.Course;
 import is.hi.hbv501g.reithi.Persistence.Entities.Review;
 import is.hi.hbv501g.reithi.Persistence.Entities.User;
-import is.hi.hbv501g.reithi.Persistence.Repositories.CourseRepository;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +15,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * This controller handles HTTP requests for the view course page, such as voting reviews, requesting
+ * the review page and deleting reviews.
+ */
 @Controller
 public class ViewCourseController {
 
     private CourseService courseService;
     private ReviewService reviewService;
+
 
     @Autowired
     public ViewCourseController(CourseService courseService, ReviewService reviewService) {
@@ -29,21 +32,32 @@ public class ViewCourseController {
         this.reviewService = reviewService;
     }
 
-
+    /**
+     * Gets the review course page template
+     *
+     * @param model The applications model
+     * @return The review course page template
+     */
     @RequestMapping(value = "/reviewcourse", method = RequestMethod.GET)
     public String reviewCourseGET(Model model) {
         return "reviewCourse";
     }
 
-
+    /**
+     *
+     *
+     * @param id
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/upvote/{id}", method = RequestMethod.GET)
-    public String upvotePOST(@PathVariable("id") long id, HttpSession session){
+    public String upvotePOST(@PathVariable("id") long id, HttpSession session) {
         Review review = reviewService.findByID(id);
         User currentUser = (User) session.getAttribute("LoggedInUser");
         boolean removed = false;
 
-        for (int i = 0; i<review.getUpvoters().size(); i++){
-            if(review.getUpvoters().get(i).getUserName().equals(currentUser.getUserName())){
+        for (int i = 0; i < review.getUpvoters().size(); i++) {
+            if (review.getUpvoters().get(i).getUserName().equals(currentUser.getUserName())) {
                 review.removeUpvote(review.getUpvoters().get(i));
                 removed = true;
                 break;
@@ -65,13 +79,13 @@ public class ViewCourseController {
     }
 
     @RequestMapping(value = "/downvote/{id}", method = RequestMethod.GET)
-    public String downvotePOST(@PathVariable("id") long id, HttpSession session){
+    public String downvotePOST(@PathVariable("id") long id, HttpSession session) {
         Review review = reviewService.findByID(id);
         User currentUser = (User) session.getAttribute("LoggedInUser");
         boolean removed = false;
 
-        for (int i = 0; i<review.getDownvoters().size(); i++){
-            if(review.getDownvoters().get(i).getUserName().equals(currentUser.getUserName())){
+        for (int i = 0; i < review.getDownvoters().size(); i++) {
+            if (review.getDownvoters().get(i).getUserName().equals(currentUser.getUserName())) {
                 review.removeDownvote(review.getDownvoters().get(i));
                 removed = true;
                 break;
@@ -93,14 +107,14 @@ public class ViewCourseController {
         return "viewCourse";
     }
 
-    public void refreshViewCourse(HttpSession session, long id){
+    public void refreshViewCourse(HttpSession session, long id) {
         ReviewCourseController.setScores(session, id, reviewService);
         List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
         session.setAttribute("reviewsForCourse", reviewSearchResults);
     }
 
     @RequestMapping(value = "/deletereview/{id}", method = RequestMethod.GET)
-    public String deleteReviewGET(@PathVariable("id") long id,HttpSession session){
+    public String deleteReviewGET(@PathVariable("id") long id, HttpSession session) {
         Review review = reviewService.findByID(id);
         User user = review.getUser();
         List<Review> allReviews = user.getReviews();
@@ -118,9 +132,5 @@ public class ViewCourseController {
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
         return "viewCourse";
     }
-
-
-
-
 
 }

@@ -96,7 +96,7 @@ public class CourseSearchResultsController {
 
     public void setHasReviewedCourse(long id, HttpSession session) {
         User user = (User) session.getAttribute("LoggedInUser");
-        if(user != null) {
+        if (user != null) {
             for (Review review : reviewService.findByCourse_ID(id)) {
                 if (Objects.equals(review.getUser().getUserName(), user.getUserName())) {
                     session.setAttribute("hasReviewedCourse", true);
