@@ -61,11 +61,11 @@ public class LandingPageController {
 
             DecimalFormat df = new DecimalFormat("0.00");
 
-            double avgOverall = Double.valueOf(df.format(reviewService.getAverageOverallScore(id)));
-            double avgDifficulty = Double.valueOf(df.format(reviewService.getAverageDifficulty(id)));
-            double avgWorkload = Double.valueOf(df.format(reviewService.getAverageWorkload(id)));
-            double avgTeachingQuality = Double.valueOf(df.format(reviewService.getAverageTeachingQuality(id)));
-            double avgCourseMaterial = Double.valueOf(df.format(reviewService.getAverageCourseMaterial(id)));
+            double avgOverall = Double.parseDouble(df.format(reviewService.getAverageOverallScore(id)));
+            double avgDifficulty = Double.parseDouble(df.format(reviewService.getAverageDifficulty(id)));
+            double avgWorkload = Double.parseDouble(df.format(reviewService.getAverageWorkload(id)));
+            double avgTeachingQuality = Double.parseDouble(df.format(reviewService.getAverageTeachingQuality(id)));
+            double avgCourseMaterial = Double.parseDouble(df.format(reviewService.getAverageCourseMaterial(id)));
 
             CourseRating courseRating = new CourseRating(
                     course.getID(),

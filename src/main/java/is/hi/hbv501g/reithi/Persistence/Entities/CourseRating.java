@@ -1,7 +1,12 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class CourseRating{
     private long ID;
+
     private double avgOverall;
 
     private double avgDifficulty;

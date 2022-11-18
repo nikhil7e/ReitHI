@@ -10,13 +10,13 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private User user;
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Comment comment;
     @ManyToOne(fetch = FetchType.LAZY)
     private Course course;
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Rating rating;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH}, orphanRemoval = true)
@@ -36,9 +36,11 @@ public class Review {
         this.upvoters = new ArrayList<>();
         this.downvoters = new ArrayList<>();
     }
+
     public long getID() {
         return ID;
     }
+
     public User getUser() {
         return user;
     }
@@ -75,11 +77,11 @@ public class Review {
         return upvoters.size() - downvoters.size();
     }
 
-    public void addUpvote(User user){
+    public void addUpvote(User user) {
         upvoters.add(user);
     }
 
-    public void addDownvote(User user){
+    public void addDownvote(User user) {
         downvoters.add(user);
     }
 
@@ -87,7 +89,7 @@ public class Review {
         return upvoters;
     }
 
-    public void removeUpvote(User user){
+    public void removeUpvote(User user) {
         upvoters.remove(user);
     }
 
