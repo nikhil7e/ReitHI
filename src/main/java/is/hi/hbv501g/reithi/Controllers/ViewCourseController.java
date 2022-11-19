@@ -39,7 +39,8 @@ public class ViewCourseController {
      * @return The review course page template
      */
     @RequestMapping(value = "/reviewcourse", method = RequestMethod.GET)
-    public String reviewCourseGET(Model model) {
+    public String reviewCourseGET(Model model, HttpSession session) {
+        session.setAttribute("currentPage", "reviewCourse");
         return "reviewCourse";
     }
 
@@ -75,6 +76,7 @@ public class ViewCourseController {
         }
         reviewService.save(review);
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
+        session.setAttribute("currentPage", "viewCourse");
         return "viewCourse";
     }
 
@@ -111,6 +113,7 @@ public class ViewCourseController {
 
         reviewService.save(review);
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
+        session.setAttribute("currentPage", "viewCourse");
         return "viewCourse";
     }
 
@@ -150,6 +153,7 @@ public class ViewCourseController {
         reviewService.delete(review);
         session.setAttribute("hasReviewedCourse", false);
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
+        session.setAttribute("currentPage", "viewCourse");
         return "viewCourse";
     }
 

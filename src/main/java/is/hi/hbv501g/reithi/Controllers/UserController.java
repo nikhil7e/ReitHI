@@ -4,10 +4,12 @@ package is.hi.hbv501g.reithi.Controllers;
 import is.hi.hbv501g.reithi.Persistence.Entities.User;
 import is.hi.hbv501g.reithi.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -43,9 +45,9 @@ public class UserController {
      */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signupPOST(@ModelAttribute("user") User user, BindingResult result, Model model,
-                             HttpSession session) {
+                             HttpSession session, @RequestHeader(value = HttpHeaders.REFERER, required = false) final String referrer) {
         if (result.hasErrors()) {
-            return "redirect:/signup";
+            return (String) session.getAttribute("currentPage");
         }
         User exists = userService.findByUserName(user.getUserName());
         if (exists == null) {
@@ -54,7 +56,7 @@ public class UserController {
             model.addAttribute("LoggedInUser", exists);
         }
 
-        return "redirect:/";
+        return (String) session.getAttribute("currentPage");
     }
 
 //    @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -72,9 +74,9 @@ public class UserController {
      * @return If the user account exists, send a GET request to /loggedin, else return the landing page template
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPOST(@ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session) {
+    public String loginPOST(@ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session, @RequestHeader(value = HttpHeaders.REFERER, required = false) final String referrer) {
         if (result.hasErrors()) {
-            return "landingPage";
+            return (String) session.getAttribute("currentPage");
         }
 
         User exists = userService.login(user);
@@ -84,7 +86,7 @@ public class UserController {
         }
 
         // TODO: Notify user if account does not exist
-        return "redirect:/";
+        return (String) session.getAttribute("currentPage");
     }
 
 //    /**
@@ -111,11 +113,11 @@ public class UserController {
      * @return The landing page template
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logoutGET(HttpSession session, Model model) {
+    public String logoutGET(HttpSession session, Model model, @RequestHeader(value = HttpHeaders.REFERER, required = false) final String referrer) {
         session.setAttribute("LoggedInUser", null);
         model.addAttribute("LoggedInUser", null);
 
-        return "redirect:/";
+        return (String) session.getAttribute("currentPage");
     }
 
 }

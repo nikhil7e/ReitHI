@@ -39,7 +39,8 @@ public class LandingPageController {
      * @return The landing pages' template
      */
     @RequestMapping("/")
-    public String landingPage() {
+    public String landingPage(HttpSession session) {
+        session.setAttribute("currentPage", "landingPage");
         return "landingPage";
     }
 
@@ -52,7 +53,7 @@ public class LandingPageController {
      * @return The search results page template
      */
     @RequestMapping(value = "/searchcourses", method = RequestMethod.POST)
-    public String searchCoursesPOST(@RequestParam("name") String name, Model model) {
+    public String searchCoursesPOST(@RequestParam("name") String name, Model model, HttpSession session) {
         List<Course> courseSearchResults = courseService.findByNameContainingIgnoreCase(name);
         List<CourseRating> courseRatingList = new ArrayList<>();
         for (int i = 0; i < courseSearchResults.size(); i++) {
@@ -80,8 +81,9 @@ public class LandingPageController {
             courseRatingList.add(courseRating);
             courseRatingList.get(courseSearchResults.indexOf(course)).getAvgOverall();
         }
-        model.addAttribute("courseSearchResults", courseSearchResults);
-        model.addAttribute("courseRatingList", courseRatingList);
+        session.setAttribute("courseSearchResults", courseSearchResults);
+        session.setAttribute("courseRatingList", courseRatingList);
+        session.setAttribute("currentPage", "searchResults");
         return "searchResults";
     }
 

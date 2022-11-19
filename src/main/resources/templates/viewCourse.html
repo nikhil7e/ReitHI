@@ -67,9 +67,9 @@
         <p th:text="${session.selectedCourse.faculty}"></p>
         <p th:text="${session.selectedCourse.professor_Email}"></p>
         <p th:text="${session.selectedCourse.professor_URL}"></p>-->
-        <a class=reviewButton th:if="${ session.LoggedInUser != null && !session.hasReviewedCourse}" th:href="@{/reviewcourse}">Review This Course</a>
+        <a class=reviewButton th:if="${ session.LoggedInUser != null && (session.hasReviewedCourse == null || !session.hasReviewedCourse)}" th:href="@{/reviewcourse}">Review This Course</a>
         <a class=reviewButton id="loggedOut" data-hover="Must be logged in to perform this action" th:unless="${ session.LoggedInUser != null}">Review This Course</a>
-        <a class=reviewButton id="loggedOut" data-hover="You have already reviewed this course" th:if="${session.LoggedInUser != null && session.hasReviewedCourse}">Review This Course</a>
+        <a class=reviewButton id="loggedOut" data-hover="You have already reviewed this course" th:if="${session.LoggedInUser != null && (session.hasReviewedCourse != null && session.hasReviewedCourse)}">Review This Course</a>
     </div>
     <div class='statistics'>
         <div>
