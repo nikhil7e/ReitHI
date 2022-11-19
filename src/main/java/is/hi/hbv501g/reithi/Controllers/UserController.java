@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 /**
  * This controller handles HTTP requests for user functionality, such as logging in, signing up and logging out.
@@ -56,6 +57,10 @@ public class UserController {
             model.addAttribute("LoggedInUser", exists);
         }
 
+        if(Objects.equals(session.getAttribute("currentPage"), "searchResults")) {
+            return "landingPage";
+        }
+
         return (String) session.getAttribute("currentPage");
     }
 
@@ -86,6 +91,10 @@ public class UserController {
         }
 
         // TODO: Notify user if account does not exist
+        if(Objects.equals(session.getAttribute("currentPage"), "searchResults")) {
+            return "landingPage";
+        }
+
         return (String) session.getAttribute("currentPage");
     }
 
@@ -116,6 +125,10 @@ public class UserController {
     public String logoutGET(HttpSession session, Model model, @RequestHeader(value = HttpHeaders.REFERER, required = false) final String referrer) {
         session.setAttribute("LoggedInUser", null);
         model.addAttribute("LoggedInUser", null);
+
+        if(Objects.equals(session.getAttribute("currentPage"), "searchResults")) {
+            return "landingPage";
+        }
 
         return (String) session.getAttribute("currentPage");
     }

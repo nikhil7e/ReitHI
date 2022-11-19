@@ -81,8 +81,8 @@ public class LandingPageController {
             courseRatingList.add(courseRating);
             courseRatingList.get(courseSearchResults.indexOf(course)).getAvgOverall();
         }
-        session.setAttribute("courseSearchResults", courseSearchResults);
-        session.setAttribute("courseRatingList", courseRatingList);
+        model.addAttribute("courseSearchResults", courseSearchResults);
+        model.addAttribute("courseRatingList", courseRatingList);
         session.setAttribute("currentPage", "searchResults");
         return "searchResults";
     }

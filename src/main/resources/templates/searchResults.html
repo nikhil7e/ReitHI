@@ -44,7 +44,7 @@
         </form>
     </div>
 
-    <h2 th:if="${session.courseSearchResults == null or session.courseSearchResults.empty}">No Courses found!</h2>
+    <h2 th:if="${courseSearchResults == null or courseSearchResults.empty}">No Courses found!</h2>
     <div class="resultsAndFilter">
         <div class="filters">
             <div class="typeFilter">
@@ -255,8 +255,8 @@
         </table>
 
         -->
-    <div class="allSearchResults" th:unless="${session.courseSearchResults == null or session.courseSearchResults.empty}">
-            <div class="searchResult" th:each="course : ${session.courseSearchResults}">
+    <div class="allSearchResults" th:unless="${courseSearchResults == null or courseSearchResults.empty}">
+            <div class="searchResult" th:each="course : ${courseSearchResults}">
                 <a th:href="@{/viewcourse/{id}(id=${course.ID})}">
                     <p class="courseId" th:text="${course.number}"></p>
                     <div class="columnizeResults">
