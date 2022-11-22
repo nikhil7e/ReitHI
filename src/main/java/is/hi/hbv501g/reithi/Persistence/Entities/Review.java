@@ -19,10 +19,10 @@ public class Review {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Rating rating;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH}, orphanRemoval = true)
+    @ManyToMany(cascade = {CascadeType.DETACH}) //, orphanRemoval = true mappedBy="upvoters_id ",
     private List<User> upvoters;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH}, orphanRemoval = true)
+    @ManyToMany(cascade = {CascadeType.DETACH}) //, orphanRemoval = true mappedBy="downvoters_id ",
     private List<User> downvoters;
 
     public Review() {
