@@ -17,7 +17,7 @@ The file format for the website can roughly be described with the following bull
 * `/resources`, contains all of our HTML and javaScript code, along with all of the extra material such as images and font files.
 
 ## Required setup to run the project:
-The available version shown above host's it's database on supaBase. The database contains a table corresponding to each repository and when setting up the database, please make sure to allow for null values since the data can be patchy. The data is scraped from https://www.hi.is/ using Web Scraper.but requires quite a bit of data massage since the course pages can vary a lot.
+The available version shown above uses a database hosted on supaBase. The database contains a table corresponding to each repository and when setting up the database, please make sure to allow for null values since the data can be patchy. The data is scraped from https://www.hi.is/ using Web Scraper.but requires quite a bit of data massage since the course pages can vary a lot.
 ## Additional information:
 * General rules for using the reitHÍ website:
     - Be respectful when leaving comments on courses.
