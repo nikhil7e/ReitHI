@@ -2,7 +2,7 @@
 
 ReitHÍ is a website to enable students to make better decisions about the courses they choose. It allows users to rate, review and comment on courses, taught in the University of Iceland.
 
-**A hosted demo is available on Heroku to try out:**
+**A hosted demo is available on Heroku to try out, deployed from the deployment branch:**
 
 * https://reithi.herokuapp.com/
 
@@ -14,10 +14,10 @@ The file format for the website can roughly be described with the following bull
     * `/Entities`, contains all of the entities used by the code, for example, Review, Rating, Comment, User, Course, Professor
     * `/Repositories`, contains all repositories used by the software. They fetch data from the database and hand them to the services.
   * `/Services`, contains all services and service implementations.
-* `/resources`, contains all of our HTML and javaScript code, along with all of the extra material such as images and font files.
+* `/resources`, contains all of our HTML and javaScript code, along with all of the extra material such as images and font files. It also includes the applications.properties file that includes the applications configurations.
 
 ## Required setup to run the project:
-The available version shown above uses a database hosted on supaBase. The database contains a table corresponding to each repository and when setting up the database, please make sure to allow for null values since the data can be patchy. The data is scraped from https://www.hi.is/ using Web Scraper.but requires quite a bit of data massage since the course pages can vary a lot.
+The available version shown above uses a database hosted on SupaBase. The database contains a table corresponding to each repository and when setting up the database, please make sure to allow for null values since the data can be patchy. The data is scraped from https://www.hi.is/ using Web Scraper, but requires quite a bit of data massage since the course pages can vary a lot.
 ## Additional information:
 * General rules for using the reitHÍ website:
     - Be respectful when leaving comments on courses.
