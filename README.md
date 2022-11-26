@@ -17,7 +17,10 @@ The file format for the website can roughly be described with the following bull
 * `/resources`, contains all of our HTML and javaScript code, along with all of the extra material such as images and font files. It also includes the applications.properties file that includes the applications configurations.
 
 ## Required setup to run the project:
-The available version shown above uses a database hosted on SupaBase. The database contains a table corresponding to each repository, but if you would like to set up and use a different database, please make sure to allow for null values since the data can be patchy and update the application.properties file to connect to the desired database. The data is scraped from https://www.hi.is/ using Web Scraper, but requires quite a bit of data massage since the course pages can vary a lot.
+To build and run the project, clone it or download its zip file to your desired location. Open the project in your desired IDE and simply run ReitHiApplication.java. Maven will insttall the necessary dependencies and build the project automatically. Please make sure to have at least JDK 8 installed.
+
+The project currently uses a database hosted on SupaBase. The database contains a table corresponding to each repository, but if you would like to set up and use a different database, please make sure to allow for null values since the data can be patchy and update the application.properties file to connect to the desired database. The data is scraped from https://www.hi.is/ using Web Scraper, but requires quite a bit of data massage since the course pages can vary a lot. 
+
 ## Additional information:
 * General rules for using the reitHÍ website:
     - Be respectful when leaving comments on courses.
