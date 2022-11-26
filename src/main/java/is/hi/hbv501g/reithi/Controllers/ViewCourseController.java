@@ -5,6 +5,7 @@ import is.hi.hbv501g.reithi.Persistence.Entities.Review;
 import is.hi.hbv501g.reithi.Persistence.Entities.User;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
+import is.hi.hbv501g.reithi.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +26,14 @@ public class ViewCourseController {
     private CourseService courseService;
     private ReviewService reviewService;
 
+    private UserService userService;
+
 
     @Autowired
-    public ViewCourseController(CourseService courseService, ReviewService reviewService) {
+    public ViewCourseController(CourseService courseService, ReviewService reviewService, UserService userService) {
         this.courseService = courseService;
         this.reviewService = reviewService;
+        this.userService = userService;
     }
 
     /**
@@ -39,7 +43,8 @@ public class ViewCourseController {
      * @return The review course page template
      */
     @RequestMapping(value = "/reviewcourse", method = RequestMethod.GET)
-    public String reviewCourseGET(Model model) {
+    public String reviewCourseGET(Model model, HttpSession session) {
+        session.setAttribute("currentPage", "reviewCourse");
         return "reviewCourse";
     }
 
@@ -64,9 +69,9 @@ public class ViewCourseController {
             }
         }
 
-        if (!removed){
-            for (int i = 0; i<review.getDownvoters().size(); i++){
-                if(review.getDownvoters().get(i).getUserName().equals(currentUser.getUserName())){
+        if (!removed) {
+            for (int i = 0; i < review.getDownvoters().size(); i++) {
+                if (review.getDownvoters().get(i).getUserName().equals(currentUser.getUserName())) {
                     review.removeDownvote(review.getDownvoters().get(i));
                     break;
                 }
@@ -75,6 +80,7 @@ public class ViewCourseController {
         }
         reviewService.save(review);
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
+        session.setAttribute("currentPage", "viewCourse");
         return "viewCourse";
     }
 
@@ -99,9 +105,9 @@ public class ViewCourseController {
             }
         }
 
-        if (!removed){
-            for (int i = 0; i<review.getUpvoters().size(); i++){
-                if(review.getUpvoters().get(i).getUserName().equals(currentUser.getUserName())){
+        if (!removed) {
+            for (int i = 0; i < review.getUpvoters().size(); i++) {
+                if (review.getUpvoters().get(i).getUserName().equals(currentUser.getUserName())) {
                     review.removeUpvote(review.getUpvoters().get(i));
                     break;
                 }
@@ -111,6 +117,7 @@ public class ViewCourseController {
 
         reviewService.save(review);
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
+        session.setAttribute("currentPage", "viewCourse");
         return "viewCourse";
     }
 
@@ -140,16 +147,19 @@ public class ViewCourseController {
         List<Review> allReviews = user.getReviews();
         allReviews.remove(review);
         user.setReviews(allReviews);
-        for (int i = 0; i<review.getUpvoters().size(); i++){
+        //userService.save(user);
+        for (int i = 0; i < review.getUpvoters().size(); i++) {
             review.removeUpvote(review.getUpvoters().get(i));
         }
-        for (int i = 0; i<review.getDownvoters().size(); i++){
+        for (int i = 0; i < review.getDownvoters().size(); i++) {
             review.removeDownvote(review.getDownvoters().get(i));
         }
+        //review.setUser(null);
         reviewService.save(review);
         reviewService.delete(review);
         session.setAttribute("hasReviewedCourse", false);
         refreshViewCourse(session, ((Course) session.getAttribute("selectedCourse")).getID());
+        session.setAttribute("currentPage", "viewCourse");
         return "viewCourse";
     }
 

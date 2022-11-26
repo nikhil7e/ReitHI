@@ -70,12 +70,12 @@ public class CourseSearchResultsController {
     @RequestMapping(value = "/viewcourse/{id}", method = RequestMethod.GET)
     public String viewCourseGET(@PathVariable("id") long id, Model model, HttpSession session) {
         // update html to use session instead of model and delete line 43
-        model.addAttribute("selectedCourse", courseService.findByID(id));
+        session.setAttribute("selectedCourse", courseService.findByID(id));
         setHasReviewedCourse(id, session);
 
         // model.addAttribute("hasReviewedCourse", );
         // Get course rating from selected course
-        Course selectedCourse = (Course) model.getAttribute("selectedCourse");
+        Course selectedCourse = (Course) session.getAttribute("selectedCourse");
         // Include rating data course in HTML
         model.addAttribute("avgOAS", reviewService.getAverageOverallScore(selectedCourse.getID()));
         model.addAttribute("avgD", reviewService.getAverageDifficulty(selectedCourse.getID()));
@@ -89,8 +89,9 @@ public class CourseSearchResultsController {
         session.setAttribute("avgTQ", reviewService.getAverageTeachingQuality(selectedCourse.getID()));
         session.setAttribute("avgCM", reviewService.getAverageCourseMaterial(selectedCourse.getID()));
 
-        List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) model.getAttribute("selectedCourse")).getName());
+        List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
         session.setAttribute("reviewsForCourse", reviewSearchResults);
+        session.setAttribute("currentPage", "viewCourse");
         return "viewCourse";
     }
 
