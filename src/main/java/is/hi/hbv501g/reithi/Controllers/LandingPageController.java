@@ -39,7 +39,8 @@ public class LandingPageController {
      * @return The landing pages' template
      */
     @RequestMapping("/")
-    public String landingPage() {
+    public String landingPage(HttpSession session) {
+        session.setAttribute("currentPage", "landingPage");
         return "landingPage";
     }
 
@@ -52,7 +53,7 @@ public class LandingPageController {
      * @return The search results page template
      */
     @RequestMapping(value = "/searchcourses", method = RequestMethod.POST)
-    public String searchCoursesPOST(@RequestParam("name") String name, Model model) {
+    public String searchCoursesPOST(@RequestParam("name") String name, Model model, HttpSession session) {
         List<Course> courseSearchResults = courseService.findByNameContainingIgnoreCase(name);
         List<CourseRating> courseRatingList = new ArrayList<>();
         for (int i = 0; i < courseSearchResults.size(); i++) {
@@ -61,11 +62,11 @@ public class LandingPageController {
 
             DecimalFormat df = new DecimalFormat("0.00");
 
-            double avgOverall = Double.valueOf(df.format(reviewService.getAverageOverallScore(id)));
-            double avgDifficulty = Double.valueOf(df.format(reviewService.getAverageDifficulty(id)));
-            double avgWorkload = Double.valueOf(df.format(reviewService.getAverageWorkload(id)));
-            double avgTeachingQuality = Double.valueOf(df.format(reviewService.getAverageTeachingQuality(id)));
-            double avgCourseMaterial = Double.valueOf(df.format(reviewService.getAverageCourseMaterial(id)));
+            double avgOverall = Double.parseDouble(df.format(reviewService.getAverageOverallScore(id)));
+            double avgDifficulty = Double.parseDouble(df.format(reviewService.getAverageDifficulty(id)));
+            double avgWorkload = Double.parseDouble(df.format(reviewService.getAverageWorkload(id)));
+            double avgTeachingQuality = Double.parseDouble(df.format(reviewService.getAverageTeachingQuality(id)));
+            double avgCourseMaterial = Double.parseDouble(df.format(reviewService.getAverageCourseMaterial(id)));
 
             CourseRating courseRating = new CourseRating(
                     course.getID(),
@@ -82,6 +83,7 @@ public class LandingPageController {
         }
         model.addAttribute("courseSearchResults", courseSearchResults);
         model.addAttribute("courseRatingList", courseRatingList);
+        session.setAttribute("currentPage", "searchResults");
         return "searchResults";
     }
 

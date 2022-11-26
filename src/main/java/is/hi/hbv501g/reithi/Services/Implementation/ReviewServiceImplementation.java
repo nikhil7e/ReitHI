@@ -1,7 +1,6 @@
 package is.hi.hbv501g.reithi.Services.Implementation;
 
 import is.hi.hbv501g.reithi.Persistence.Entities.Review;
-import is.hi.hbv501g.reithi.Persistence.Repositories.CourseRepository;
 import is.hi.hbv501g.reithi.Persistence.Repositories.ReviewRepository;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,29 +12,28 @@ import java.util.List;
 @Service
 public class ReviewServiceImplementation implements ReviewService {
 
-    private HashMap<Long, Boolean> changesOverall = new HashMap();
+    private HashMap<Long, Boolean> changesOverall = new HashMap<>();
 
-    private HashMap<Long, Boolean> changesDifficulty = new HashMap();
+    private HashMap<Long, Boolean> changesDifficulty = new HashMap<>();
 
-    private HashMap<Long, Boolean> changesWorkload = new HashMap();
+    private HashMap<Long, Boolean> changesWorkload = new HashMap<>();
 
-    private HashMap<Long, Boolean> changesTeachingQuality = new HashMap();
+    private HashMap<Long, Boolean> changesTeachingQuality = new HashMap<>();
 
-    private HashMap<Long, Boolean> changesCourseMaterial = new HashMap();
+    private HashMap<Long, Boolean> changesCourseMaterial = new HashMap<>();
 
+    private HashMap<Long, Double> latestOverall = new HashMap<>();
 
-    private HashMap<Long, Double> latestOverall = new HashMap();
+    private HashMap<Long, Double> latestDifficulty = new HashMap<>();
 
-    private HashMap<Long, Double> latestDifficulty = new HashMap();
+    private HashMap<Long, Double> latestWorkload = new HashMap<>();
 
-    private HashMap<Long, Double> latestWorkload = new HashMap();
+    private HashMap<Long, Double> latestTeachingQuality = new HashMap<>();
 
-    private HashMap<Long, Double> latestTeachingQuality = new HashMap();
-
-    private HashMap<Long, Double> latestCourseMaterial = new HashMap();
-
+    private HashMap<Long, Double> latestCourseMaterial = new HashMap<>();
 
     private ReviewRepository reviewRepository;
+
     private int id_counter = 0;
 
     @Autowired
@@ -44,6 +42,19 @@ public class ReviewServiceImplementation implements ReviewService {
     }
 
     public ReviewServiceImplementation() {
+    }
+
+    private Double calculateAverage(long ID, List<Review> list, double sum, HashMap<Long, Boolean> changes, HashMap<Long, Double> latest) {
+        if (list.size() == 0) {
+            double workload = 0.0;
+            changes.put(ID, false);
+            latest.put(ID, workload);
+            return workload;
+        }
+        double workload = sum / list.size();
+        changes.put(ID, false);
+        latest.put(ID, workload);
+        return workload;
     }
 
     /**
@@ -59,19 +70,10 @@ public class ReviewServiceImplementation implements ReviewService {
         } else {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
-            for (int i = 0; i < list.size(); i++) {
-                sum += list.get(i).getRating().getOverallScore();
+            for (Review review : list) {
+                sum += review.getRating().getOverallScore();
             }
-            if (list.size() == 0) {
-                double overall = 0.0;
-                changesOverall.put(ID, false);
-                latestOverall.put(ID, overall);
-                return overall;
-            }
-            double overall = sum / list.size();
-            changesOverall.put(ID, false);
-            latestOverall.put(ID, overall);
-            return overall;
+            return calculateAverage(ID, list, sum, changesOverall, latestOverall);
         }
     }
 
@@ -88,19 +90,10 @@ public class ReviewServiceImplementation implements ReviewService {
         } else {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
-            for (int i = 0; i < list.size(); i++) {
-                sum += list.get(i).getRating().getDifficulty();
+            for (Review review : list) {
+                sum += review.getRating().getDifficulty();
             }
-            if (list.size() == 0) {
-                double difficulty = 0.0;
-                changesDifficulty.put(ID, false);
-                latestDifficulty.put(ID, difficulty);
-                return difficulty;
-            }
-            double difficulty = sum / list.size();
-            changesDifficulty.put(ID, false);
-            latestDifficulty.put(ID, difficulty);
-            return difficulty;
+            return calculateAverage(ID, list, sum, changesDifficulty, latestDifficulty);
         }
     }
 
@@ -117,19 +110,10 @@ public class ReviewServiceImplementation implements ReviewService {
         } else {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
-            for (int i = 0; i < list.size(); i++) {
-                sum += list.get(i).getRating().getWorkload();
+            for (Review review : list) {
+                sum += review.getRating().getWorkload();
             }
-            if (list.size() == 0) {
-                double workload = 0.0;
-                changesWorkload.put(ID, false);
-                latestWorkload.put(ID, workload);
-                return workload;
-            }
-            double workload = sum / list.size();
-            changesWorkload.put(ID, false);
-            latestWorkload.put(ID, workload);
-            return workload;
+            return calculateAverage(ID, list, sum, changesWorkload, latestWorkload);
         }
     }
 
@@ -146,19 +130,10 @@ public class ReviewServiceImplementation implements ReviewService {
         } else {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
-            for (int i = 0; i < list.size(); i++) {
-                sum += list.get(i).getRating().getTeachingQuality();
+            for (Review review : list) {
+                sum += review.getRating().getTeachingQuality();
             }
-            if (list.size() == 0) {
-                double teachingQuality = 0.0;
-                changesTeachingQuality.put(ID, false);
-                latestTeachingQuality.put(ID, teachingQuality);
-                return teachingQuality;
-            }
-            double teachingQuality = sum / list.size();
-            changesTeachingQuality.put(ID, false);
-            latestTeachingQuality.put(ID, teachingQuality);
-            return teachingQuality;
+            return calculateAverage(ID, list, sum, changesTeachingQuality, latestTeachingQuality);
         }
     }
 
@@ -175,19 +150,10 @@ public class ReviewServiceImplementation implements ReviewService {
         } else {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
-            for (int i = 0; i < list.size(); i++) {
-                sum += list.get(i).getRating().getCourseMaterial();
+            for (Review review : list) {
+                sum += review.getRating().getCourseMaterial();
             }
-            if (list.size() == 0) {
-                double courseMaterial = 0.0;
-                changesCourseMaterial.put(ID, false);
-                latestCourseMaterial.put(ID, courseMaterial);
-                return courseMaterial;
-            }
-            double courseMaterial = sum / list.size();
-            changesCourseMaterial.put(ID, false);
-            latestCourseMaterial.put(ID, courseMaterial);
-            return courseMaterial;
+            return calculateAverage(ID, list, sum, changesCourseMaterial, latestCourseMaterial);
         }
     }
 
@@ -196,23 +162,23 @@ public class ReviewServiceImplementation implements ReviewService {
         return reviewRepository.findAll();
     }
 
-    @Override
-    public Review save(Review review) {
+    private void updateChangesHashmaps(Review review) {
         changesOverall.put(review.getCourse().getID(), true);
         changesDifficulty.put(review.getCourse().getID(), true);
         changesWorkload.put(review.getCourse().getID(), true);
         changesTeachingQuality.put(review.getCourse().getID(), true);
         changesCourseMaterial.put(review.getCourse().getID(), true);
+    }
+
+    @Override
+    public Review save(Review review) {
+        updateChangesHashmaps(review);
         return reviewRepository.save(review);
     }
 
     @Override
     public void delete(Review review) {
-        changesOverall.put(review.getCourse().getID(), true);
-        changesDifficulty.put(review.getCourse().getID(), true);
-        changesWorkload.put(review.getCourse().getID(), true);
-        changesTeachingQuality.put(review.getCourse().getID(), true);
-        changesCourseMaterial.put(review.getCourse().getID(), true);
+        updateChangesHashmaps(review);
         reviewRepository.delete(review);
     }
 

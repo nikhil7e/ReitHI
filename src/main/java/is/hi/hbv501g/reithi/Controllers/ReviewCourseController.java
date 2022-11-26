@@ -53,6 +53,7 @@ public class ReviewCourseController {
         setScores(session, id, reviewService);
         List<Review> reviewSearchResults = reviewService.findByCourse_Name((selectedCourse.getName()));
         session.setAttribute("reviewsForCourse", reviewSearchResults);
+        session.setAttribute("currentPage", "viewCourse");
         return "viewCourse";
     }
 
