@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * This controller handles HTTP requests for searching for courses
  */
-@Controller
+@RestController
 public class LandingPageRESTController {
 
     private CourseService courseService;
@@ -53,7 +53,7 @@ public class LandingPageRESTController {
      * @return The search results page template
      */
     @RequestMapping(value = "/api/searchcourses", method = RequestMethod.POST)
-    public List<Course> searchCoursesPOST(@RequestParam("name") String name, Model model, HttpSession session) {
+    public List<Course> searchCoursesPOST(@RequestParam("name") String name) {
         List<Course> courseSearchResults = courseService.findByNameContainingIgnoreCase(name);
         List<CourseRating> courseRatingList = new ArrayList<>();
         for (int i = 0; i < courseSearchResults.size(); i++) {
@@ -81,9 +81,9 @@ public class LandingPageRESTController {
             courseRatingList.add(courseRating);
             courseRatingList.get(courseSearchResults.indexOf(course)).getAvgOverall();
         }
-        model.addAttribute("courseSearchResults", courseSearchResults);
-        model.addAttribute("courseRatingList", courseRatingList);
-        session.setAttribute("currentPage", "searchResults");
+//        model.addAttribute("courseSearchResults", courseSearchResults);
+//        model.addAttribute("courseRatingList", courseRatingList);
+//        session.setAttribute("currentPage", "searchResults");
         return courseSearchResults;
     }
 
