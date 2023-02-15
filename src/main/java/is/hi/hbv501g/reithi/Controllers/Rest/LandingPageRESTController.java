@@ -32,18 +32,6 @@ public class LandingPageRESTController {
         this.reviewService = reviewService;
     }
 
-
-/*    *//**
-     * Return the landing pages' template on root HTTP request
-     *
-     * @return The landing pages' template
-     *//*
-    @RequestMapping("/")
-    public String landingPage(HttpSession session) {
-        session.setAttribute("currentPage", "landingPage");
-        return "landingPage";
-    }*/
-
     /**
      * Update the model with the users' course search input and return the search results
      * page template
