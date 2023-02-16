@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This controller handles HTTP requests for searching for courses
+ * This REST controller handles HTTP requests for searching for courses
  */
 @RestController
 public class LandingPageRESTController {
