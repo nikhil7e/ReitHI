@@ -1,10 +1,10 @@
 # ReitHÍ
 
-ReitHÍ is a website to enable students to make better decisions about the courses they choose. It allows users to rate, review and comment on courses, taught in the University of Iceland.
+ReitHÍ is a website that enables students to make better informed decisions about the courses they choose to enroll in. It gives users the opportunity to rate, review and comment on courses that are taught in the University of Iceland.
 
-**A hosted demo is available on Heroku to try out, deployed from the deployment branch:**
+**A hosted demo is available on Railway to try out, deployed from the main branch:**
 
-* https://reithi.herokuapp.com/
+* https://reithi-production.up.railway.app/
 
 ## File format:
 The file format for the website can roughly be described with the following bullet points:
@@ -19,7 +19,7 @@ The file format for the website can roughly be described with the following bull
 ## Required setup to run the project:
 The available version shown above uses a database hosted on SupaBase. The database contains a table corresponding to each repository and when setting up the database, please make sure to allow for null values since the data can be patchy. The data is scraped from https://www.hi.is/ using Web Scraper, but requires quite a bit of data massage since the course pages can vary a lot.
 ## Additional information:
-* General rules for using the reitHÍ website:
+* General rules for using the ReitHÍ website:
     - Be respectful when leaving comments on courses.
     - Don't use the same passwords for your account you use anywhere else.
     - Don't mention individual teachers when rating a course.
