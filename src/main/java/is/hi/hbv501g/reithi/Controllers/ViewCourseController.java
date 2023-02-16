@@ -147,14 +147,12 @@ public class ViewCourseController {
         List<Review> allReviews = user.getReviews();
         allReviews.remove(review);
         user.setReviews(allReviews);
-        //userService.save(user);
         for (int i = 0; i < review.getUpvoters().size(); i++) {
             review.removeUpvote(review.getUpvoters().get(i));
         }
         for (int i = 0; i < review.getDownvoters().size(); i++) {
             review.removeDownvote(review.getDownvoters().get(i));
         }
-        //review.setUser(null);
         reviewService.save(review);
         reviewService.delete(review);
         session.setAttribute("hasReviewedCourse", false);
