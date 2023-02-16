@@ -2,9 +2,9 @@
 
 ReitHÍ is a website to enable students to make better decisions about the courses they choose. It allows users to rate, review and comment on courses, taught in the University of Iceland.
 
-**A hosted demo is available on Heroku to try out, deployed from the deployment branch:**
+**A hosted demo is available on Railway to try out, deployed from the main branch:**
 
-* https://reithi.herokuapp.com/
+* https://reithi-production.up.railway.app/
 
 ## File format:
 The file format for the website can roughly be described with the following bullet points:
