@@ -1,6 +1,6 @@
 # ReitHÍ
 
-ReitHÍ is a website to enable students to make better decisions about the courses they choose. It allows users to rate, review and comment on courses, taught in the University of Iceland.
+ReitHÍ is a website that enables students to make better informed decisions about the courses they choose to enroll in. It gives users the opportunity to rate, review and comment on courses that are taught in the University of Iceland.
 
 **A hosted demo is available on Railway to try out, deployed from the main branch:**
 
