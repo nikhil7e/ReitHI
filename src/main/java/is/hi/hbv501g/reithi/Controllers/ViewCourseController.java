@@ -128,7 +128,7 @@ public class ViewCourseController {
      * @param id      The courses id
      */
     public void refreshViewCourse(HttpSession session, long id) {
-        ReviewCourseController.setScores(session, id, reviewService);
+        ReviewCourseController.setScores(session, id, reviewService, courseService);
         List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
         session.setAttribute("reviewsForCourse", reviewSearchResults);
     }

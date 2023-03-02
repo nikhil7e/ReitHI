@@ -46,11 +46,29 @@ public class Course {
 
     private String professor_URL;
 
+    @ColumnDefault("0")
     private Integer totalOverallScore;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Review> reviews;
 
+    @ColumnDefault("0")
+    private double totalOverall;
+
+    @ColumnDefault("0")
+    private double totalDifficulty;
+
+    @ColumnDefault("0")
+    private double totalWorkload;
+
+    @ColumnDefault("0")
+    private double totalTeachingQuality;
+
+    @ColumnDefault("0")
+    private double totalCourseMaterial;
+
+    @ColumnDefault("0")
+    private int nrReviews;
 
 
     public Course() {
@@ -230,4 +248,56 @@ public class Course {
         this.totalOverallScore = totalOverallScore;
     }
 
+
+    public void setTotalOverallScore(Integer totalOverallScore) {
+        this.totalOverallScore = totalOverallScore;
+    }
+
+    public double getTotalOverall() {
+        return totalOverall;
+    }
+
+    public void setTotalOverall(double totalOverall) {
+        this.totalOverall = totalOverall;
+    }
+
+    public double getTotalDifficulty() {
+        return totalDifficulty;
+    }
+
+    public void setTotalDifficulty(double totalDifficulty) {
+        this.totalDifficulty = totalDifficulty;
+    }
+
+    public double getTotalWorkload() {
+        return totalWorkload;
+    }
+
+    public void setTotalWorkload(double totalWorkload) {
+        this.totalWorkload = totalWorkload;
+    }
+
+    public double getTotalTeachingQuality() {
+        return totalTeachingQuality;
+    }
+
+    public void setTotalTeachingQuality(double totalTeachingQuality) {
+        this.totalTeachingQuality = totalTeachingQuality;
+    }
+
+    public double getTotalCourseMaterial() {
+        return totalCourseMaterial;
+    }
+
+    public void setTotalCourseMaterial(double totalCourseMaterial) {
+        this.totalCourseMaterial = totalCourseMaterial;
+    }
+
+    public int getNrReviews() {
+        return nrReviews;
+    }
+
+    public void setNrReviews(int nrReviews) {
+        this.nrReviews = nrReviews;
+    }
 }

@@ -61,13 +61,25 @@ public class LandingPageController {
             long id = course.getID();
 
             DecimalFormat df = new DecimalFormat("0.00");
+            double avgOverall;
+            double avgDifficulty;
+            double avgWorkload;
+            double avgTeachingQuality;
+            double avgCourseMaterial;
 
-            double avgOverall = Double.parseDouble(df.format(reviewService.getAverageOverallScore(id)));
-            double avgDifficulty = Double.parseDouble(df.format(reviewService.getAverageDifficulty(id)));
-            double avgWorkload = Double.parseDouble(df.format(reviewService.getAverageWorkload(id)));
-            double avgTeachingQuality = Double.parseDouble(df.format(reviewService.getAverageTeachingQuality(id)));
-            double avgCourseMaterial = Double.parseDouble(df.format(reviewService.getAverageCourseMaterial(id)));
-
+            if (course.getNrReviews() == 0) {
+                avgOverall = 0;
+                avgDifficulty = 0;
+                avgWorkload = 0;
+                avgTeachingQuality = 0;
+                avgCourseMaterial = 0;
+            } else {
+                avgOverall = Double.parseDouble(df.format(course.getTotalOverall() / course.getNrReviews()));
+                avgDifficulty = Double.parseDouble(df.format(course.getTotalDifficulty() / course.getNrReviews()));
+                avgWorkload = Double.parseDouble(df.format(course.getTotalWorkload() / course.getNrReviews()));
+                avgTeachingQuality = Double.parseDouble(df.format(course.getTotalTeachingQuality() / course.getNrReviews()));
+                avgCourseMaterial = Double.parseDouble(df.format(course.getTotalCourseMaterial() / course.getNrReviews()));
+            }
             CourseRating courseRating = new CourseRating(
                     course.getID(),
                     avgOverall,
@@ -79,7 +91,6 @@ public class LandingPageController {
 
             courseRating.setID(id);
             courseRatingList.add(courseRating);
-            courseRatingList.get(courseSearchResults.indexOf(course)).getAvgOverall();
         }
         model.addAttribute("courseSearchResults", courseSearchResults);
         model.addAttribute("courseRatingList", courseRatingList);
