@@ -46,12 +46,14 @@ public class ReviewCourseController {
 
         User user = (User) session.getAttribute("LoggedInUser");
         Course selectedCourse = (Course) session.getAttribute("selectedCourse");
+        selectedCourse.setNrReviews(selectedCourse.getNrReviews() + 1);
         reviewService.save(new Review(user, rating, comment, selectedCourse));
         selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() + rating.getOverallScore());
         selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() + rating.getDifficulty());
         selectedCourse.setTotalWorkload(selectedCourse.getTotalWorkload() + rating.getWorkload());
         selectedCourse.setTotalTeachingQuality(selectedCourse.getTotalTeachingQuality() + rating.getTeachingQuality());
         selectedCourse.setTotalCourseMaterial(selectedCourse.getTotalCourseMaterial() + rating.getCourseMaterial());
+        courseService.save(selectedCourse);
         session.setAttribute("hasReviewedCourse", true);
 
         long id = ((Course) session.getAttribute("selectedCourse")).getID();
@@ -72,11 +74,11 @@ public class ReviewCourseController {
     public static void setScores(HttpSession session, long id, ReviewService reviewService, CourseService courseService) {
         Course course = courseService.findByID(id);
 
-        session.setAttribute("avgOAS", course.getTotalOverall()/course.getNrReviews());
-        session.setAttribute("avgD", course.getTotalDifficulty()/course.getNrReviews());
-        session.setAttribute("avgW", course.getTotalWorkload()/course.getNrReviews());
-        session.setAttribute("avgTQ", course.getTotalTeachingQuality()/course.getNrReviews());
-        session.setAttribute("avgCM", course.getTotalCourseMaterial()/course.getNrReviews());
+        session.setAttribute("avgOAS", course.getTotalOverall() / course.getNrReviews());
+        session.setAttribute("avgD", course.getTotalDifficulty() / course.getNrReviews());
+        session.setAttribute("avgW", course.getTotalWorkload() / course.getNrReviews());
+        session.setAttribute("avgTQ", course.getTotalTeachingQuality() / course.getNrReviews());
+        session.setAttribute("avgCM", course.getTotalCourseMaterial() / course.getNrReviews());
     }
 
 }

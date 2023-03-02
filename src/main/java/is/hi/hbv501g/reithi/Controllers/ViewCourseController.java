@@ -143,6 +143,16 @@ public class ViewCourseController {
     @RequestMapping(value = "/deletereview/{id}", method = RequestMethod.GET)
     public String deleteReviewGET(@PathVariable("id") long id, HttpSession session) {
         Review review = reviewService.findByID(id);
+        Course selectedCourse = (Course) session.getAttribute("selectedCourse");
+        selectedCourse.setNrReviews(selectedCourse.getNrReviews() - 1);
+
+        selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() - review.getRating().getOverallScore());
+        selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() - review.getRating().getDifficulty());
+        selectedCourse.setTotalWorkload(selectedCourse.getTotalWorkload() - review.getRating().getWorkload());
+        selectedCourse.setTotalTeachingQuality(selectedCourse.getTotalTeachingQuality() - review.getRating().getTeachingQuality());
+        selectedCourse.setTotalCourseMaterial(selectedCourse.getTotalCourseMaterial() - review.getRating().getCourseMaterial());
+
+        courseService.save(selectedCourse);
         User user = review.getUser();
         List<Review> allReviews = user.getReviews();
         allReviews.remove(review);

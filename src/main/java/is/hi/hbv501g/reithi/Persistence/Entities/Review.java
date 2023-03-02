@@ -12,11 +12,11 @@ public class Review {
     private long ID;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private User user;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Comment comment;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Course course;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "review",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Rating rating;
 
     @ManyToMany(cascade = {CascadeType.DETACH})
