@@ -51,6 +51,8 @@ public class Course {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
+
+
     public Course() {
 
     }

@@ -6,11 +6,8 @@ import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import is.hi.hbv501g.reithi.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +16,14 @@ import java.util.List;
  * This REST controller handles HTTP requests for searching for courses
  */
 @RestController
-public class LandingPageRESTController {
+public class CourseRESTController {
 
     private CourseService courseService;
     private UserService userService;
     private ReviewService reviewService;
 
     @Autowired
-    public LandingPageRESTController(CourseService courseService, UserService userService, ReviewService reviewService) {
+    public CourseRESTController(CourseService courseService, UserService userService, ReviewService reviewService) {
         this.courseService = courseService;
         this.userService = userService;
         this.reviewService = reviewService;
@@ -37,7 +34,6 @@ public class LandingPageRESTController {
      * page template
      *
      * @param name  The users course name search input
-     * @param model The applications model
      * @return The search results page template
      */
     @RequestMapping(value = "/api/searchcourses", method = RequestMethod.POST)
@@ -69,9 +65,7 @@ public class LandingPageRESTController {
             courseRatingList.add(courseRating);
             courseRatingList.get(courseSearchResults.indexOf(course)).getAvgOverall();
         }
-//        model.addAttribute("courseSearchResults", courseSearchResults);
-//        model.addAttribute("courseRatingList", courseRatingList);
-//        session.setAttribute("currentPage", "searchResults");
+
         return courseSearchResults;
     }
 

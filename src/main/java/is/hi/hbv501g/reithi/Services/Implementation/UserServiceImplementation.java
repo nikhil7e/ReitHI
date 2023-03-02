@@ -39,6 +39,11 @@ public class UserServiceImplementation implements UserService {
         return userRepository.findByUserName(userName);
     }
 
+    @Override
+    public User findByID(long ID) {
+        return userRepository.findByID(ID);
+    }
+
     /**
      * Returns the given user if it exists in the database
      *
