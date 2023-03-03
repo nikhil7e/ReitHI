@@ -14,7 +14,7 @@ public class Comment {
 
     private String text;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private Review review;
 
     @OneToOne(fetch = FetchType.LAZY)

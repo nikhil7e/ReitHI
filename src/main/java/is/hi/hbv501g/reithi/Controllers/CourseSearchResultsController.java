@@ -77,18 +77,43 @@ public class CourseSearchResultsController {
         // Get course rating from selected course
         Course selectedCourse = (Course) session.getAttribute("selectedCourse");
         // Include rating data course in HTML
-        model.addAttribute("avgOAS", reviewService.getAverageOverallScore(selectedCourse.getID()));
-        model.addAttribute("avgD", reviewService.getAverageDifficulty(selectedCourse.getID()));
-        model.addAttribute("avgW", reviewService.getAverageWorkload(selectedCourse.getID()));
-        model.addAttribute("avgTQ", reviewService.getAverageTeachingQuality(selectedCourse.getID()));
-        model.addAttribute("avgCM", reviewService.getAverageCourseMaterial(selectedCourse.getID()));
-        session.setAttribute("selectedCourse", courseService.findByID(id));
-        session.setAttribute("avgOAS", reviewService.getAverageOverallScore(selectedCourse.getID()));
-        session.setAttribute("avgD", reviewService.getAverageDifficulty(selectedCourse.getID()));
-        session.setAttribute("avgW", reviewService.getAverageWorkload(selectedCourse.getID()));
-        session.setAttribute("avgTQ", reviewService.getAverageTeachingQuality(selectedCourse.getID()));
-        session.setAttribute("avgCM", reviewService.getAverageCourseMaterial(selectedCourse.getID()));
 
+//        model.addAttribute("avgOAS", reviewService.getAverageOverallScore(selectedCourse.getID()));
+//        model.addAttribute("avgD", reviewService.getAverageDifficulty(selectedCourse.getID()));
+//        model.addAttribute("avgW", reviewService.getAverageWorkload(selectedCourse.getID()));
+//        model.addAttribute("avgTQ", reviewService.getAverageTeachingQuality(selectedCourse.getID()));
+//        model.addAttribute("avgCM", reviewService.getAverageCourseMaterial(selectedCourse.getID()));
+//        session.setAttribute("selectedCourse", courseService.findByID(id));
+//        session.setAttribute("avgOAS", reviewService.getAverageOverallScore(selectedCourse.getID()));
+//        session.setAttribute("avgD", reviewService.getAverageDifficulty(selectedCourse.getID()));
+//        session.setAttribute("avgW", reviewService.getAverageWorkload(selectedCourse.getID()));
+//        session.setAttribute("avgTQ", reviewService.getAverageTeachingQuality(selectedCourse.getID()));
+//        session.setAttribute("avgCM", reviewService.getAverageCourseMaterial(selectedCourse.getID()));
+
+        if (selectedCourse.getNrReviews() == 0) {
+            model.addAttribute("avgOAS", 0);
+            model.addAttribute("avgD", 0);
+            model.addAttribute("avgW", 0);
+            model.addAttribute("avgTQ", 0);
+            model.addAttribute("avgCM", 0);
+            session.setAttribute("avgOAS", 0);
+            session.setAttribute("avgD", 0);
+            session.setAttribute("avgW", 0);
+            session.setAttribute("avgTQ", 0);
+            session.setAttribute("avgCM", 0);
+        } else {
+            model.addAttribute("avgOAS", selectedCourse.getTotalOverall() / selectedCourse.getNrReviews());
+            model.addAttribute("avgD", selectedCourse.getTotalDifficulty() / selectedCourse.getNrReviews());
+            model.addAttribute("avgW", selectedCourse.getTotalWorkload() / selectedCourse.getNrReviews());
+            model.addAttribute("avgTQ", selectedCourse.getTotalTeachingQuality() / selectedCourse.getNrReviews());
+            model.addAttribute("avgCM", selectedCourse.getTotalCourseMaterial() / selectedCourse.getNrReviews());
+            session.setAttribute("selectedCourse", courseService.findByID(id));
+            session.setAttribute("avgOAS", selectedCourse.getTotalOverall() / selectedCourse.getNrReviews());
+            session.setAttribute("avgD", selectedCourse.getTotalDifficulty() / selectedCourse.getNrReviews());
+            session.setAttribute("avgW", selectedCourse.getTotalWorkload() / selectedCourse.getNrReviews());
+            session.setAttribute("avgTQ", selectedCourse.getTotalTeachingQuality() / selectedCourse.getNrReviews());
+            session.setAttribute("avgCM", selectedCourse.getTotalCourseMaterial() / selectedCourse.getNrReviews());
+        }
         List<Review> reviewSearchResults = reviewService.findByCourse_Name(((Course) session.getAttribute("selectedCourse")).getName());
         session.setAttribute("reviewsForCourse", reviewSearchResults);
         session.setAttribute("currentPage", "viewCourse");

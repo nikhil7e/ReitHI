@@ -24,12 +24,14 @@ public class Rating {
     private int teachingQuality;
     @ColumnDefault("0")
     private int courseMaterial;
+    @OneToOne
+    private Review review;
 
 
     public Rating() {
     }
 
-    public Rating(User user, Course course, int overallScore, int difficulty, int workload, int teachingQuality, int courseMaterial) {
+    public Rating(User user, Course course, int overallScore, int difficulty, int workload, int teachingQuality, int courseMaterial, Review review) {
         this.user = user;
         this.course = course;
         this.overallScore = overallScore;
@@ -37,6 +39,15 @@ public class Rating {
         this.workload = workload;
         this.teachingQuality = teachingQuality;
         this.courseMaterial = courseMaterial;
+        this.review = review;
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
     }
 
     public User getUser() {
