@@ -49,7 +49,7 @@ public class Course {
     @ColumnDefault("0")
     private Integer totalOverallScore;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Review> reviews;
 
     @ColumnDefault("0")
