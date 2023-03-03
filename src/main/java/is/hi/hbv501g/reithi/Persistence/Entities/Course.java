@@ -70,38 +70,35 @@ public class Course {
     @ColumnDefault("0")
     private int nrReviews;
 
-
     public Course() {
 
     }
 
-    public Course(String name, String number, String type, Double credits, String semester, String level, String professor_Name, Professor professor, List<Review> reviews, Double minimumGrade, String assessment, String finalExam, String school, String faculty, String professor_Email, String professor_URL, String course_URL) {
+    public Course(String name, String number, String course_URL, String type, Double credits, String semester, String level, String professor_Name, Professor professor, Double minimumGrade, String assessment, String finalExam, String school, String faculty, String professor_Email, String professor_URL, Integer totalOverallScore, List<Review> reviews, double totalOverall, double totalDifficulty, double totalWorkload, double totalTeachingQuality, double totalCourseMaterial, int nrReviews) {
         this.name = name;
         this.number = number;
+        this.course_URL = course_URL;
         this.type = type;
         this.credits = credits;
         this.semester = semester;
         this.level = level;
+        this.professor_Name = professor_Name;
         this.professor = professor;
-        this.reviews = reviews;
         this.minimumGrade = minimumGrade;
         this.assessment = assessment;
-        this.professor_Name = professor_Name;
-        this.professor_Email = professor_Email;
-        this.professor_URL = professor_URL;
-        this.course_URL = course_URL;
         this.finalExam = finalExam;
         this.school = school;
         this.faculty = faculty;
-        this.totalOverallScore = 0;
-    }
-
-    public long getID() {
-        return ID;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
+        this.professor_Email = professor_Email;
+        this.professor_URL = professor_URL;
+        this.totalOverallScore = totalOverallScore;
+        this.reviews = reviews;
+        this.totalOverall = totalOverall;
+        this.totalDifficulty = totalDifficulty;
+        this.totalWorkload = totalWorkload;
+        this.totalTeachingQuality = totalTeachingQuality;
+        this.totalCourseMaterial = totalCourseMaterial;
+        this.nrReviews = nrReviews;
     }
 
     public String getName() {
@@ -118,6 +115,14 @@ public class Course {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getCourse_URL() {
+        return course_URL;
+    }
+
+    public void setCourse_URL(String course_URL) {
+        this.course_URL = course_URL;
     }
 
     public String getType() {
@@ -152,20 +157,20 @@ public class Course {
         this.level = level;
     }
 
+    public String getProfessor_Name() {
+        return professor_Name;
+    }
+
+    public void setProfessor_Name(String professor_Name) {
+        this.professor_Name = professor_Name;
+    }
+
     public Professor getProfessor() {
         return professor;
     }
 
     public void setProfessor(Professor professor) {
         this.professor = professor;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
     }
 
     public Double getMinimumGrade() {
@@ -208,14 +213,6 @@ public class Course {
         this.faculty = faculty;
     }
 
-    public String getCourse_URL() {
-        return course_URL;
-    }
-
-    public void setCourse_URL(String course_URL) {
-        this.course_URL = course_URL;
-    }
-
     public String getProfessor_Email() {
         return professor_Email;
     }
@@ -232,25 +229,20 @@ public class Course {
         this.professor_URL = professor_URL;
     }
 
-    public String getProfessor_Name() {
-        return professor_Name;
-    }
-
-    public void setProfessor_Name(String professor_Name) {
-        this.professor_Name = professor_Name;
-    }
-
-    public int getTotalOverallScore() {
+    public Integer getTotalOverallScore() {
         return totalOverallScore;
     }
 
-    public void setTotalOverallScore(int totalOverallScore) {
+    public void setTotalOverallScore(Integer totalOverallScore) {
         this.totalOverallScore = totalOverallScore;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
 
-    public void setTotalOverallScore(Integer totalOverallScore) {
-        this.totalOverallScore = totalOverallScore;
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public double getTotalOverall() {
@@ -299,5 +291,13 @@ public class Course {
 
     public void setNrReviews(int nrReviews) {
         this.nrReviews = nrReviews;
+    }
+
+    public long getID() {
+        return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
     }
 }
