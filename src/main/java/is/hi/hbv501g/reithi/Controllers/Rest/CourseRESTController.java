@@ -38,35 +38,7 @@ public class CourseRESTController {
      */
     @RequestMapping(value = "/api/searchcourses", method = RequestMethod.POST)
     public List<Course> searchCoursesPOST(@RequestParam("name") String name) {
-        List<Course> courseSearchResults = courseService.findByNameContainingIgnoreCase(name);
-        List<CourseRating> courseRatingList = new ArrayList<>();
-        for (int i = 0; i < courseSearchResults.size(); i++) {
-            Course course = courseSearchResults.get(i);
-            long id = course.getID();
-
-            DecimalFormat df = new DecimalFormat("0.00");
-
-            double avgOverall = Double.parseDouble(df.format(reviewService.getAverageOverallScore(id)));
-            double avgDifficulty = Double.parseDouble(df.format(reviewService.getAverageDifficulty(id)));
-            double avgWorkload = Double.parseDouble(df.format(reviewService.getAverageWorkload(id)));
-            double avgTeachingQuality = Double.parseDouble(df.format(reviewService.getAverageTeachingQuality(id)));
-            double avgCourseMaterial = Double.parseDouble(df.format(reviewService.getAverageCourseMaterial(id)));
-
-            CourseRating courseRating = new CourseRating(
-                    course.getID(),
-                    avgOverall,
-                    avgDifficulty,
-                    avgWorkload,
-                    avgTeachingQuality,
-                    avgCourseMaterial
-            );
-
-            courseRating.setID(id);
-            courseRatingList.add(courseRating);
-            courseRatingList.get(courseSearchResults.indexOf(course)).getAvgOverall();
-        }
-
-        return courseSearchResults;
+        return courseService.findByNameContainingIgnoreCase(name);
     }
 
 }
