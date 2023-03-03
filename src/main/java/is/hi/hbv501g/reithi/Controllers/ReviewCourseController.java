@@ -74,11 +74,19 @@ public class ReviewCourseController {
     public static void setScores(HttpSession session, long id, ReviewService reviewService, CourseService courseService) {
         Course course = courseService.findByID(id);
 
-        session.setAttribute("avgOAS", course.getTotalOverall() / course.getNrReviews());
-        session.setAttribute("avgD", course.getTotalDifficulty() / course.getNrReviews());
-        session.setAttribute("avgW", course.getTotalWorkload() / course.getNrReviews());
-        session.setAttribute("avgTQ", course.getTotalTeachingQuality() / course.getNrReviews());
-        session.setAttribute("avgCM", course.getTotalCourseMaterial() / course.getNrReviews());
+        if(course.getNrReviews() == 0) {
+            session.setAttribute("avgOAS", 0);
+            session.setAttribute("avgD", 0);
+            session.setAttribute("avgW", 0);
+            session.setAttribute("avgTQ", 0);
+            session.setAttribute("avgCM", 0);
+        } else {
+            session.setAttribute("avgOAS", course.getTotalOverall() / course.getNrReviews());
+            session.setAttribute("avgD", course.getTotalDifficulty() / course.getNrReviews());
+            session.setAttribute("avgW", course.getTotalWorkload() / course.getNrReviews());
+            session.setAttribute("avgTQ", course.getTotalTeachingQuality() / course.getNrReviews());
+            session.setAttribute("avgCM", course.getTotalCourseMaterial() / course.getNrReviews());
+        }
     }
 
 }
