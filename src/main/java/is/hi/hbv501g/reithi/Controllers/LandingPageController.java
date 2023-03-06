@@ -6,6 +6,7 @@ import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import is.hi.hbv501g.reithi.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,8 +54,10 @@ public class LandingPageController {
      * @return The search results page template
      */
     @RequestMapping(value = "/searchcourses", method = RequestMethod.POST)
-    public String searchCoursesPOST(@RequestParam("name") String name, Model model, HttpSession session) {
-        List<Course> courseSearchResults = courseService.findByNameContainingIgnoreCase(name);
+    public String searchCoursesPOST(@RequestParam("name") String name, @RequestParam(defaultValue = "0") int page, Model model, HttpSession session) {
+        Page<Course> courseSearchResultsPage = courseService.findByNameContainingIgnoreCase(name, page);
+        List<Course> courseSearchResults = courseSearchResultsPage.getContent();
+
         List<CourseRating> courseRatingList = new ArrayList<>();
         for (int i = 0; i < courseSearchResults.size(); i++) {
             Course course = courseSearchResults.get(i);
@@ -94,6 +97,7 @@ public class LandingPageController {
         }
         model.addAttribute("courseSearchResults", courseSearchResults);
         model.addAttribute("courseRatingList", courseRatingList);
+        model.addAttribute("courseSearchPage", courseSearchResultsPage);
         session.setAttribute("currentPage", "searchResults");
         return "searchResults";
     }

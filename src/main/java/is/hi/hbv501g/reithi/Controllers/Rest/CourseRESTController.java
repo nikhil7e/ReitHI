@@ -38,7 +38,8 @@ public class CourseRESTController {
      */
     @RequestMapping(value = "/api/searchcourses", method = RequestMethod.POST)
     public List<Course> searchCoursesPOST(@RequestParam("name") String name) {
-        return courseService.findByNameContainingIgnoreCase(name);
+        //return courseService.findByNameContainingIgnoreCase(name);
+        return null;
     }
 
 }

@@ -4,6 +4,9 @@ import is.hi.hbv501g.reithi.Persistence.Entities.Course;
 import is.hi.hbv501g.reithi.Persistence.Repositories.CourseRepository;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,8 +32,9 @@ public class CourseServiceImplementation implements CourseService {
      * @return A list of courses that exactly match the name parameter
      */
     @Override
-    public List<Course> findByName(String name) {
-        return courseRepository.findByName(name);
+    public Page<Course> findByName(String name, int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return courseRepository.findByName(name, pageable);
     }
 
     /**
@@ -40,8 +44,9 @@ public class CourseServiceImplementation implements CourseService {
      * @return A list of courses that contain the name parameter
      */
     @Override
-    public List<Course> findByNameContainingIgnoreCase(String name) {
-        return courseRepository.findByNameContainingIgnoreCase(name);
+    public Page<Course> findByNameContainingIgnoreCase(String name, int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return courseRepository.findByNameContainingIgnoreCase(name, pageable);
     }
 
     /**
@@ -50,8 +55,9 @@ public class CourseServiceImplementation implements CourseService {
      * @return A list of all courses stored in the database
      */
     @Override
-    public List<Course> findAll() {
-        return courseRepository.findAll();
+    public Page<Course> findAll(int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return courseRepository.findAll(pageable);
     }
 
     /**
