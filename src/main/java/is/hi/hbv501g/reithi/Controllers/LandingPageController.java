@@ -59,9 +59,6 @@ public class LandingPageController {
     public String searchCoursesGET(@RequestParam("name") String name, @RequestParam(defaultValue = "1") int page, Model model, HttpSession session) {
         Page<Course> courseSearchResultsPage = courseService.findByNameContainingIgnoreCase(name, page - 1);
         List<Course> courseSearchResults = courseSearchResultsPage.getContent();
-        boolean x = courseSearchResultsPage.hasPrevious();
-        boolean y = courseSearchResultsPage.hasNext();
-
 
         List<CourseRating> courseRatingList = new ArrayList<>();
         for (Course course : courseSearchResults) {

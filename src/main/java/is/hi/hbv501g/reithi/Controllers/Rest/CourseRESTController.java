@@ -6,6 +6,7 @@ import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import is.hi.hbv501g.reithi.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.DecimalFormat;
@@ -36,10 +37,9 @@ public class CourseRESTController {
      * @param name  The users course name search input
      * @return The search results page template
      */
-    @RequestMapping(value = "/api/searchcourses", method = RequestMethod.POST)
-    public List<Course> searchCoursesPOST(@RequestParam("name") String name) {
-        //return courseService.findByNameContainingIgnoreCase(name);
-        return null;
+    @RequestMapping(value = "/api/searchcourses", method = RequestMethod.GET)
+    public Page<Course> searchCoursesGET(@RequestParam("name") String name) {
+        return courseService.findByNameContainingIgnoreCase(name, 20);
     }
 
 }
