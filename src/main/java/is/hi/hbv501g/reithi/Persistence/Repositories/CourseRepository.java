@@ -4,6 +4,7 @@ import is.hi.hbv501g.reithi.Persistence.Entities.Course;
 import is.hi.hbv501g.reithi.Persistence.Entities.CourseSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -19,10 +20,14 @@ public interface CourseRepository extends JpaRepository<Course, Long>, JpaSpecif
 
     Page<Course> findAll(Pageable pageable);
 
+    Page<Course> findAll(Specification<Course> spec, Pageable pageable);
+
     // List<Course> findAll(CourseSpecification spec);
     Page<Course> findByName(String name, Pageable pageable);
 
     Page<Course> findByNameContainingIgnoreCase(String name, Pageable pageable);
+
+    Page<Course> findByNameContainingIgnoreCase(String name, Pageable pageable, Specification<Course> spec);
 
     Course findByID(long ID);
 

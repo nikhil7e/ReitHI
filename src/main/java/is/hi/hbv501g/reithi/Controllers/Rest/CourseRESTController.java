@@ -2,11 +2,14 @@ package is.hi.hbv501g.reithi.Controllers.Rest;
 
 import is.hi.hbv501g.reithi.Persistence.Entities.Course;
 import is.hi.hbv501g.reithi.Persistence.Entities.CourseRating;
+import is.hi.hbv501g.reithi.Persistence.Entities.CourseSpecification;
+import is.hi.hbv501g.reithi.Persistence.Entities.SearchCriteria;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import is.hi.hbv501g.reithi.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.DecimalFormat;
@@ -34,12 +37,24 @@ public class CourseRESTController {
      * Update the model with the users' course search input and return the search results
      * page template
      *
-     * @param name  The users course name search input
+     * @param name The users course name search input
      * @return The search results page template
      */
     @RequestMapping(value = "/api/searchcourses", method = RequestMethod.GET)
     public Page<Course> searchCoursesGET(@RequestParam("name") String name) {
         return courseService.findByNameContainingIgnoreCase(name, 20);
+    }
+
+    // FOR TESTING PURPOSES, ADJUST
+    @RequestMapping(value = "/api/filter", method = RequestMethod.GET)
+    public List<Course> filterGET(@RequestParam("name") String name) {
+        CourseSpecification spec =
+                new CourseSpecification(new SearchCriteria("name", ":", name));
+        CourseSpecification spec2 =
+                new CourseSpecification(new SearchCriteria("nrReviews", ">", "1"));
+
+        return courseService.findAll(Specification.where(spec).and(spec2), 0).toList();
+        //return courseService.findByNameContainingIgnoreCase(name, 20);
     }
 
 }
