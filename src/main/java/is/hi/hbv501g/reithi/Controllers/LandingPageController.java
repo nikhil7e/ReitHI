@@ -9,13 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * This controller handles HTTP requests for searching for courses
@@ -53,14 +55,16 @@ public class LandingPageController {
      * @param model The applications model
      * @return The search results page template
      */
-    @RequestMapping(value = "/searchcourses", method = RequestMethod.POST)
-    public String searchCoursesPOST(@RequestParam("name") String name, @RequestParam(defaultValue = "0") int page, Model model, HttpSession session) {
-        Page<Course> courseSearchResultsPage = courseService.findByNameContainingIgnoreCase(name, page);
+    @RequestMapping(value = "/searchcourses", method = RequestMethod.GET)
+    public String searchCoursesGET(@RequestParam("name") String name, @RequestParam(defaultValue = "1") int page, Model model, HttpSession session) {
+        Page<Course> courseSearchResultsPage = courseService.findByNameContainingIgnoreCase(name, page - 1);
         List<Course> courseSearchResults = courseSearchResultsPage.getContent();
+        boolean x = courseSearchResultsPage.hasPrevious();
+        boolean y = courseSearchResultsPage.hasNext();
+
 
         List<CourseRating> courseRatingList = new ArrayList<>();
-        for (int i = 0; i < courseSearchResults.size(); i++) {
-            Course course = courseSearchResults.get(i);
+        for (Course course : courseSearchResults) {
             long id = course.getID();
 
             DecimalFormat df = new DecimalFormat("0.00");
@@ -95,9 +99,11 @@ public class LandingPageController {
             courseRating.setID(id);
             courseRatingList.add(courseRating);
         }
+
+        model.addAttribute("searchTerm", name);
         model.addAttribute("courseSearchResults", courseSearchResults);
         model.addAttribute("courseRatingList", courseRatingList);
-        model.addAttribute("courseSearchPage", courseSearchResultsPage);
+        model.addAttribute("courseSearchResultsPage", courseSearchResultsPage);
         session.setAttribute("currentPage", "searchResults");
         return "searchResults";
     }

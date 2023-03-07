@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Rate HÍ</title>
-    <link th:href="@{/styles/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/styles/css/styles.css}" rel="stylesheet"/>
     <script src="/scripts/filter.js" type="module"></script>
 </head>
 <body>
@@ -19,7 +19,7 @@
         <input type="submit" value="Sign up" th:formaction="@{/signup}"/>
     </form>
 
-    <p class="loggedInUser" th:if="${session.LoggedInUser != null}" , th:text="${session.LoggedInUser.userName}"></p>
+    <p class="loggedInUser" th:if="${session.LoggedInUser != null}" th:text="${session.LoggedInUser.userName}"></p>
     <form action="#" th:action="@{/logout}" method="get">
         <input th:if="${session.LoggedInUser != null}" type="submit" value="Log out"/>
     </form>
@@ -33,7 +33,7 @@
 <main>
     <div>
         <!--<h2>Search for a course</h2>-->
-        <form action="#" th:action="@{/searchcourses}" method="post">
+        <form action="#" th:action="@{/searchcourses/}" method="get">
             <!--<label for="name">Course name</label>-->
             <div class="searchbar">
                 <img class="search-icon"
@@ -66,15 +66,19 @@
                 <div class="range_container">
                     <div class="form_control_container">
                         <div class="form_control_container__time">Min</div>
-                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="30" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Credits-min"/>
+                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="30"
+                               step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Credits-min"/>
                     </div>
                     <div class="sliders_control">
-                        <input class="creditsSlideMin slideMin" type="range" min="0" max="30" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Credits-min"/>
-                        <input class="creditsSlideMax slideMax" type="range" min="0" max="30" step="1" value="30" oninput="updateTextInput()" onmouseup="hide()" name="Credits-max"/>
+                        <input class="creditsSlideMin slideMin" type="range" min="0" max="30" step="1" value="0"
+                               oninput="updateTextInput()" onmouseup="hide()" name="Credits-min"/>
+                        <input class="creditsSlideMax slideMax" type="range" min="0" max="30" step="1" value="30"
+                               oninput="updateTextInput()" onmouseup="hide()" name="Credits-max"/>
                     </div>
                     <div class="form_control_container">
                         <div class="form_control_container__time">Max</div>
-                        <input class="form_control_container__time__input toInput" type="number" min="0" max="30" step="1" value="30" oninput="updateTextInput()" onmouseup="hide()" name="Credits-max"/>
+                        <input class="form_control_container__time__input toInput" type="number" min="0" max="30"
+                               step="1" value="30" oninput="updateTextInput()" onmouseup="hide()" name="Credits-max"/>
                     </div>
                 </div>
 
@@ -94,15 +98,19 @@
                 <div class="range_container">
                     <div class="form_control_container">
                         <div class="form_control_container__time">Min</div>
-                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Overall-min"/>
+                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5"
+                               step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Overall-min"/>
                     </div>
                     <div class="sliders_control">
-                        <input class="overallSlideMin slideMin" type="range" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Overall-min"/>
-                        <input class="overallSlideMax slideMax" type="range" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Overall-max"/>
+                        <input class="overallSlideMin slideMin" type="range" min="0" max="5" step="1" value="0"
+                               oninput="updateTextInput()" onmouseup="hide()" name="Overall-min"/>
+                        <input class="overallSlideMax slideMax" type="range" min="0" max="5" step="1" value="5"
+                               oninput="updateTextInput()" onmouseup="hide()" name="Overall-max"/>
                     </div>
                     <div class="form_control_container">
                         <div class="form_control_container__time">Max</div>
-                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Overall-max"/>
+                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5"
+                               step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Overall-max"/>
                     </div>
                 </div>
 
@@ -122,15 +130,19 @@
                 <div class="range_container">
                     <div class="form_control_container">
                         <div class="form_control_container__time">Min</div>
-                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-min"/>
+                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5"
+                               step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-min"/>
                     </div>
                     <div class="sliders_control">
-                        <input class="difficultySlideMin slideMin" type="range" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-min"/>
-                        <input class="difficultySlideMax slideMax" type="range" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-max"/>
+                        <input class="difficultySlideMin slideMin" type="range" min="0" max="5" step="1" value="0"
+                               oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-min"/>
+                        <input class="difficultySlideMax slideMax" type="range" min="0" max="5" step="1" value="5"
+                               oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-max"/>
                     </div>
                     <div class="form_control_container">
                         <div class="form_control_container__time">Max</div>
-                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-max"/>
+                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5"
+                               step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Difficulty-max"/>
                     </div>
                 </div>
                 <!--<div class="mix">
@@ -148,15 +160,19 @@
                 <div class="range_container">
                     <div class="form_control_container">
                         <div class="form_control_container__time">Min</div>
-                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Workload-min"/>
+                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5"
+                               step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Workload-min"/>
                     </div>
                     <div class="sliders_control">
-                        <input class="workloadSlideMin slideMin" type="range" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Workload-min"/>
-                        <input class="workloadSlideMax slideMax" type="range" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Workload-max"/>
+                        <input class="workloadSlideMin slideMin" type="range" min="0" max="5" step="1" value="0"
+                               oninput="updateTextInput()" onmouseup="hide()" name="Workload-min"/>
+                        <input class="workloadSlideMax slideMax" type="range" min="0" max="5" step="1" value="5"
+                               oninput="updateTextInput()" onmouseup="hide()" name="Workload-max"/>
                     </div>
                     <div class="form_control_container">
                         <div class="form_control_container__time">Max</div>
-                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Workload-max"/>
+                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5"
+                               step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Workload-max"/>
                     </div>
                 </div>
 
@@ -175,15 +191,21 @@
                 <div class="range_container">
                     <div class="form_control_container">
                         <div class="form_control_container__time">Min</div>
-                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="TeachingQuality-min"/>
+                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5"
+                               step="1" value="0" oninput="updateTextInput()" onmouseup="hide()"
+                               name="TeachingQuality-min"/>
                     </div>
                     <div class="sliders_control">
-                        <input class="teachingQualitySlideMin slideMin" type="range" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="Overall-min"/>
-                        <input class="teachingQualitySlideMax slideMax" type="range" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="Overall-max"/>
+                        <input class="teachingQualitySlideMin slideMin" type="range" min="0" max="5" step="1" value="0"
+                               oninput="updateTextInput()" onmouseup="hide()" name="Overall-min"/>
+                        <input class="teachingQualitySlideMax slideMax" type="range" min="0" max="5" step="1" value="5"
+                               oninput="updateTextInput()" onmouseup="hide()" name="Overall-max"/>
                     </div>
                     <div class="form_control_container">
                         <div class="form_control_container__time">Max</div>
-                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="TeachingQuality-max"/>
+                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5"
+                               step="1" value="5" oninput="updateTextInput()" onmouseup="hide()"
+                               name="TeachingQuality-max"/>
                     </div>
                 </div>
                 <!--<div class="mix">
@@ -201,15 +223,21 @@
                 <div class="range_container">
                     <div class="form_control_container">
                         <div class="form_control_container__time">Min</div>
-                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="CourseMaterial-min"/>
+                        <input class="form_control_container__time__input fromInput" type="number" min="0" max="5"
+                               step="1" value="0" oninput="updateTextInput()" onmouseup="hide()"
+                               name="CourseMaterial-min"/>
                     </div>
                     <div class="sliders_control">
-                        <input class="courseMaterialSlideMin slideMin" type="range" min="0" max="5" step="1" value="0" oninput="updateTextInput()" onmouseup="hide()" name="CourseMaterial-min"/>
-                        <input class="courseMaterialSlideMax slideMax" type="range" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="CourseMaterial-max"/>
+                        <input class="courseMaterialSlideMin slideMin" type="range" min="0" max="5" step="1" value="0"
+                               oninput="updateTextInput()" onmouseup="hide()" name="CourseMaterial-min"/>
+                        <input class="courseMaterialSlideMax slideMax" type="range" min="0" max="5" step="1" value="5"
+                               oninput="updateTextInput()" onmouseup="hide()" name="CourseMaterial-max"/>
                     </div>
                     <div class="form_control_container">
                         <div class="form_control_container__time">Max</div>
-                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5" step="1" value="5" oninput="updateTextInput()" onmouseup="hide()" name="CourseMaterial-max"/>
+                        <input class="form_control_container__time__input toInput" type="number" min="0" max="5"
+                               step="1" value="5" oninput="updateTextInput()" onmouseup="hide()"
+                               name="CourseMaterial-max"/>
                     </div>
                 </div>
                 <!--<div class="mix">
@@ -255,7 +283,7 @@
         </table>
 
         -->
-    <div class="allSearchResults" th:unless="${courseSearchResults == null or courseSearchResults.empty}">
+        <div class="allSearchResults" th:unless="${courseSearchResults == null or courseSearchResults.empty}">
             <div class="searchResult" th:each="course : ${courseSearchResults}">
                 <a th:href="@{/viewcourse/{id}(id=${course.ID})}">
                     <p class="courseId" th:text="${course.number}"></p>
@@ -264,33 +292,41 @@
                         <div class="extraInfo">
                             <p class="courseCredits" th:text="${course.credits}+' credits'"> credits</p>
                             <p th:text="${course.professor_Name}"></p>
-                            <p class="level" th:text="${course.level}">  </p>
+                            <p class="level" th:text="${course.level}"></p>
                         </div>
                         <div class="extraInfo">
-                            <p class="overall" th:text="'Overall rating: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgOverall()}">Overall rating</p>
-                            <p class="difficulty" th:text="'Difficulty: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgDifficulty()}">Difficulty</p>
-                            <p class="workload" th:text="'Workload: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgWorkload()}">Workload</p>
+                            <p class="overall"
+                               th:text="'Overall rating: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgOverall()}">
+                                Overall rating</p>
+                            <p class="difficulty"
+                               th:text="'Difficulty: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgDifficulty()}">
+                                Difficulty</p>
+                            <p class="workload"
+                               th:text="'Workload: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgWorkload()}">
+                                Workload</p>
 
                         </div>
                         <div class="extraInfo">
-                            <p class="teachingQuality" th:text="'Teaching quality: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgTeachingQuality()}">Teaching quality</p>
-                            <p class="courseMaterial" th:text="'Course material: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgCourseMaterial()}">Course material</p>
+                            <p class="teachingQuality"
+                               th:text="'Teaching quality: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgTeachingQuality()}">
+                                Teaching quality</p>
+                            <p class="courseMaterial"
+                               th:text="'Course material: ' + ${courseRatingList.get(courseSearchResults.indexOf(course)).getAvgCourseMaterial()}">
+                                Course material</p>
                         </div>
                         <div class="rating">
                             <p class="overall"></p>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
+            <!--<p><a th:href="@{/delete/{id}(id=${course.ID})}">Delete</a></p>-->
+
         </div>
-        <!--<p><a th:href="@{/delete/{id}(id=${course.ID})}">Delete</a></p>-->
-
-
-    </div>
     </div>
     <!--
     <p><a href="/addcourse">Add a new course</a></p>
     -->
-    </div>
     <!--
     <div>
         <h2>Filter courses by:</h2>
@@ -309,6 +345,13 @@
         </form>
     </div>
     -->
+    <div th:if="${courseSearchResultsPage.getTotalPages() > 0}" class="pagination">
+
+        <a th:if="${courseSearchResultsPage.hasPrevious()}" th:href="@{/searchcourses(name=${searchTerm}, page=${ courseSearchResultsPage.getNumber()})}"
+           th:text="Previous" ></a>
+        <a th:if="${courseSearchResultsPage.hasNext()}" th:href="@{/searchcourses(name=${searchTerm}, page=${courseSearchResultsPage.getNumber()+2})}"
+           th:text="Next" ></a>
+    </div>
 </main>
 </body>
 </html>
