@@ -31,15 +31,13 @@ public class Rating {
     public Rating() {
     }
 
-    public Rating(User user, Course course, int overallScore, int difficulty, int workload, int teachingQuality, int courseMaterial, Review review) {
-        this.user = user;
+    public Rating(Course course, int overallScore, int difficulty, int workload, int teachingQuality, int courseMaterial) {
         this.course = course;
         this.overallScore = overallScore;
         this.difficulty = difficulty;
         this.workload = workload;
         this.teachingQuality = teachingQuality;
         this.courseMaterial = courseMaterial;
-        this.review = review;
     }
 
     public Review getReview() {
