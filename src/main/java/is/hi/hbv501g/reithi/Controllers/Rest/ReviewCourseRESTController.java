@@ -31,23 +31,31 @@ public class ReviewCourseRESTController {
         this.reviewService = reviewService;
     }
 
+    // TODO: Dont allow default user
+
     /**
      * Creates a review and saves it in the database. Returns the review object.
      *
      * @param comment The reviews optional comment
      * @param rating  The reviews rating
-     * @param result  The binding result
      * @return The course view page template
      */
     @RequestMapping(value = "/api/addreview", method = RequestMethod.POST)
     public Review addReviewPOST(@RequestParam("comment") Comment comment, @RequestParam("rating") Rating rating,
-                                @RequestParam("user") User user, @RequestParam("selectedCourse") Course selectedCourse,
-                                BindingResult result) {
-        if (result.hasErrors()) {
-            return null;
+                                @RequestParam("user") User user, @RequestParam("selectedCourse") Course selectedCourse) {
+        Review review;
+        if(user == null) {
+            review = reviewService.save(new Review(userService.login(new User("x", "x")), rating, comment, selectedCourse));
+        } else {
+            review = reviewService.save(new Review(user, rating, comment, selectedCourse));
         }
 
-        Review review = reviewService.save(new Review(user, rating, comment, selectedCourse));
+        selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() + rating.getOverallScore());
+        selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() + rating.getDifficulty());
+        selectedCourse.setTotalWorkload(selectedCourse.getTotalWorkload() + rating.getWorkload());
+        selectedCourse.setTotalTeachingQuality(selectedCourse.getTotalTeachingQuality() + rating.getTeachingQuality());
+        selectedCourse.setTotalCourseMaterial(selectedCourse.getTotalCourseMaterial() + rating.getCourseMaterial());
+        courseService.save(selectedCourse);
 //
 //        long id = ((Course) session.getAttribute("selectedCourse")).getID();
 //        setScores(session, id, reviewService);
