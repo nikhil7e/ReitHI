@@ -12,7 +12,7 @@ public class User {
     private long ID;
     private String userName;
     private String password;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = false)
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = false)
     private List<Review> reviews = new ArrayList<>();
 
 
