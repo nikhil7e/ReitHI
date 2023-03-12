@@ -7,10 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Objects;
@@ -18,7 +15,7 @@ import java.util.Objects;
 /**
  * This controller handles HTTP requests for user functionality, such as logging in, signing up and logging out.
  */
-@Controller
+@RestController
 public class UserRESTController {
 
     private UserService userService;
