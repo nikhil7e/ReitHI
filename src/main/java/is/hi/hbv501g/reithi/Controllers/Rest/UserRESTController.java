@@ -34,7 +34,7 @@ public class UserRESTController {
      * @param user The user to be saved in the database
      * @return The landing page template
      */
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/signup", method = RequestMethod.POST)
     public User signupPOST(@ModelAttribute("user") User user) {
         User exists = userService.findByUserName(user.getUserName());
 
@@ -50,7 +50,7 @@ public class UserRESTController {
      *
      * @return The landing page template
      */
-    @RequestMapping(value = "/finduser", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/finduser", method = RequestMethod.POST)
     public User getUserPOST(@ModelAttribute("username") String username) {
         return userService.findByUserName(username);
     }
@@ -61,7 +61,7 @@ public class UserRESTController {
      * @param user The user to be logged in
      * @return If the user account exists, send a GET request to /loggedin, else return the landing page template
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/login", method = RequestMethod.POST)
     public User loginPOST(@ModelAttribute("user") User user) {
         return userService.login(user);
     }
