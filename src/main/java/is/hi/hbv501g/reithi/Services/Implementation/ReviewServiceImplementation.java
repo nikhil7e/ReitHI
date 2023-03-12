@@ -71,7 +71,7 @@ public class ReviewServiceImplementation implements ReviewService {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
             for (Review review : list) {
-                sum += review.getRating().getOverallScore();
+                sum += review.getOverallScore();
             }
             return calculateAverage(ID, list, sum, changesOverall, latestOverall);
         }
@@ -91,7 +91,7 @@ public class ReviewServiceImplementation implements ReviewService {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
             for (Review review : list) {
-                sum += review.getRating().getDifficulty();
+                sum += review.getDifficulty();
             }
             return calculateAverage(ID, list, sum, changesDifficulty, latestDifficulty);
         }
@@ -111,7 +111,7 @@ public class ReviewServiceImplementation implements ReviewService {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
             for (Review review : list) {
-                sum += review.getRating().getWorkload();
+                sum += review.getWorkload();
             }
             return calculateAverage(ID, list, sum, changesWorkload, latestWorkload);
         }
@@ -131,7 +131,7 @@ public class ReviewServiceImplementation implements ReviewService {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
             for (Review review : list) {
-                sum += review.getRating().getTeachingQuality();
+                sum += review.getTeachingQuality();
             }
             return calculateAverage(ID, list, sum, changesTeachingQuality, latestTeachingQuality);
         }
@@ -151,7 +151,7 @@ public class ReviewServiceImplementation implements ReviewService {
             List<Review> list = reviewRepository.findByCourse_ID(ID);
             double sum = 0;
             for (Review review : list) {
-                sum += review.getRating().getCourseMaterial();
+                sum += review.getCourseMaterial();
             }
             return calculateAverage(ID, list, sum, changesCourseMaterial, latestCourseMaterial);
         }

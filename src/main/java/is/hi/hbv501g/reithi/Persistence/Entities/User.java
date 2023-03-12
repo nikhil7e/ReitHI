@@ -13,8 +13,6 @@ public class User {
     private String userName;
     private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = false)
-    private List<Rating> ratings = new ArrayList<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = false)
     private List<Review> reviews = new ArrayList<>();
 
 
@@ -40,14 +38,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Rating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
     }
 
     public List<Review> getReviews() {

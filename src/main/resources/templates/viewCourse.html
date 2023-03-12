@@ -117,23 +117,23 @@
                 <div class="rating">
                     <div>
                         <label>Overall rating</label>
-                        <p th:text="${review.rating.overallScore}"></p>
+                        <p th:text="${review.overallScore}"></p>
                     </div>
                     <div>
                         <label>Difficulty</label>
-                        <p th:text="${review.rating.difficulty}"></p>
+                        <p th:text="${review.difficulty}"></p>
                     </div>
                     <div>
                         <label>Work load</label>
-                        <p th:text="${review.rating.workload}"></p>
+                        <p th:text="${review.workload}"></p>
                     </div>
                     <div>
                         <label>Teaching quality</label>
-                        <p th:text="${review.rating.teachingQuality}"></p>
+                        <p th:text="${review.teachingQuality}"></p>
                     </div>
                     <div>
                         <label>Course material</label>
-                        <p th:text="${review.rating.courseMaterial}"></p>
+                        <p th:text="${review.courseMaterial}"></p>
                     </div>
                     <div>
                         <a class="upvote" th:if="${ session.LoggedInUser != null}" th:href="@{/upvote/{id}(id=${review.ID})}">
@@ -158,7 +158,7 @@
                     </div>
                 </div>
                 <div class="comment">
-                    <td th:text="${review.comment.text}"></td>
+                    <td th:text="${review.comment}"></td>
                 </div>
             </div>
         </tr>
