@@ -5,6 +5,8 @@ import is.hi.hbv501g.reithi.Persistence.Entities.CourseRating;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import is.hi.hbv501g.reithi.Services.UserService;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +39,8 @@ public class CourseRESTController {
      * @return The search results page template
      */
     @RequestMapping(value = "/api/searchcourses", method = RequestMethod.POST)
-    public List<Course> searchCoursesPOST(@RequestBody String name) {
+    public List<Course> searchCoursesPOST(@RequestBody JSONObject jsonBody) throws JSONException {
+        String name = jsonBody.getString("name");
         return courseService.findByNameContainingIgnoreCase(name);
     }
 
