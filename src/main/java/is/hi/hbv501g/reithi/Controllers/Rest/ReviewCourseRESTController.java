@@ -2,21 +2,19 @@ package is.hi.hbv501g.reithi.Controllers.Rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import is.hi.hbv501g.reithi.Persistence.Entities.*;
+import is.hi.hbv501g.reithi.Persistence.Entities.Course;
+import is.hi.hbv501g.reithi.Persistence.Entities.Review;
+import is.hi.hbv501g.reithi.Persistence.Entities.User;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import is.hi.hbv501g.reithi.Services.UserService;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,17 +42,17 @@ public class ReviewCourseRESTController {
      * @return The course view page template
      */
     @RequestMapping(value = "/api/addreview", method = RequestMethod.POST)
-    public Review addReviewPOST(@RequestBody Map<String, Object> json) throws JsonProcessingException {
+    public Review addReviewPOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
         Review review;
         ObjectMapper objectMapper = new ObjectMapper();
-        User user = objectMapper.convertValue(json.get("user"), User.class);
-        String comment = objectMapper.convertValue(json.get("comment"), String.class);
-        int overallScore = objectMapper.convertValue(json.get("overallScore"), int.class);
-        int difficulty = objectMapper.convertValue(json.get("difficulty"), int.class);
-        int workload = objectMapper.convertValue(json.get("workload"), int.class);
-        int teachingQuality = objectMapper.convertValue(json.get("teachingQuality"), int.class);
-        int courseMaterial = objectMapper.convertValue(json.get("courseMaterial"), int.class);
-        Course selectedCourse = objectMapper.convertValue(json.get("selectedCourse"), Course.class);
+        User user = objectMapper.readValue(json.get("user"), User.class);
+        String comment = objectMapper.readValue(json.get("comment"), String.class);
+        int overallScore = objectMapper.readValue(json.get("overallScore"), int.class);
+        int difficulty = objectMapper.readValue(json.get("difficulty"), int.class);
+        int workload = objectMapper.readValue(json.get("workload"), int.class);
+        int teachingQuality = objectMapper.readValue(json.get("teachingQuality"), int.class);
+        int courseMaterial = objectMapper.readValue(json.get("courseMaterial"), int.class);
+        Course selectedCourse = objectMapper.readValue(json.get("selectedCourse"), Course.class);
         System.out.println(json.keySet());
         System.out.println(json.values());
 
