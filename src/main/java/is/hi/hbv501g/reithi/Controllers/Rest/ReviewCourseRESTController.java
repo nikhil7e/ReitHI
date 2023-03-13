@@ -7,6 +7,7 @@ import is.hi.hbv501g.reithi.Persistence.Entities.*;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import is.hi.hbv501g.reithi.Services.UserService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,17 +43,17 @@ public class ReviewCourseRESTController {
      * @return The course view page template
      */
     @RequestMapping(value = "/api/addreview", method = RequestMethod.POST)
-    public Review addReviewPOST(@RequestBody ObjectNode json) throws JsonProcessingException {
+    public Review addReviewPOST(@RequestBody JSONObject json) throws JsonProcessingException {
         Review review;
         ObjectMapper objectMapper = new ObjectMapper();
-        User user = objectMapper.treeToValue(json.get("user"), User.class);
-        String comment = objectMapper.treeToValue(json.get("comment"), String.class);
-        int overallScore = objectMapper.treeToValue(json.get("overallScore"), int.class);
-        int difficulty = objectMapper.treeToValue(json.get("difficulty"), int.class);
-        int workload = objectMapper.treeToValue(json.get("workload"), int.class);
-        int teachingQuality = objectMapper.treeToValue(json.get("teachingQuality"), int.class);
-        int courseMaterial = objectMapper.treeToValue(json.get("courseMaterial"), int.class);
-        Course selectedCourse = objectMapper.treeToValue(json.get("selectedCourse"), Course.class);
+        User user = objectMapper.convertValue(json.get("user"), User.class);
+        String comment = objectMapper.convertValue(json.get("comment"), String.class);
+        int overallScore = objectMapper.convertValue(json.get("overallScore"), int.class);
+        int difficulty = objectMapper.convertValue(json.get("difficulty"), int.class);
+        int workload = objectMapper.convertValue(json.get("workload"), int.class);
+        int teachingQuality = objectMapper.convertValue(json.get("teachingQuality"), int.class);
+        int courseMaterial = objectMapper.convertValue(json.get("courseMaterial"), int.class);
+        Course selectedCourse = objectMapper.convertValue(json.get("selectedCourse"), Course.class);
 
         if (user == null) {
             review = reviewService.save(new Review(userService.login(new User("x", "x")), selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
