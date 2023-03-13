@@ -145,4 +145,16 @@ public class Review {
     public void removeDownvote(User currentUser) {
         downvoters.remove(user);
     }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    public void setUpvoters(List<User> upvoters) {
+        this.upvoters = upvoters;
+    }
+
+    public void setDownvoters(List<User> downvoters) {
+        this.downvoters = downvoters;
+    }
 }
