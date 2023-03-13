@@ -1,5 +1,6 @@
 package is.hi.hbv501g.reithi.Controllers.Rest;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import is.hi.hbv501g.reithi.Persistence.Entities.User;
 import is.hi.hbv501g.reithi.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -28,15 +30,14 @@ public class UserRESTController {
     /**
      * Saves a new user in the database
      *
-     * @param user The user to be saved in the database
      * @return The landing page template
      */
     @RequestMapping(value = "/api/signup", method = RequestMethod.POST)
-    public User signupPOST(@ModelAttribute("user") User user) {
-        User exists = userService.findByUserName(user.getUserName());
+    public User signupPOST(@RequestBody Map<String, User> payload) {
+        User exists = userService.findByUserName(payload.get("user").getUserName());
 
         if (exists == null) {
-            return userService.save(user);
+            return userService.save(payload.get("user"));
         }
 
         return null;
@@ -48,19 +49,18 @@ public class UserRESTController {
      * @return The landing page template
      */
     @RequestMapping(value = "/api/finduser", method = RequestMethod.POST)
-    public User getUserPOST(@ModelAttribute("username") String username) {
-        return userService.findByUserName(username);
+    public User getUserPOST(@RequestBody Map<String, String> payload) {
+        return userService.findByUserName(payload.get("username"));
     }
 
     /**
      * Logs a user in if the user account exists
      *
-     * @param user The user to be logged in
      * @return If the user account exists, send a GET request to /loggedin, else return the landing page template
      */
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
-    public User loginPOST(@ModelAttribute("user") User user) {
-        return userService.login(user);
+    public User loginPOST(@RequestBody Map<String, User> payload) {
+        return userService.login(payload.get("user"));
     }
 
 }
