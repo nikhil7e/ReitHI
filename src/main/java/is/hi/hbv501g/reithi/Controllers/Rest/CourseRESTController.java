@@ -37,7 +37,7 @@ public class CourseRESTController {
      * @return The search results page template
      */
     @RequestMapping(value = "/api/searchcourses", method = RequestMethod.POST)
-    public List<Course> searchCoursesPOST(@RequestParam("name") String name) {
+    public List<Course> searchCoursesPOST(@RequestBody String name) {
         return courseService.findByNameContainingIgnoreCase(name);
     }
 
