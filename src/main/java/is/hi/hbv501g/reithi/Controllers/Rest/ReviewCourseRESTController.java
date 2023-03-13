@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This REST controller handles HTTP requests for review functionality
@@ -43,7 +44,7 @@ public class ReviewCourseRESTController {
      * @return The course view page template
      */
     @RequestMapping(value = "/api/addreview", method = RequestMethod.POST)
-    public Review addReviewPOST(@RequestBody JSONObject json) throws JsonProcessingException {
+    public Review addReviewPOST(@RequestBody Map<String, Object> json) throws JsonProcessingException {
         Review review;
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.convertValue(json.get("user"), User.class);
@@ -54,6 +55,8 @@ public class ReviewCourseRESTController {
         int teachingQuality = objectMapper.convertValue(json.get("teachingQuality"), int.class);
         int courseMaterial = objectMapper.convertValue(json.get("courseMaterial"), int.class);
         Course selectedCourse = objectMapper.convertValue(json.get("selectedCourse"), Course.class);
+        System.out.println(json.keySet());
+        System.out.println(json.values());
 
         if (user == null) {
             review = reviewService.save(new Review(userService.login(new User("x", "x")), selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
