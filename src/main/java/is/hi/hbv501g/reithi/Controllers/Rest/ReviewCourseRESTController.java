@@ -44,17 +44,18 @@ public class ReviewCourseRESTController {
     @RequestMapping(value = "/api/addreview", method = RequestMethod.POST)
     public Review addReviewPOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
         Review review;
-        ObjectMapper objectMapper = new ObjectMapper();
-        User user = objectMapper.readValue(json.get("user"), User.class);
-        String comment = objectMapper.readValue(json.get("comment"), String.class);
-        int overallScore = objectMapper.readValue(json.get("overallScore"), int.class);
-        int difficulty = objectMapper.readValue(json.get("difficulty"), int.class);
-        int workload = objectMapper.readValue(json.get("workload"), int.class);
-        int teachingQuality = objectMapper.readValue(json.get("teachingQuality"), int.class);
-        int courseMaterial = objectMapper.readValue(json.get("courseMaterial"), int.class);
-        Course selectedCourse = objectMapper.readValue(json.get("selectedCourse"), Course.class);
         System.out.println(json.keySet());
         System.out.println(json.values());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(json.get("user"), User.class);
+        String comment = json.get("comment");
+        int overallScore = Integer.parseInt(json.get("overallScore"));
+        int difficulty = Integer.parseInt(json.get("difficulty"));
+        int workload = Integer.parseInt(json.get("workload"));
+        int teachingQuality = Integer.parseInt(json.get("teachingQuality"));
+        int courseMaterial = Integer.parseInt(json.get("courseMaterial"));
+        Course selectedCourse = objectMapper.readValue(json.get("selectedCourse"), Course.class);
 
         if (user == null) {
             review = reviewService.save(new Review(userService.login(new User("x", "x")), selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
