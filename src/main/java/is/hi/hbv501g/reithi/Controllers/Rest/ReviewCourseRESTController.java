@@ -63,6 +63,7 @@ public class ReviewCourseRESTController {
             review = reviewService.save(new Review(user, selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
         }
 
+        selectedCourse.setNrReviews(selectedCourse.getNrReviews() + 1);
         selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() + overallScore);
         selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() + difficulty);
         selectedCourse.setTotalWorkload(selectedCourse.getTotalWorkload() + workload);
