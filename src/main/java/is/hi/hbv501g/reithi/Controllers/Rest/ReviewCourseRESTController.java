@@ -1,5 +1,8 @@
 package is.hi.hbv501g.reithi.Controllers.Rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import is.hi.hbv501g.reithi.Persistence.Entities.*;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
@@ -36,13 +39,21 @@ public class ReviewCourseRESTController {
     /**
      * Creates a review and saves it in the database. Returns the review object.
      *
-     * @param comment The reviews optional comment
      * @return The course view page template
      */
     @RequestMapping(value = "/api/addreview", method = RequestMethod.POST)
-    public Review addReviewPOST(@RequestParam("comment") String comment, @RequestParam("overallScore") int overallScore, @RequestParam("difficulty") int difficulty, @RequestParam("workload") int workload, @RequestParam("teachingQuality") int teachingQuality, @RequestParam("courseMaterial") int courseMaterial,
-                                @RequestBody User user, @RequestParam("selectedCourse") Course selectedCourse) {
+    public Review addReviewPOST(@RequestBody ObjectNode json) throws JsonProcessingException {
         Review review;
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.treeToValue(json.get("user"), User.class);
+        String comment = objectMapper.treeToValue(json.get("comment"), String.class);
+        int overallScore = objectMapper.treeToValue(json.get("overallScore"), int.class);
+        int difficulty = objectMapper.treeToValue(json.get("difficulty"), int.class);
+        int workload = objectMapper.treeToValue(json.get("workload"), int.class);
+        int teachingQuality = objectMapper.treeToValue(json.get("teachingQuality"), int.class);
+        int courseMaterial = objectMapper.treeToValue(json.get("courseMaterial"), int.class);
+        Course selectedCourse = objectMapper.treeToValue(json.get("selectedCourse"), Course.class);
+
         if (user == null) {
             review = reviewService.save(new Review(userService.login(new User("x", "x")), selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
         } else {
