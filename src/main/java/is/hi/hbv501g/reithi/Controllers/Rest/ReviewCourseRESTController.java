@@ -41,7 +41,7 @@ public class ReviewCourseRESTController {
      */
     @RequestMapping(value = "/api/addreview", method = RequestMethod.POST)
     public Review addReviewPOST(@RequestParam("comment") String comment, @RequestParam("overallScore") int overallScore, @RequestParam("difficulty") int difficulty, @RequestParam("workload") int workload, @RequestParam("teachingQuality") int teachingQuality, @RequestParam("courseMaterial") int courseMaterial,
-                                @RequestParam("user") User user, @RequestParam("selectedCourse") Course selectedCourse) {
+                                @RequestBody User user, @RequestParam("selectedCourse") Course selectedCourse) {
         Review review;
         if (user == null) {
             review = reviewService.save(new Review(userService.login(new User("x", "x")), selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
