@@ -1,5 +1,7 @@
 package is.hi.hbv501g.reithi.Controllers.Rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import is.hi.hbv501g.reithi.Persistence.Entities.User;
 import is.hi.hbv501g.reithi.Services.UserService;
@@ -33,11 +35,14 @@ public class UserRESTController {
      * @return The landing page template
      */
     @RequestMapping(value = "/api/signup", method = RequestMethod.POST)
-    public User signupPOST(@RequestBody Map<String, User> payload) {
-        User exists = userService.findByUserName(payload.get("user").getUserName());
+    public User signupPOST(@RequestBody Map<String, String> json) throws JsonProcessingException  {
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(json.get("user"), User.class);
+
+        User exists = userService.findByUserName(user.getUserName());
 
         if (exists == null) {
-            return userService.save(payload.get("user"));
+            return userService.save(user);
         }
 
         return null;
@@ -59,8 +64,12 @@ public class UserRESTController {
      * @return If the user account exists, send a GET request to /loggedin, else return the landing page template
      */
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
-    public User loginPOST(@RequestBody Map<String, User> payload) {
-        return userService.login(payload.get("user"));
+    public User loginPOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(json.get("user"), User.class);
+        return userService.login(user);
     }
+
+
 
 }
