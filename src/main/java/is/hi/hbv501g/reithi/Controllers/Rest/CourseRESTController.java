@@ -42,8 +42,8 @@ public class CourseRESTController {
      * @return The search results page template
      */
     @RequestMapping(value = "/api/searchcourses", method = RequestMethod.GET)
-    public Page<Course> searchCoursesGET(@RequestParam("name") String name) {
-        return courseService.findByNameContainingIgnoreCase(name, 20);
+    public Page<Course> searchCoursesGET(@RequestParam("name") String name, @RequestParam(defaultValue = "1") int page) {
+        return courseService.findByNameContainingIgnoreCase(name, page - 1);
     }
 
     // FOR TESTING PURPOSES, ADJUST
