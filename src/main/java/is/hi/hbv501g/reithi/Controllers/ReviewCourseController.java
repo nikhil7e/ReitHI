@@ -1,5 +1,6 @@
 package is.hi.hbv501g.reithi.Controllers;
 
+import is.hi.hbv501g.reithi.Controllers.Rest.ReviewCourseRESTController;
 import is.hi.hbv501g.reithi.Persistence.Entities.*;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
@@ -46,8 +47,8 @@ public class ReviewCourseController {
         User user = (User) session.getAttribute("LoggedInUser");
         Course selectedCourse = (Course) session.getAttribute("selectedCourse");
         selectedCourse.setNrReviews(selectedCourse.getNrReviews() + 1);
-        reviewService.save(new Review(user, selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
-
+        Review review = reviewService.save(new Review(user, selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
+        selectedCourse = review.getCourse();
         selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() + overallScore);
         selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() + difficulty);
         selectedCourse.setTotalWorkload(selectedCourse.getTotalWorkload() + workload);

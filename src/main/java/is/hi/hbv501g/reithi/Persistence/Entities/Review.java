@@ -1,5 +1,8 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -11,10 +14,16 @@ import java.util.List;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("ID")
     private long ID;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonBackReference("userReference")
     private User user;
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    @JsonBackReference("courseReference")
     private Course course;
     @ManyToMany(cascade = {CascadeType.DETACH})
     private List<User> upvoters;
@@ -31,6 +40,9 @@ public class Review {
     @ColumnDefault("0")
     private int courseMaterial;
     private String comment;
+
+    @Transient
+    private int upvotes;
 
     public Review() {
     }
