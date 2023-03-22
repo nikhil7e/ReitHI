@@ -45,7 +45,7 @@
     </div>
 
     <h2 th:if="${courseSearchResults == null or courseSearchResults.empty}">No Courses found!</h2>
-    <div class="resultsAndFilter">
+    <div class="resultsAndFilter">Filter
         <div class="filters">
             <div class="typeFilter">
                 <div>
@@ -347,9 +347,9 @@
     -->
     <div th:if="${courseSearchResultsPage.getTotalPages() > 0}" class="pagination">
 
-        <a th:if="${courseSearchResultsPage.hasPrevious()}" th:href="@{/searchcourses(name=${searchTerm}, page=${ courseSearchResultsPage.getNumber()})}"
+        <a th:if="${courseSearchResultsPage.hasPrevious()}" th:href="@{|${#httpServletRequest.requestURI}(name=${searchTerm}, page=${ courseSearchResultsPage.getNumber()})}"
            th:text="Previous" ></a>
-        <a th:if="${courseSearchResultsPage.hasNext()}" th:href="@{/searchcourses(name=${searchTerm}, page=${courseSearchResultsPage.getNumber()+2})}"
+        <a th:if="${courseSearchResultsPage.hasNext()}" th:href="@{|${#httpServletRequest.requestURI}(name=${searchTerm}, page=${courseSearchResultsPage.getNumber()+2})}"
            th:text="Next" ></a>
     </div>
 </main>

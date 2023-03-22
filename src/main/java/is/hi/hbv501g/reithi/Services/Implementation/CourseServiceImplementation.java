@@ -35,7 +35,7 @@ public class CourseServiceImplementation implements CourseService {
      */
     @Override
     public Page<Course> findByName(String name, int page) {
-        Pageable pageable = PageRequest.of(page, 20);
+        Pageable pageable = PageRequest.of(page, 5);
         return courseRepository.findByName(name, pageable);
     }
 
@@ -47,7 +47,7 @@ public class CourseServiceImplementation implements CourseService {
      */
     @Override
     public Page<Course> findByNameContainingIgnoreCase(String name, int page) {
-        Pageable pageable = PageRequest.of(page, 20);
+        Pageable pageable = PageRequest.of(page, 5);
         return courseRepository.findByNameContainingIgnoreCase(name, pageable);
     }
 
@@ -59,7 +59,7 @@ public class CourseServiceImplementation implements CourseService {
      */
     @Override
     public Page<Course> findByNameContainingIgnoreCaseWithSpec(String name, int page, Specification<Course> spec) {
-        Pageable pageable = PageRequest.of(page, 20);
+        Pageable pageable = PageRequest.of(page, 5);
         return courseRepository.findByNameContainingIgnoreCase(name, pageable, spec);
     }
 
@@ -70,13 +70,13 @@ public class CourseServiceImplementation implements CourseService {
      */
     @Override
     public Page<Course> findAll(int page) {
-        Pageable pageable = PageRequest.of(page, 20);
+        Pageable pageable = PageRequest.of(page, 5);
         return courseRepository.findAll(pageable);
     }
 
     @Override
     public Page<Course> findAll(Specification<Course> spec, int page) {
-        Pageable pageable = PageRequest.of(page, 20);
+        Pageable pageable = PageRequest.of(page, 5);
         return courseRepository.findAll(spec, pageable);
     }
 
