@@ -1,5 +1,10 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,30 +14,50 @@ import java.util.List;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("ID")
     private long ID;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    private User user;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Comment comment;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonBackReference("userReference")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    @JsonBackReference("courseReference")
     private Course course;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Rating rating;
     @ManyToMany(cascade = {CascadeType.DETACH})
     private List<User> upvoters;
     @ManyToMany(cascade = {CascadeType.DETACH})
     private List<User> downvoters;
+    @ColumnDefault("0")
+    private int overallScore;
+    @ColumnDefault("0")
+    private int difficulty;
+    @ColumnDefault("0")
+    private int workload;
+    @ColumnDefault("0")
+    private int teachingQuality;
+    @ColumnDefault("0")
+    private int courseMaterial;
+    private String comment;
+
+    @Transient
+    private int upvotes;
 
     public Review() {
     }
 
-    public Review(User user, Rating rating, Comment comment, Course course) {
-        this.user = user;
-        this.rating = rating;
-        this.comment = comment;
-        this.course = course;
+    public Review(User user, Course course, int overallScore, int difficulty, int workload, int teachingQuality, int courseMaterial, String comment) {
         this.upvoters = new ArrayList<>();
         this.downvoters = new ArrayList<>();
+        this.user = user;
+        this.course = course;
+        this.overallScore = overallScore;
+        this.difficulty = difficulty;
+        this.workload = workload;
+        this.teachingQuality = teachingQuality;
+        this.courseMaterial = courseMaterial;
+        this.comment = comment;
     }
 
     public long getID() {
@@ -47,13 +72,6 @@ public class Review {
         this.user = user;
     }
 
-    public Comment getComment() {
-        return comment;
-    }
-
-    public void setComment(Comment comment) {
-        this.comment = comment;
-    }
 
     public Course getCourse() {
         return course;
@@ -63,13 +81,6 @@ public class Review {
         this.course = course;
     }
 
-    public Rating getRating() {
-        return rating;
-    }
-
-    public void setRating(Rating rating) {
-        this.rating = rating;
-    }
 
     public int getUpvotes() {
         return upvoters.size() - downvoters.size();
@@ -99,8 +110,63 @@ public class Review {
         this.comment = comment;
     }
 
+    public int getOverallScore() {
+        return overallScore;
+    }
+
+    public void setOverallScore(int overallScore) {
+        this.overallScore = overallScore;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public int getWorkload() {
+        return workload;
+    }
+
+    public void setWorkload(int workload) {
+        this.workload = workload;
+    }
+
+    public int getTeachingQuality() {
+        return teachingQuality;
+    }
+
+    public void setTeachingQuality(int teachingQuality) {
+        this.teachingQuality = teachingQuality;
+    }
+
+    public int getCourseMaterial() {
+        return courseMaterial;
+    }
+
+    public void setCourseMaterial(int courseMaterial) {
+        this.courseMaterial = courseMaterial;
+    }
+
+    public String getComment() {
+        return comment;
+    }
 
     public void removeDownvote(User currentUser) {
         downvoters.remove(user);
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    public void setUpvoters(List<User> upvoters) {
+        this.upvoters = upvoters;
+    }
+
+    public void setDownvoters(List<User> downvoters) {
+        this.downvoters = downvoters;
     }
 }

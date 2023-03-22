@@ -146,11 +146,11 @@ public class ViewCourseController {
         Course selectedCourse = (Course) session.getAttribute("selectedCourse");
         selectedCourse.setNrReviews(selectedCourse.getNrReviews() - 1);
 
-        selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() - review.getRating().getOverallScore());
-        selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() - review.getRating().getDifficulty());
-        selectedCourse.setTotalWorkload(selectedCourse.getTotalWorkload() - review.getRating().getWorkload());
-        selectedCourse.setTotalTeachingQuality(selectedCourse.getTotalTeachingQuality() - review.getRating().getTeachingQuality());
-        selectedCourse.setTotalCourseMaterial(selectedCourse.getTotalCourseMaterial() - review.getRating().getCourseMaterial());
+        selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() - review.getOverallScore());
+        selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() - review.getDifficulty());
+        selectedCourse.setTotalWorkload(selectedCourse.getTotalWorkload() - review.getWorkload());
+        selectedCourse.setTotalTeachingQuality(selectedCourse.getTotalTeachingQuality() - review.getTeachingQuality());
+        selectedCourse.setTotalCourseMaterial(selectedCourse.getTotalCourseMaterial() - review.getCourseMaterial());
 
         courseService.save(selectedCourse);
         User user = review.getUser();

@@ -32,27 +32,28 @@ public class ReviewCourseController {
      * Creates a review and saves it in the database. Redirects to the course view page with updated values.
      *
      * @param comment The reviews optional comment
-     * @param rating  The reviews rating
      * @param result  The binding result
      * @param model   The applications model
      * @param session The applications session
      * @return The course view page template
      */
     @RequestMapping(value = "/addreview", method = RequestMethod.POST)
-    public String addReviewPOST(Comment comment, Rating rating, BindingResult result, Model model, HttpSession session) {
-        if (result.hasErrors()) {
-            return "reviewCourse";
-        }
+    public String addReviewPOST(String comment, int overallScore, int difficulty, int workload, int teachingQuality, int courseMaterial, Model model, HttpSession session) {
+//        if (result.hasErrors()) {
+//            return "reviewCourse";
+//        }
 
         User user = (User) session.getAttribute("LoggedInUser");
         Course selectedCourse = (Course) session.getAttribute("selectedCourse");
         selectedCourse.setNrReviews(selectedCourse.getNrReviews() + 1);
-        reviewService.save(new Review(user, rating, comment, selectedCourse));
-        selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() + rating.getOverallScore());
-        selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() + rating.getDifficulty());
-        selectedCourse.setTotalWorkload(selectedCourse.getTotalWorkload() + rating.getWorkload());
-        selectedCourse.setTotalTeachingQuality(selectedCourse.getTotalTeachingQuality() + rating.getTeachingQuality());
-        selectedCourse.setTotalCourseMaterial(selectedCourse.getTotalCourseMaterial() + rating.getCourseMaterial());
+        reviewService.save(new Review(user, selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
+
+        selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() + overallScore);
+        selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() + difficulty);
+        selectedCourse.setTotalWorkload(selectedCourse.getTotalWorkload() + workload);
+        selectedCourse.setTotalTeachingQuality(selectedCourse.getTotalTeachingQuality() + teachingQuality);
+        selectedCourse.setTotalCourseMaterial(selectedCourse.getTotalCourseMaterial() + courseMaterial);
+
         courseService.save(selectedCourse);
         session.setAttribute("hasReviewedCourse", true);
 
@@ -74,7 +75,7 @@ public class ReviewCourseController {
     public static void setScores(HttpSession session, long id, ReviewService reviewService, CourseService courseService) {
         Course course = courseService.findByID(id);
 
-        if(course.getNrReviews() == 0) {
+        if (course.getNrReviews() == 0) {
             session.setAttribute("avgOAS", 0);
             session.setAttribute("avgD", 0);
             session.setAttribute("avgW", 0);

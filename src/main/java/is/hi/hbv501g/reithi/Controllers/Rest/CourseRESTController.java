@@ -7,14 +7,15 @@ import is.hi.hbv501g.reithi.Persistence.Entities.SearchCriteria;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import is.hi.hbv501g.reithi.Services.UserService;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This REST controller handles HTTP requests for searching for courses

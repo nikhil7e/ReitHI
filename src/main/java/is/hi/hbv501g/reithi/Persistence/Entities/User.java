@@ -12,9 +12,7 @@ public class User {
     private long ID;
     private String userName;
     private String password;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = false)
-    private List<Rating> ratings = new ArrayList<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = false)
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = false)
     private List<Review> reviews = new ArrayList<>();
 
 
@@ -42,19 +40,19 @@ public class User {
         this.password = password;
     }
 
-    public List<Rating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
-    }
-
     public List<Review> getReviews() {
         return reviews;
     }
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public long getID() {
+        return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
     }
 }

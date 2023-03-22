@@ -1,18 +1,21 @@
 package is.hi.hbv501g.reithi.Controllers.Rest;
 
-import is.hi.hbv501g.reithi.Persistence.Entities.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import is.hi.hbv501g.reithi.Persistence.Entities.Course;
+import is.hi.hbv501g.reithi.Persistence.Entities.Review;
+import is.hi.hbv501g.reithi.Persistence.Entities.User;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import is.hi.hbv501g.reithi.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * This REST controller handles HTTP requests for review functionality
@@ -31,23 +34,42 @@ public class ReviewCourseRESTController {
         this.reviewService = reviewService;
     }
 
+    // TODO: Dont allow default user
+
     /**
      * Creates a review and saves it in the database. Returns the review object.
      *
-     * @param comment The reviews optional comment
-     * @param rating  The reviews rating
-     * @param result  The binding result
      * @return The course view page template
      */
     @RequestMapping(value = "/api/addreview", method = RequestMethod.POST)
-    public Review addReviewPOST(@RequestParam("comment") Comment comment, @RequestParam("rating") Rating rating,
-                                @RequestParam("user") User user, @RequestParam("selectedCourse") Course selectedCourse,
-                                BindingResult result) {
-        if (result.hasErrors()) {
-            return null;
+    public Review addReviewPOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
+        Review review;
+        System.out.println(json.keySet());
+        System.out.println(json.values());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(json.get("user"), User.class);
+        String comment = json.get("comment");
+        int overallScore = Integer.parseInt(json.get("overallScore"));
+        int difficulty = Integer.parseInt(json.get("difficulty"));
+        int workload = Integer.parseInt(json.get("workload"));
+        int teachingQuality = Integer.parseInt(json.get("teachingQuality"));
+        int courseMaterial = Integer.parseInt(json.get("courseMaterial"));
+        Course selectedCourse = objectMapper.readValue(json.get("selectedCourse"), Course.class);
+
+        if (user == null) {
+            review = reviewService.save(new Review(userService.login(new User("x", "x")), selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
+        } else {
+            review = reviewService.save(new Review(user, selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
         }
 
-        Review review = reviewService.save(new Review(user, rating, comment, selectedCourse));
+        selectedCourse.setNrReviews(selectedCourse.getNrReviews() + 1);
+        selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() + overallScore);
+        selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() + difficulty);
+        selectedCourse.setTotalWorkload(selectedCourse.getTotalWorkload() + workload);
+        selectedCourse.setTotalTeachingQuality(selectedCourse.getTotalTeachingQuality() + teachingQuality);
+        selectedCourse.setTotalCourseMaterial(selectedCourse.getTotalCourseMaterial() + courseMaterial);
+        courseService.save(selectedCourse);
 //
 //        long id = ((Course) session.getAttribute("selectedCourse")).getID();
 //        setScores(session, id, reviewService);
