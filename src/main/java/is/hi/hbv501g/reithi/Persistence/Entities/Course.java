@@ -1,5 +1,6 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -49,7 +50,9 @@ public class Course {
     @ColumnDefault("0")
     private Integer totalOverallScore;
 */
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = false)
+    @Column(nullable = true)
+    @JsonManagedReference("courseReference")
     private List<Review> reviews;
 
     @ColumnDefault("0")

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,14 +57,16 @@ public class ReviewCourseRESTController {
         int teachingQuality = Integer.parseInt(json.get("teachingQuality"));
         int courseMaterial = Integer.parseInt(json.get("courseMaterial"));
         Course selectedCourse = objectMapper.readValue(json.get("selectedCourse"), Course.class);
-
         if (user == null) {
             review = reviewService.save(new Review(userService.login(new User("x", "x")), selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
         } else {
             review = reviewService.save(new Review(user, selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
         }
+        selectedCourse = review.getCourse();
+        System.out.print(selectedCourse);
 
         selectedCourse.setNrReviews(selectedCourse.getNrReviews() + 1);
+
         selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() + overallScore);
         selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() + difficulty);
         selectedCourse.setTotalWorkload(selectedCourse.getTotalWorkload() + workload);
@@ -79,6 +82,7 @@ public class ReviewCourseRESTController {
 
         return review;
     }
+
 
     /**
      * Saves the average scores for the viewed course in the session

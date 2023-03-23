@@ -1,5 +1,7 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,9 @@ public class User {
     private long ID;
     private String userName;
     private String password;
-    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = false)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = false)
+    @Column(nullable = true)
+    @JsonManagedReference("userReference")
     private List<Review> reviews = new ArrayList<>();
 
 
