@@ -45,11 +45,11 @@ public class Course {
     private String professor_Email;
 
     private String professor_URL;
-
+/*
     @ColumnDefault("0")
     private Integer totalOverallScore;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+*/
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Review> reviews;
 
     @ColumnDefault("0")
@@ -74,7 +74,7 @@ public class Course {
 
     }
 
-    public Course(String name, String number, String course_URL, String type, Double credits, String semester, String level, String professor_Name, Professor professor, Double minimumGrade, String assessment, String finalExam, String school, String faculty, String professor_Email, String professor_URL, Integer totalOverallScore, List<Review> reviews, double totalOverall, double totalDifficulty, double totalWorkload, double totalTeachingQuality, double totalCourseMaterial, int nrReviews) {
+    public Course(String name, String number, String course_URL, String type, Double credits, String semester, String level, String professor_Name, Professor professor, Double minimumGrade, String assessment, String finalExam, String school, String faculty, String professor_Email, String professor_URL, List<Review> reviews, double totalOverall, double totalDifficulty, double totalWorkload, double totalTeachingQuality, double totalCourseMaterial, int nrReviews) {
         this.name = name;
         this.number = number;
         this.course_URL = course_URL;
@@ -91,7 +91,6 @@ public class Course {
         this.faculty = faculty;
         this.professor_Email = professor_Email;
         this.professor_URL = professor_URL;
-        this.totalOverallScore = totalOverallScore;
         this.reviews = reviews;
         this.totalOverall = totalOverall;
         this.totalDifficulty = totalDifficulty;
@@ -229,14 +228,14 @@ public class Course {
         this.professor_URL = professor_URL;
     }
 
-    public Integer getTotalOverallScore() {
+    /*public Integer getTotalOverallScore() {
         return totalOverallScore;
     }
 
     public void setTotalOverallScore(Integer totalOverallScore) {
         this.totalOverallScore = totalOverallScore;
     }
-
+*/
     public List<Review> getReviews() {
         return reviews;
     }

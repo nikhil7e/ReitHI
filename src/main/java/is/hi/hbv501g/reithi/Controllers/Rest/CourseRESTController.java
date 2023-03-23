@@ -63,7 +63,7 @@ public class CourseRESTController {
 
     // FOR TESTING PURPOSES, ADJUST
     @RequestMapping(value = "/api/filter", method = RequestMethod.POST)
-    public Page<Course> filterPOST(@RequestBody Map<String, String> json, @RequestParam(defaultValue = "1") int page) throws IOException {
+    public Page<Course> filterPOST(@RequestBody Map<String, String> json, @RequestParam("name") String name, @RequestParam(defaultValue = "1") int page) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = mapper.readValue(json.get("filter"), Map.class);
         boolean scores = false;
@@ -120,8 +120,7 @@ public class CourseRESTController {
             specs.add(new CourseSpecification(new SearchCriteria("totalCourseMaterial", "sum>", totalCourseMaterialRange.get(0))));
             specs.add(new CourseSpecification(new SearchCriteria("totalCourseMaterial", ">", 1)));
         }
-        CourseSpecification spec2 = new CourseSpecification(new SearchCriteria("ID", ">", 0));
-
+        CourseSpecification spec2 = new CourseSpecification(new SearchCriteria("name", "likeIgnoreCase", name));
 
         Specification<Course> combinedSpec = spec2;
 
