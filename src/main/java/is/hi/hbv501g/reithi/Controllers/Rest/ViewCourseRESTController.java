@@ -34,56 +34,54 @@ public class ViewCourseRESTController {
     }
 
 
-    @RequestMapping(value = "api/upvote/", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/upvote/", method = RequestMethod.GET)
     public Review upvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json.get("user"), User.class);
-        Review review = objectMapper.readValue(json.get("user"), Review.class);
+        Review review = objectMapper.readValue(json.get("review"), Review.class);
 
-        if (review.getUpvoters().contains(user)){
+        if (review.getUpvoters().contains(user)) {
             review.removeUpvote(user);
-        }
-        else if (review.getDownvoters().contains(user)) {
+        } else if (review.getDownvoters().contains(user)) {
             review.removeDownvote(user);
             review.addUpvote(user);
-        }
-        else{
+        } else {
             review.addUpvote(user);
         }
         reviewService.save(review);
         return review;
     }
-    @RequestMapping(value = "api/downvote/", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/api/downvote/", method = RequestMethod.GET)
     public Review downvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json.get("user"), User.class);
-        Review review = objectMapper.readValue(json.get("user"), Review.class);
+        Review review = objectMapper.readValue(json.get("review"), Review.class);
 
-        if (review.getDownvoters().contains(user)){
+        if (review.getDownvoters().contains(user)) {
             review.removeDownvote(user);
-        }
-        else if (review.getUpvoters().contains(user)) {
+        } else if (review.getUpvoters().contains(user)) {
             review.removeUpvote(user);
             review.addDownvote(user);
-        }
-        else{
+        } else {
             review.addDownvote(user);
         }
         reviewService.save(review);
         return review;
     }
 
-    @RequestMapping(value = "api/deletereview/", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/deletereview/", method = RequestMethod.GET)
     public void deleteReviewGET(@RequestBody Map<String, String> json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        Course selectedCourse = objectMapper.readValue(json.get("user"), Course.class);
-        Review review = objectMapper.readValue(json.get("user"), Review.class);
+        Course selectedCourse = objectMapper.readValue(json.get("selectedCourse"), Course.class);
+        Review review = objectMapper.readValue(json.get("review"), Review.class);
 
         selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() - review.getOverallScore());
         selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() - review.getDifficulty());
         selectedCourse.setTotalWorkload(selectedCourse.getTotalWorkload() - review.getWorkload());
         selectedCourse.setTotalTeachingQuality(selectedCourse.getTotalTeachingQuality() - review.getTeachingQuality());
         selectedCourse.setTotalCourseMaterial(selectedCourse.getTotalCourseMaterial() - review.getCourseMaterial());
+        selectedCourse.setNrReviews(selectedCourse.getNrReviews() - 1);
 
         courseService.save(selectedCourse);
         User user = review.getUser();
