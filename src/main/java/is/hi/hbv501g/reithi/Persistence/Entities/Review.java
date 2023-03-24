@@ -1,8 +1,7 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -11,19 +10,23 @@ import java.util.List;
 
 @Entity
 @Table(name = "reviews")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
+//@JsonSerialize(using = ReviewSerializer.class)
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
     private long ID;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    @JsonBackReference("userReference")
+   // @JsonBackReference("userReference")
+    @JsonProperty("user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id")
-    @JsonBackReference("courseReference")
+    //@JsonBackReference("courseReference")
+    @JsonProperty("course_id")
     private Course course;
     @ManyToMany(cascade = {CascadeType.DETACH})
     private List<User> upvoters;
@@ -168,5 +171,35 @@ public class Review {
 
     public void setDownvoters(List<User> downvoters) {
         this.downvoters = downvoters;
+    }
+
+    @JsonProperty("user_id")
+    //@Transient
+    public long getUserId() {
+        return user != null ? user.getID() : null;
+    }
+
+    @JsonProperty("course_id")
+    //@Transient
+    public long getCourseId() {
+        return course != null ? course.getID() : null;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "ID=" + ID +
+                ", user=" + user +
+                ", course=" + course +
+                ", upvoters=" + upvoters +
+                ", downvoters=" + downvoters +
+                ", overallScore=" + overallScore +
+                ", difficulty=" + difficulty +
+                ", workload=" + workload +
+                ", teachingQuality=" + teachingQuality +
+                ", courseMaterial=" + courseMaterial +
+                ", comment='" + comment + '\'' +
+                ", upvotes=" + upvotes +
+                '}';
     }
 }

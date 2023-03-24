@@ -62,6 +62,8 @@ public class ReviewCourseRESTController {
         } else {
             review = reviewService.save(new Review(user, selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
         }
+
+        System.out.println("THE REVIEW OBJECT IS: "+ review.toString());
         selectedCourse = review.getCourse();
         System.out.print(selectedCourse);
 

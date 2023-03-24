@@ -1,6 +1,9 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -9,9 +12,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "courses")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "ID")
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("ID")
     private long ID;
 
     private String name;
@@ -50,9 +57,9 @@ public class Course {
     @ColumnDefault("0")
     private Integer totalOverallScore;
 */
-    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = false)
-    @Column(nullable = true)
-    @JsonManagedReference("courseReference")
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = false)
+    //@Column(nullable = true)
+    //@JsonManagedReference("courseReference")
     private List<Review> reviews;
 
     @ColumnDefault("0")

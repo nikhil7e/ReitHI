@@ -34,11 +34,13 @@ public class ViewCourseRESTController {
     }
 
 
-    @RequestMapping(value = "/api/upvote/", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/upvote/", method = RequestMethod.POST)
     public Review upvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json.get("user"), User.class);
         Review review = objectMapper.readValue(json.get("review"), Review.class);
+        User reviewUser = objectMapper.readValue(json.get("reviewUser"), User.class);
+        Course reviewCourse = objectMapper.readValue(json.get("course"), Course.class);
 
         if (review.getUpvoters().contains(user)) {
             review.removeUpvote(user);
@@ -48,15 +50,19 @@ public class ViewCourseRESTController {
         } else {
             review.addUpvote(user);
         }
+        review.setUser(reviewUser);
+        review.setCourse(reviewCourse);
         reviewService.save(review);
         return review;
     }
 
-    @RequestMapping(value = "/api/downvote/", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/downvote/", method = RequestMethod.POST)
     public Review downvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json.get("user"), User.class);
         Review review = objectMapper.readValue(json.get("review"), Review.class);
+        User reviewUser = objectMapper.readValue(json.get("reviewUser"), User.class);
+        Course reviewCourse = objectMapper.readValue(json.get("course"), Course.class);
 
         if (review.getDownvoters().contains(user)) {
             review.removeDownvote(user);
@@ -66,6 +72,8 @@ public class ViewCourseRESTController {
         } else {
             review.addDownvote(user);
         }
+        review.setUser(reviewUser);
+        review.setCourse(reviewCourse);
         reviewService.save(review);
         return review;
     }

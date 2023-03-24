@@ -172,13 +172,13 @@ public class ReviewServiceImplementation implements ReviewService {
 
     @Override
     public Review save(Review review) {
-        updateChangesHashmaps(review);
+        //updateChangesHashmaps(review);
         return reviewRepository.save(review);
     }
 
     @Override
     public void delete(Review review) {
-        updateChangesHashmaps(review);
+        //updateChangesHashmaps(review);
         reviewRepository.delete(review);
     }
 
