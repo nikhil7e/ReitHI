@@ -51,7 +51,7 @@ public class CourseRESTController {
      * @param name The users course name search input
      * @return The search results page template
      */
-    @RequestMapping(value = "/api/searchcourses", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/searchcourses", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public Page<Course> searchCoursesGET(@RequestParam("name") String name, @RequestParam(defaultValue = "1") int page) {
         return courseService.findByNameContainingIgnoreCase(name, page - 1);
     }
@@ -62,7 +62,7 @@ public class CourseRESTController {
     }
 
     // FOR TESTING PURPOSES, ADJUST
-    @RequestMapping(value = "/api/filter", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/filter", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public Page<Course> filterPOST(@RequestBody Map<String, String> json, @RequestParam("name") String name, @RequestParam(defaultValue = "1") int page) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = mapper.readValue(json.get("filter"), Map.class);
