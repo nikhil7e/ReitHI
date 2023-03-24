@@ -10,38 +10,45 @@ import java.util.List;
 
 @Entity
 @Table(name = "reviews")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
-//@JsonSerialize(using = ReviewSerializer.class)
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
     private long ID;
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-   // @JsonBackReference("userReference")
-    @JsonProperty("user_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
+    @JsonBackReference("userReference")
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
-    //@JsonBackReference("courseReference")
-    @JsonProperty("course_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
+    @JsonBackReference("courseReference")
     private Course course;
+
     @ManyToMany(cascade = {CascadeType.DETACH})
     private List<User> upvoters;
+
     @ManyToMany(cascade = {CascadeType.DETACH})
     private List<User> downvoters;
+
     @ColumnDefault("0")
     private int overallScore;
+
     @ColumnDefault("0")
     private int difficulty;
+
     @ColumnDefault("0")
     private int workload;
+
     @ColumnDefault("0")
     private int teachingQuality;
+
     @ColumnDefault("0")
     private int courseMaterial;
+
     private String comment;
 
     @Transient
