@@ -3,6 +3,7 @@ package is.hi.hbv501g.reithi.Controllers.Rest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import is.hi.hbv501g.reithi.Persistence.Entities.Course;
 import is.hi.hbv501g.reithi.Persistence.Entities.User;
 import is.hi.hbv501g.reithi.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,12 @@ public class UserRESTController {
     public User getUserPOST(@RequestBody Map<String, String> payload) {
         return userService.findByUserName(payload.get("username"));
     }
+
+    @RequestMapping(value = "/api/getuserbyid", method = RequestMethod.GET)
+    public User genericGET(@RequestParam("id") int id ) {
+        return userService.findByID(id);
+    }
+
 
     /**
      * Logs a user in if the user account exists

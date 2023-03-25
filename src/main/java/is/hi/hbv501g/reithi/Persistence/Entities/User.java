@@ -1,6 +1,6 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,14 +8,18 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("ID")
     private long ID;
     private String userName;
     private String password;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = false)
-    @Column(nullable = true)
+    //@Column(nullable = true)
+
+    //@JsonIdentityReference(alwaysAsId = true)
     @JsonManagedReference("userReference")
     private List<Review> reviews = new ArrayList<>();
 

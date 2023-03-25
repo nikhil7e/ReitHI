@@ -1,6 +1,6 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -9,12 +9,24 @@ import java.util.List;
 
 @Entity
 @Table(name = "courses")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("ID")
     private long ID;
 
     private String name;
+
+    // other fields omitted for brevity
+
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = false)
+    //@Column(nullable = true)
+    @JsonManagedReference("courseReference")
+    private List<Review> reviews;
+
+    // getters and setters omitted for brevity
 
     private String number;
 
@@ -50,10 +62,10 @@ public class Course {
     @ColumnDefault("0")
     private Integer totalOverallScore;
 */
-    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = false)
-    @Column(nullable = true)
-    @JsonManagedReference("courseReference")
-    private List<Review> reviews;
+//    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = false)
+//    //@Column(nullable = true)
+//    //@JsonManagedReference("courseReference")
+//    private List<Review> reviews;
 
     @ColumnDefault("0")
     private double totalOverall;

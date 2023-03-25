@@ -1,8 +1,7 @@
 package is.hi.hbv501g.reithi.Persistence.Entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -11,38 +10,58 @@ import java.util.List;
 
 @Entity
 @Table(name = "reviews")
+@JsonSerialize(using = ReviewSerializer.class)
+//@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("ID")
     private long ID;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    //@JoinColumn(name = "user_id")
     @JsonBackReference("userReference")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
+    //@JoinColumn(name = "course_id")
+    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
     @JsonBackReference("courseReference")
     private Course course;
+
     @ManyToMany(cascade = {CascadeType.DETACH})
     private List<User> upvoters;
+
     @ManyToMany(cascade = {CascadeType.DETACH})
     private List<User> downvoters;
+
     @ColumnDefault("0")
     private int overallScore;
+
     @ColumnDefault("0")
     private int difficulty;
+
     @ColumnDefault("0")
     private int workload;
+
     @ColumnDefault("0")
     private int teachingQuality;
+
     @ColumnDefault("0")
     private int courseMaterial;
+    @JsonProperty("comment")
     private String comment;
-
     @Transient
     private int upvotes;
+    @Transient
+    @JsonProperty("course_id")
+    private long courseID;
+
+    @Transient
+    @JsonProperty("user_id")
+    private long userID;
+
 
     public Review() {
     }
@@ -98,15 +117,15 @@ public class Review {
         return upvoters;
     }
 
-    public void removeUpvote(User user) {
-        upvoters.remove(user);
+    public void removeUpvote(User currentUser) {
+        upvoters.remove(currentUser);
     }
 
     public List<User> getDownvoters() {
         return downvoters;
     }
 
-    public void setComment(String content) {
+    public void setComment(String comment) {
         this.comment = comment;
     }
 
@@ -155,7 +174,7 @@ public class Review {
     }
 
     public void removeDownvote(User currentUser) {
-        downvoters.remove(user);
+        downvoters.remove(currentUser);
     }
 
     public void setID(long ID) {
@@ -168,5 +187,36 @@ public class Review {
 
     public void setDownvoters(List<User> downvoters) {
         this.downvoters = downvoters;
+    }
+
+
+
+    @JsonProperty("user_id")
+    //@Transient
+    public long getUserId() {
+        return user != null ? user.getID() : null;
+    }
+
+    @JsonProperty("course_id")
+    //@Transient
+    public long getCourseId() {
+        return course != null ? course.getID() : null;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "ID=" + ID +
+                ", user=" + user +
+                ", course=" + course +
+                ", upvoters=" + upvoters +
+                ", downvoters=" + downvoters +
+                ", overallScore=" + overallScore +
+                ", difficulty=" + difficulty +
+                ", workload=" + workload +
+                ", teachingQuality=" + teachingQuality +
+                ", courseMaterial=" + courseMaterial +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }
