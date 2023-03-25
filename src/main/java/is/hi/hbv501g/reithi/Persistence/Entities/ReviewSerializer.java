@@ -10,30 +10,34 @@ import java.util.Map;
 
 public class ReviewSerializer extends JsonSerializer<Review> {
     private static final int MAX_OCCURRENCES = 2;
-    private static int count;
+
+    private static Map<Object, Integer> idCounts = new HashMap<>();
 
     @Override
     public void serialize(Review review, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         //Integer count = idCounts.get(review);
         jsonGenerator.writeStartObject();
-        if (count != 0) {
+        /*
+        System.out.print(idCounts.toString());
+        Integer count = idCounts.get(review);
+        if (count == null) {
             jsonGenerator.writeObjectField("user", review.getUser());
             jsonGenerator.writeObjectField("course", review.getCourse());
-            System.out.println("BROBROBROBROBRO" + count);
-            count = 0;
+            idCounts.put(review, 1);
+        } else {
+            jsonGenerator.writeNumberField("user_id", review.getUser().getID());
+            jsonGenerator.writeNumberField("course_id", review.getCourse().getID());
+        }
+       else if (count < MAX_OCCURRENCES) {
+            jsonGenerator.writeObjectField("user", review.getUser());
+            jsonGenerator.writeObjectField("course", review.getCourse());
+            idCounts.put(review, count + 1);
+        }
+        jsonGenerator.writeNumberField("user_id", review.getUser().getID());
+        jsonGenerator.writeNumberField("course_id", review.getCourse().getID());
 
-            //idCounts.put(review, 1);
-        }
-        else if (count <=1){
-            count++;
-            jsonGenerator.writeNumberField("user_id", review.getUser().getID());
-            jsonGenerator.writeNumberField("course_id", review.getCourse().getID());
-        }
-        else{
-            count++;
-            jsonGenerator.writeNumberField("user_id", review.getUser().getID());
-            jsonGenerator.writeNumberField("course_id", review.getCourse().getID());
-        }
+        */
+
         /*else if (count < MAX_OCCURRENCES) {
             jsonGenerator.writeObjectField("user", review.getUser());
             jsonGenerator.writeObjectField("course", review.getCourse());
@@ -42,6 +46,8 @@ public class ReviewSerializer extends JsonSerializer<Review> {
             jsonGenerator.writeNumberField("user_id", review.getUser().getID());
             jsonGenerator.writeNumberField("course_id", review.getCourse().getID());
         }*/
+        jsonGenerator.writeNumberField("user_id", review.getUser().getID());
+        jsonGenerator.writeNumberField("course_id", review.getCourse().getID());
         jsonGenerator.writeNumberField("ID", review.getID());
         jsonGenerator.writeNumberField("overallScore", review.getOverallScore());
         jsonGenerator.writeNumberField("difficulty", review.getDifficulty());

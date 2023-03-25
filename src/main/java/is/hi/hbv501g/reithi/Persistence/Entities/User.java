@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,9 +17,9 @@ public class User {
     private String userName;
     private String password;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = false)
-    @Column(nullable = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
-    @JsonIdentityReference(alwaysAsId = true)
+    //@Column(nullable = true)
+
+    //@JsonIdentityReference(alwaysAsId = true)
     @JsonManagedReference("userReference")
     private List<Review> reviews = new ArrayList<>();
 

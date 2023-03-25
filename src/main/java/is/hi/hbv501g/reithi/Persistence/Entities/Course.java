@@ -9,8 +9,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "courses")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Course {
     // other fields omitted for brevity
 
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = false)
-    @Column(nullable = true)
+    //@Column(nullable = true)
     @JsonManagedReference("courseReference")
     private List<Review> reviews;
 

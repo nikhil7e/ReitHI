@@ -10,6 +10,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "reviews")
+@JsonSerialize(using = ReviewSerializer.class)
+//@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,14 +20,13 @@ public class Review {
     private long ID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
+    //@JoinColumn(name = "user_id")
     @JsonBackReference("userReference")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
+    //@JoinColumn(name = "course_id")
+    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
     @JsonBackReference("courseReference")
     private Course course;
 
@@ -48,11 +50,18 @@ public class Review {
 
     @ColumnDefault("0")
     private int courseMaterial;
-
+    @JsonProperty("comment")
     private String comment;
-
     @Transient
     private int upvotes;
+    @Transient
+    @JsonProperty("course_id")
+    private long courseID;
+
+    @Transient
+    @JsonProperty("user_id")
+    private long userID;
+
 
     public Review() {
     }
@@ -108,15 +117,15 @@ public class Review {
         return upvoters;
     }
 
-    public void removeUpvote(User user) {
-        upvoters.remove(user);
+    public void removeUpvote(User currentUser) {
+        upvoters.remove(currentUser);
     }
 
     public List<User> getDownvoters() {
         return downvoters;
     }
 
-    public void setComment(String content) {
+    public void setComment(String comment) {
         this.comment = comment;
     }
 
@@ -165,7 +174,7 @@ public class Review {
     }
 
     public void removeDownvote(User currentUser) {
-        downvoters.remove(user);
+        downvoters.remove(currentUser);
     }
 
     public void setID(long ID) {
@@ -179,6 +188,8 @@ public class Review {
     public void setDownvoters(List<User> downvoters) {
         this.downvoters = downvoters;
     }
+
+
 
     @JsonProperty("user_id")
     //@Transient
@@ -206,7 +217,6 @@ public class Review {
                 ", teachingQuality=" + teachingQuality +
                 ", courseMaterial=" + courseMaterial +
                 ", comment='" + comment + '\'' +
-                ", upvotes=" + upvotes +
                 '}';
     }
 }

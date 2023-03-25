@@ -8,6 +8,7 @@ import is.hi.hbv501g.reithi.Persistence.Entities.User;
 import is.hi.hbv501g.reithi.Services.CourseService;
 import is.hi.hbv501g.reithi.Services.ReviewService;
 import is.hi.hbv501g.reithi.Services.UserService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,7 +63,7 @@ public class ReviewCourseRESTController {
         } else {
             review = reviewService.save(new Review(user, selectedCourse, overallScore, difficulty, workload, teachingQuality, courseMaterial, comment));
         }
-
+        System.out.println(objectMapper.writeValueAsString(review));
         System.out.println("THE REVIEW OBJECT IS: "+ review.toString());
         selectedCourse = review.getCourse();
         System.out.print(selectedCourse);
