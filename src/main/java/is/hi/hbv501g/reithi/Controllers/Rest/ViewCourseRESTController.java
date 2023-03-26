@@ -13,6 +13,23 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.google.firebase.messaging.AndroidConfig;
+import com.google.firebase.messaging.AndroidNotification;
+import com.google.firebase.messaging.ApnsConfig;
+import com.google.firebase.messaging.Aps;
+import com.google.firebase.messaging.ApsAlert;
+import com.google.firebase.messaging.BatchResponse;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.MulticastMessage;
+import com.google.firebase.messaging.Notification;
+import com.google.firebase.messaging.SendResponse;
+import com.google.firebase.messaging.TopicManagementResponse;
+import com.google.firebase.messaging.WebpushConfig;
+import com.google.firebase.messaging.WebpushFcmOptions;
+import com.google.firebase.messaging.WebpushNotification;
+
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +97,9 @@ public class ViewCourseRESTController {
         return review.getUpvotes();
     }
 
+
+
+
     @RequestMapping(value = "/api/downvote/", method = RequestMethod.POST)
     public int downvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -113,5 +133,26 @@ public class ViewCourseRESTController {
         courseService.save(selectedCourse);
         reviewService.delete(review);
     }
+
+    public void sendToToken() throws FirebaseMessagingException {
+        // [START send_to_token]
+        // This registration token comes from the client FCM SDKs.
+        String registrationToken = "YOUR_REGISTRATION_TOKEN";
+
+        // See documentation on defining a message payload.
+        Message message = Message.builder()
+                .putData("score", "850")
+                .putData("time", "2:45")
+                .setToken(registrationToken)
+                .build();
+
+        // Send a message to the device corresponding to the provided
+        // registration token.
+        String response = FirebaseMessaging.getInstance().send(message);
+        // Response is a message ID string.
+        System.out.println("Successfully sent message: " + response);
+        // [END send_to_token]
+    }
+
 
 }
