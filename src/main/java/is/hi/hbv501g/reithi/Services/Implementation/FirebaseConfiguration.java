@@ -45,7 +45,7 @@ public class FirebaseConfiguration {
     @Bean
     FirebaseApp firebaseApp() throws IOException {
         FileInputStream serviceAccount =
-                new FileInputStream("/home/nikhil/school/onn-4/hbv401g/ReitHI/src/main/resources/reithi-firebase-adminsdk-o9ao5-5acbd2f073.json");
+                new FileInputStream("src/main/resources/reithi-firebase-adminsdk-o9ao5-5acbd2f073.json");
 
 
         FirebaseOptions options = new FirebaseOptions.Builder()

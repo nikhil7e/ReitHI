@@ -87,6 +87,7 @@ public class ViewCourseRESTController {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json.get("user"), User.class);
         String deviceToken = objectMapper.readValue(json.get("deviceToken"), String.class);
+        String courseName = objectMapper.readValue(json.get("courseName"), String.class);
         Review review = createReviewFromJson(json, objectMapper);
 
         if (review.getUpvoters() != null && review.getUpvoters().contains(user)) {
@@ -102,7 +103,7 @@ public class ViewCourseRESTController {
 
         Message msg = Message.builder().setNotification(Notification.builder()
                         .setTitle("ReitHÍ - Review upvoted")
-                        .setBody("Your review for " + review.getCourseName() + " has been upvoted!").build())
+                        .setBody("Your review for " + courseName + " has been upvoted!").build())
                 .setToken(deviceToken)
                 .putData("body", "Upvote")
                 .build();
@@ -120,6 +121,7 @@ public class ViewCourseRESTController {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json.get("user"), User.class);
         String deviceToken = objectMapper.readValue(json.get("deviceToken"), String.class);
+        String courseName = objectMapper.readValue(json.get("courseName"), String.class);
         Review review = createReviewFromJson(json, objectMapper);
 
         if (review.getDownvoters() != null && review.getDownvoters().contains(user)) {
@@ -134,8 +136,8 @@ public class ViewCourseRESTController {
         reviewService.save(review);
 
         Message msg = Message.builder().setNotification(Notification.builder()
-                        .setTitle("ReitHÍ - Review upvoted")
-                        .setBody("Your review for " + review.getCourseName() + " has been downvoted!").build())
+                        .setTitle("ReitHÍ - Review downvoted")
+                        .setBody("Your review for " + courseName + " has been downvoted!").build())
                 .setToken(deviceToken)
                 .putData("body", "Downvote")
                 .build();
