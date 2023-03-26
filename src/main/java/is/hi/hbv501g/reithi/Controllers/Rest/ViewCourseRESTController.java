@@ -111,17 +111,6 @@ public class ViewCourseRESTController {
         selectedCourse.setNrReviews(selectedCourse.getNrReviews() - 1);
 
         courseService.save(selectedCourse);
-        /*User user = userService.findByID(review.getUserId());
-        List<Review> allReviews = user.getReviews();
-        allReviews.remove(review);
-        user.setReviews(allReviews);
-        for (int i = 0; i < review.getUpvoters().size(); i++) {
-            review.removeUpvote(review.getUpvoters().get(i));
-        }
-        for (int i = 0; i < review.getDownvoters().size(); i++) {
-            review.removeDownvote(review.getDownvoters().get(i));
-        }*/
-
         reviewService.delete(review);
     }
 
