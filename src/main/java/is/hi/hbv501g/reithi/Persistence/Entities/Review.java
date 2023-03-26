@@ -70,6 +70,10 @@ public class Review {
     @JsonProperty("user_name")
     private String userName;
 
+    @Transient
+    @JsonProperty("user_token")
+    private String userToken;
+
 
     public Review() {
     }
@@ -99,6 +103,13 @@ public class Review {
         this.user = user;
     }
 
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
 
     public Course getCourse() {
         return course;

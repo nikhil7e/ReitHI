@@ -47,6 +47,7 @@ public class ReviewSerializer extends JsonSerializer<Review> {
             jsonGenerator.writeNumberField("course_id", review.getCourse().getID());
         }*/
         jsonGenerator.writeNumberField("user_id", review.getUser().getID());
+        jsonGenerator.writeStringField("user_token", review.getUser().getDeviceToken());
         jsonGenerator.writeNumberField("course_id", review.getCourse().getID());
         jsonGenerator.writeStringField("user_name", review.getUser().getUserName());
         jsonGenerator.writeStringField("course_name", review.getCourse().getName());

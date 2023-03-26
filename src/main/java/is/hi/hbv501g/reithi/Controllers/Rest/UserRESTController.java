@@ -43,6 +43,8 @@ public class UserRESTController {
         User exists = userService.findByUserName(user.getUserName());
 
         if (exists == null) {
+            String token = objectMapper.readValue(json.get("deviceToken"), String.class);
+            user.setDeviceToken(token);
             return userService.save(user);
         }
 
