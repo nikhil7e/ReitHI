@@ -11,6 +11,8 @@ import is.hi.hbv501g.reithi.Services.ReviewService;
 import is.hi.hbv501g.reithi.Services.UserService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.firebase.messaging.AndroidConfig;
@@ -43,14 +45,16 @@ public class ViewCourseRESTController {
 
     private UserService userService;
     private ReviewService reviewService;
-
     private CourseService courseService;
 
+    private final FirebaseMessaging fcm;
+
     @Autowired
-    public ViewCourseRESTController(UserService userService, ReviewService reviewService, CourseService courseService) {
+    public ViewCourseRESTController(UserService userService, ReviewService reviewService, CourseService courseService, FirebaseMessaging fcm) {
         this.userService = userService;
         this.reviewService = reviewService;
         this.courseService = courseService;
+        this.fcm = fcm;
     }
 
     public Review createReviewFromJson(Map<String, String> json, ObjectMapper objectMapper) throws JsonProcessingException {
@@ -79,9 +83,10 @@ public class ViewCourseRESTController {
 
 
     @RequestMapping(value = "/api/upvote/", method = RequestMethod.POST)
-    public int upvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
+    public int upvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException, FirebaseMessagingException {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json.get("user"), User.class);
+        String deviceToken = objectMapper.readValue(json.get("deviceToken"), String.class);
         Review review = createReviewFromJson(json, objectMapper);
 
         if (review.getUpvoters() != null && review.getUpvoters().contains(user)) {
@@ -94,17 +99,29 @@ public class ViewCourseRESTController {
             review.addUpvote(user);
         }
         reviewService.save(review);
+
+        Message msg = Message.builder().setNotification(Notification.builder()
+                        .setTitle("ReitHÍ - Review upvoted")
+                        .setBody("Your review for " + review.getCourseName() + " has been upvoted!").build())
+                .setToken(deviceToken)
+                .putData("body", "Upvote")
+                .build();
+
+        String id = fcm.send(msg);
+        ResponseEntity
+                .status(HttpStatus.ACCEPTED)
+                .body(id);
+
         return review.getUpvotes();
     }
 
-
-
-
     @RequestMapping(value = "/api/downvote/", method = RequestMethod.POST)
-    public int downvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
+    public int downvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException, FirebaseMessagingException {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json.get("user"), User.class);
+        String deviceToken = objectMapper.readValue(json.get("deviceToken"), String.class);
         Review review = createReviewFromJson(json, objectMapper);
+
         if (review.getDownvoters() != null && review.getDownvoters().contains(user)) {
             review.removeDownvote(user);
         } else if (review.getUpvoters() != null  && review.getUpvoters().contains(user)) {
@@ -113,7 +130,22 @@ public class ViewCourseRESTController {
         } else {
             review.addDownvote(user);
         }
+
         reviewService.save(review);
+
+        Message msg = Message.builder().setNotification(Notification.builder()
+                        .setTitle("ReitHÍ - Review upvoted")
+                        .setBody("Your review for " + review.getCourseName() + " has been downvoted!").build())
+                .setToken(deviceToken)
+                .putData("body", "Downvote")
+                .build();
+
+        String id = fcm.send(msg);
+        ResponseEntity
+                .status(HttpStatus.ACCEPTED)
+                .body(id);
+
+
         return review.getUpvotes();
     }
 
