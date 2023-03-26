@@ -18,7 +18,6 @@ public class User {
     private String password;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = false)
     //@Column(nullable = true)
-
     //@JsonIdentityReference(alwaysAsId = true)
     @JsonManagedReference("userReference")
     private List<Review> reviews = new ArrayList<>();
