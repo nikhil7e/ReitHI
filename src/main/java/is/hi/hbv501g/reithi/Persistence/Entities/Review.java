@@ -62,6 +62,14 @@ public class Review {
     @JsonProperty("user_id")
     private long userID;
 
+    @Transient
+    @JsonProperty("course_name")
+    private long courseName;
+
+    @Transient
+    @JsonProperty("user_name")
+    private long userName;
+
 
     public Review() {
     }
