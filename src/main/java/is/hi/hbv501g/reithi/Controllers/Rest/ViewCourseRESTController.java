@@ -1,6 +1,7 @@
 package is.hi.hbv501g.reithi.Controllers.Rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import is.hi.hbv501g.reithi.Persistence.Entities.Course;
 import is.hi.hbv501g.reithi.Persistence.Entities.Review;
@@ -45,10 +46,14 @@ public class ViewCourseRESTController {
         List<User> upvoters = new ArrayList<>();
         List<User> downvoters = new ArrayList<>();
         if (jsonObject.containsKey("upvoters")){
-            upvoters = objectMapper.readValue((String) jsonObject.get("upvoters"), List.class);
+            upvoters = objectMapper.readValue(objectMapper.writeValueAsString(
+                    jsonObject.get("upvoters")),
+                    new TypeReference<List<User>>() {});
         }
         if(jsonObject.containsKey("downvoters")){
-            downvoters = objectMapper.readValue((String) jsonObject.get("downvoters"), List.class);
+            downvoters = objectMapper.readValue(objectMapper.writeValueAsString(
+                    jsonObject.get("downvoters")),
+                    new TypeReference<List<User>>() {});
         }
         review.setUpvoters(upvoters);
         review.setDownvoters(downvoters);
@@ -57,7 +62,7 @@ public class ViewCourseRESTController {
 
 
     @RequestMapping(value = "/api/upvote/", method = RequestMethod.POST)
-    public Review upvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
+    public int upvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json.get("user"), User.class);
         Review review = createReviewFromJson(json, objectMapper);
@@ -72,11 +77,11 @@ public class ViewCourseRESTController {
             review.addUpvote(user);
         }
         reviewService.save(review);
-        return review;
+        return review.getUpvotes();
     }
 
     @RequestMapping(value = "/api/downvote/", method = RequestMethod.POST)
-    public Review downvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
+    public int downvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json.get("user"), User.class);
         Review review = createReviewFromJson(json, objectMapper);
@@ -89,14 +94,14 @@ public class ViewCourseRESTController {
             review.addDownvote(user);
         }
         reviewService.save(review);
-        return review;
+        return review.getUpvotes();
     }
 
-    @RequestMapping(value = "/api/deletereview/", method = RequestMethod.GET)
-    public void deleteReviewGET(@RequestBody Map<String, String> json) throws JsonProcessingException {
+    @RequestMapping(value = "/api/deletereview/", method = RequestMethod.POST)
+    public void deleteReviewPOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        Course selectedCourse = objectMapper.readValue(json.get("selectedCourse"), Course.class);
         Review review = objectMapper.readValue(json.get("review"), Review.class);
+        Course selectedCourse = courseService.findByID(review.getCourseId());
 
         selectedCourse.setTotalOverall(selectedCourse.getTotalOverall() - review.getOverallScore());
         selectedCourse.setTotalDifficulty(selectedCourse.getTotalDifficulty() - review.getDifficulty());
@@ -106,7 +111,7 @@ public class ViewCourseRESTController {
         selectedCourse.setNrReviews(selectedCourse.getNrReviews() - 1);
 
         courseService.save(selectedCourse);
-        User user = review.getUser();
+        /*User user = userService.findByID(review.getUserId());
         List<Review> allReviews = user.getReviews();
         allReviews.remove(review);
         user.setReviews(allReviews);
@@ -115,8 +120,8 @@ public class ViewCourseRESTController {
         }
         for (int i = 0; i < review.getDownvoters().size(); i++) {
             review.removeDownvote(review.getDownvoters().get(i));
-        }
-        reviewService.save(review);
+        }*/
+
         reviewService.delete(review);
     }
 

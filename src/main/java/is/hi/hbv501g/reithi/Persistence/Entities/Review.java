@@ -19,12 +19,12 @@ public class Review {
     @JsonProperty("ID")
     private long ID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     //@JoinColumn(name = "user_id")
     @JsonBackReference("userReference")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     //@JoinColumn(name = "course_id")
     //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ID")
     @JsonBackReference("courseReference")
@@ -64,11 +64,11 @@ public class Review {
 
     @Transient
     @JsonProperty("course_name")
-    private long courseName;
+    private String courseName;
 
     @Transient
     @JsonProperty("user_name")
-    private long userName;
+    private String userName;
 
 
     public Review() {
@@ -199,16 +199,14 @@ public class Review {
 
 
 
-    @JsonProperty("user_id")
-    //@Transient
+
     public long getUserId() {
-        return user != null ? user.getID() : null;
+        return userID;
     }
 
-    @JsonProperty("course_id")
-    //@Transient
+
     public long getCourseId() {
-        return course != null ? course.getID() : null;
+        return courseID;
     }
 
     @Override
