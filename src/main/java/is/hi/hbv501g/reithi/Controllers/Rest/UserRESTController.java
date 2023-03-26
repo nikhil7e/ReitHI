@@ -77,6 +77,15 @@ public class UserRESTController {
         return userService.login(user);
     }
 
+    @RequestMapping(value = "/api/updatetoken", method = RequestMethod.POST)
+    public User updateDeviceTokenPOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(json.get("user"), User.class);
+        String token = objectMapper.readValue(json.get("deviceToken"), String.class);
+        user.setDeviceToken(token);
+        return userService.save(user);
+    }
+
 
 
 }
