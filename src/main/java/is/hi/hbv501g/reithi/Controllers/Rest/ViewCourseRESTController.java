@@ -89,30 +89,35 @@ public class ViewCourseRESTController {
         String deviceToken = objectMapper.readValue(json.get("deviceToken"), String.class);
         String courseName = objectMapper.readValue(json.get("courseName"), String.class);
         Review review = createReviewFromJson(json, objectMapper);
+        review = reviewService.findByID(review.getID());
 
-        if (review.getUpvoters() != null && review.getUpvoters().contains(user)) {
-            review.removeUpvote(user);
-        } else if (review.getDownvoters() != null  && review.getDownvoters().contains(user)) {
-            review.removeDownvote(user);
-            review.addUpvote(user);
+        boolean alreadyVoted = false;
+        for (User alreadyVotedUser: review.getUpvoters()) {
+            if (alreadyVotedUser.getID() == user.getID()){
+                review.removeUpvote(alreadyVotedUser);
+                alreadyVoted = true;
+                break;
+            }
         }
-        else {
+        if (!alreadyVoted){
+            for (User alreadyVotedUser: review.getDownvoters()) {
+                if (alreadyVotedUser.getID() == user.getID()){
+                    review.removeDownvote(alreadyVotedUser);
+                    break;
+                }
+            }
             review.addUpvote(user);
+            Message msg = Message.builder().setNotification(Notification.builder()
+                            .setTitle("ReitHÍ - Review upvoted")
+                            .setBody("Your review for " + courseName + " has been upvoted!").build())
+                            .setToken(deviceToken)
+                            .putData("body", "Upvote")
+                            .build();
+            String id = fcm.send(msg);
+            ResponseEntity.status(HttpStatus.ACCEPTED).body(id);
         }
+
         reviewService.save(review);
-
-        Message msg = Message.builder().setNotification(Notification.builder()
-                        .setTitle("ReitHÍ - Review upvoted")
-                        .setBody("Your review for " + courseName + " has been upvoted!").build())
-                .setToken(deviceToken)
-                .putData("body", "Upvote")
-                .build();
-
-        String id = fcm.send(msg);
-        ResponseEntity
-                .status(HttpStatus.ACCEPTED)
-                .body(id);
-
         return review.getUpvotes();
     }
 
@@ -123,31 +128,35 @@ public class ViewCourseRESTController {
         String deviceToken = objectMapper.readValue(json.get("deviceToken"), String.class);
         String courseName = objectMapper.readValue(json.get("courseName"), String.class);
         Review review = createReviewFromJson(json, objectMapper);
+        review = reviewService.findByID(review.getID());
 
-        if (review.getDownvoters() != null && review.getDownvoters().contains(user)) {
-            review.removeDownvote(user);
-        } else if (review.getUpvoters() != null  && review.getUpvoters().contains(user)) {
-            review.removeUpvote(user);
+        boolean alreadyVoted = false;
+        for (User alreadyVotedUser: review.getDownvoters()) {
+            if (alreadyVotedUser.getID() == user.getID()){
+                review.removeDownvote(alreadyVotedUser);
+                alreadyVoted = true;
+                break;
+            }
+        }
+        if (!alreadyVoted){
+            for (User alreadyVotedUser: review.getUpvoters()) {
+                if (alreadyVotedUser.getID() == user.getID()){
+                    review.removeUpvote(alreadyVotedUser);
+                    break;
+                }
+            }
             review.addDownvote(user);
-        } else {
-            review.addDownvote(user);
+            Message msg = Message.builder().setNotification(Notification.builder()
+                            .setTitle("ReitHÍ - Review downvoted")
+                            .setBody("Your review for " + courseName + " has been downvoted!").build())
+                    .setToken(deviceToken)
+                    .putData("body", "Downvote")
+                    .build();
+            String id = fcm.send(msg);
+            ResponseEntity.status(HttpStatus.ACCEPTED).body(id);
         }
 
         reviewService.save(review);
-
-        Message msg = Message.builder().setNotification(Notification.builder()
-                        .setTitle("ReitHÍ - Review downvoted")
-                        .setBody("Your review for " + courseName + " has been downvoted!").build())
-                .setToken(deviceToken)
-                .putData("body", "Downvote")
-                .build();
-
-        String id = fcm.send(msg);
-        ResponseEntity
-                .status(HttpStatus.ACCEPTED)
-                .body(id);
-
-
         return review.getUpvotes();
     }
 

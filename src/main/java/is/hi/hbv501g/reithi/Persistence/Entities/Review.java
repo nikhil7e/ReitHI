@@ -74,6 +74,14 @@ public class Review {
     @JsonProperty("user_token")
     private String userToken;
 
+    @Transient
+    @JsonProperty("upvoter_ids")
+    private List<String> upvoterIDs;
+
+    @Transient
+    @JsonProperty("downvoter_ids")
+    private List<String> downvoterIDs;
+
 
     public Review() {
     }
@@ -174,6 +182,30 @@ public class Review {
 
     public List<User> getDownvoters() {
         return downvoters;
+    }
+
+    public List<String> getUpvoterIDs() {
+        List<String> upvoterIds = new ArrayList<>();
+        for (User user: upvoters) {
+            upvoterIds.add(String.valueOf(user.getID()));
+        }
+        return upvoterIds;
+    }
+
+    public void setUpvoterIDs(List<String> upvoterIDs) {
+        this.upvoterIDs = upvoterIDs;
+    }
+
+    public List<String> getDownvoterIDs() {
+        List<String> downvoterIds = new ArrayList<>();
+        for (User user: downvoters) {
+            downvoterIds.add(String.valueOf(user.getID()));
+        }
+        return downvoterIds;
+    }
+
+    public void setDownvoterIDs(List<String> downvoterIDs) {
+        this.downvoterIDs = downvoterIDs;
     }
 
     public void setComment(String comment) {
