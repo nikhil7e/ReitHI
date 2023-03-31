@@ -80,6 +80,11 @@ public class CourseRESTController {
             System.out.println("graduate wasn't null");
             specs.add(new CourseSpecification(new SearchCriteria("level", "!:", "undergraduate")));
         }
+        Object enrolledSchool = map.get("enrolledSchoolOrFaculty");
+        if (enrolledSchool!=null){
+            System.out.println("enrolledSchoolOrFaculty wasn't null");
+            specs.add(new CourseSpecification(new SearchCriteria("school", ":", enrolledSchool)));
+        }
         ArrayList<Integer> creditsRange = (ArrayList<Integer>) map.get("creditsRange");
         if (creditsRange != null) {
             specs.add(new CourseSpecification(new SearchCriteria("credits", "<", creditsRange.get(1))));

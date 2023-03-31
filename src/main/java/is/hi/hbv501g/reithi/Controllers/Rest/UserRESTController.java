@@ -88,6 +88,15 @@ public class UserRESTController {
         return userService.save(user);
     }
 
+    @RequestMapping(value = "/api/updateSchool", method = RequestMethod.POST)
+    public User updateEnrolledSchoolPOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(json.get("user"), User.class);
+        String school = objectMapper.readValue(json.get("enrolledSchoolOrFaculty"), String.class);
+        user.setEnrolledSchoolOrFaculty(school);
+        return userService.save(user);
+    }
+
 
 
 }

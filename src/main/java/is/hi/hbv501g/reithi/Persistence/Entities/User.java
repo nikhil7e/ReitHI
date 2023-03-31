@@ -22,6 +22,7 @@ public class User {
     @JsonManagedReference("userReference")
     private List<Review> reviews = new ArrayList<>();
     private String deviceToken;
+
     private String enrolledSchoolOrFaculty;
 
 
