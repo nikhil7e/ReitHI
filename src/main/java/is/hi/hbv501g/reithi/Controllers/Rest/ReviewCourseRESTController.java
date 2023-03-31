@@ -102,4 +102,6 @@ public class ReviewCourseRESTController {
         session.setAttribute("avgCM", reviewService.getAverageCourseMaterial(id));
     }
 
+
+
 }

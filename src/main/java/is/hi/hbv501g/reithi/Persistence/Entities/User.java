@@ -21,6 +21,8 @@ public class User {
     //@JsonIdentityReference(alwaysAsId = true)
     @JsonManagedReference("userReference")
     private List<Review> reviews = new ArrayList<>();
+    private String deviceToken;
+    private String enrolledSchoolOrFaculty;
 
 
     public User() {
@@ -29,6 +31,28 @@ public class User {
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
+    }
+
+    public User(String userName, String password, String deviceToken) {
+        this.userName = userName;
+        this.password = password;
+        this.deviceToken = deviceToken;
+    }
+
+    public String getEnrolledSchoolOrFaculty() {
+        return enrolledSchoolOrFaculty;
+    }
+
+    public void setEnrolledSchoolOrFaculty(String enrolledSchoolOrFaculty) {
+        this.enrolledSchoolOrFaculty = enrolledSchoolOrFaculty;
+    }
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 
     public String getUserName() {

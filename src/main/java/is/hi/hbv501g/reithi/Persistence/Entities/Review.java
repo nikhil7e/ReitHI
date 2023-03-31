@@ -70,6 +70,18 @@ public class Review {
     @JsonProperty("user_name")
     private String userName;
 
+    @Transient
+    @JsonProperty("user_token")
+    private String userToken;
+
+    @Transient
+    @JsonProperty("upvoter_ids")
+    private List<String> upvoterIDs;
+
+    @Transient
+    @JsonProperty("downvoter_ids")
+    private List<String> downvoterIDs;
+
 
     public Review() {
     }
@@ -87,6 +99,38 @@ public class Review {
         this.comment = comment;
     }
 
+    public long getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(long courseID) {
+        this.courseID = courseID;
+    }
+
+    public long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(long userID) {
+        this.userID = userID;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public long getID() {
         return ID;
     }
@@ -99,6 +143,13 @@ public class Review {
         this.user = user;
     }
 
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
 
     public Course getCourse() {
         return course;
@@ -131,6 +182,30 @@ public class Review {
 
     public List<User> getDownvoters() {
         return downvoters;
+    }
+
+    public List<String> getUpvoterIDs() {
+        List<String> upvoterIds = new ArrayList<>();
+        for (User user: upvoters) {
+            upvoterIds.add(String.valueOf(user.getID()));
+        }
+        return upvoterIds;
+    }
+
+    public void setUpvoterIDs(List<String> upvoterIDs) {
+        this.upvoterIDs = upvoterIDs;
+    }
+
+    public List<String> getDownvoterIDs() {
+        List<String> downvoterIds = new ArrayList<>();
+        for (User user: downvoters) {
+            downvoterIds.add(String.valueOf(user.getID()));
+        }
+        return downvoterIds;
+    }
+
+    public void setDownvoterIDs(List<String> downvoterIDs) {
+        this.downvoterIDs = downvoterIDs;
     }
 
     public void setComment(String comment) {

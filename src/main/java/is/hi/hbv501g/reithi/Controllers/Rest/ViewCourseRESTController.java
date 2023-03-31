@@ -11,7 +11,26 @@ import is.hi.hbv501g.reithi.Services.ReviewService;
 import is.hi.hbv501g.reithi.Services.UserService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.google.firebase.messaging.AndroidConfig;
+import com.google.firebase.messaging.AndroidNotification;
+import com.google.firebase.messaging.ApnsConfig;
+import com.google.firebase.messaging.Aps;
+import com.google.firebase.messaging.ApsAlert;
+import com.google.firebase.messaging.BatchResponse;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.MulticastMessage;
+import com.google.firebase.messaging.Notification;
+import com.google.firebase.messaging.SendResponse;
+import com.google.firebase.messaging.TopicManagementResponse;
+import com.google.firebase.messaging.WebpushConfig;
+import com.google.firebase.messaging.WebpushFcmOptions;
+import com.google.firebase.messaging.WebpushNotification;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -26,14 +45,16 @@ public class ViewCourseRESTController {
 
     private UserService userService;
     private ReviewService reviewService;
-
     private CourseService courseService;
 
+    private final FirebaseMessaging fcm;
+
     @Autowired
-    public ViewCourseRESTController(UserService userService, ReviewService reviewService, CourseService courseService) {
+    public ViewCourseRESTController(UserService userService, ReviewService reviewService, CourseService courseService, FirebaseMessaging fcm) {
         this.userService = userService;
         this.reviewService = reviewService;
         this.courseService = courseService;
+        this.fcm = fcm;
     }
 
     public Review createReviewFromJson(Map<String, String> json, ObjectMapper objectMapper) throws JsonProcessingException {
@@ -62,37 +83,79 @@ public class ViewCourseRESTController {
 
 
     @RequestMapping(value = "/api/upvote/", method = RequestMethod.POST)
-    public int upvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
+    public int upvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException, FirebaseMessagingException {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json.get("user"), User.class);
+        String deviceToken = objectMapper.readValue(json.get("deviceToken"), String.class);
+        String courseName = objectMapper.readValue(json.get("courseName"), String.class);
         Review review = createReviewFromJson(json, objectMapper);
+        review = reviewService.findByID(review.getID());
 
-        if (review.getUpvoters() != null && review.getUpvoters().contains(user)) {
-            review.removeUpvote(user);
-        } else if (review.getDownvoters() != null  && review.getDownvoters().contains(user)) {
-            review.removeDownvote(user);
-            review.addUpvote(user);
+        boolean alreadyVoted = false;
+        for (User alreadyVotedUser: review.getUpvoters()) {
+            if (alreadyVotedUser.getID() == user.getID()){
+                review.removeUpvote(alreadyVotedUser);
+                alreadyVoted = true;
+                break;
+            }
         }
-        else {
+        if (!alreadyVoted){
+            for (User alreadyVotedUser: review.getDownvoters()) {
+                if (alreadyVotedUser.getID() == user.getID()){
+                    review.removeDownvote(alreadyVotedUser);
+                    break;
+                }
+            }
             review.addUpvote(user);
+            Message msg = Message.builder().setNotification(Notification.builder()
+                            .setTitle("ReitHÍ - Review upvoted")
+                            .setBody("Your review for " + courseName + " has been upvoted!").build())
+                            .setToken(deviceToken)
+                            .putData("body", "Upvote")
+                            .build();
+            String id = fcm.send(msg);
+            ResponseEntity.status(HttpStatus.ACCEPTED).body(id);
         }
+
         reviewService.save(review);
         return review.getUpvotes();
     }
 
     @RequestMapping(value = "/api/downvote/", method = RequestMethod.POST)
-    public int downvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
+    public int downvotePOST(@RequestBody Map<String, String> json) throws JsonProcessingException, FirebaseMessagingException {
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(json.get("user"), User.class);
+        String deviceToken = objectMapper.readValue(json.get("deviceToken"), String.class);
+        String courseName = objectMapper.readValue(json.get("courseName"), String.class);
         Review review = createReviewFromJson(json, objectMapper);
-        if (review.getDownvoters() != null && review.getDownvoters().contains(user)) {
-            review.removeDownvote(user);
-        } else if (review.getUpvoters() != null  && review.getUpvoters().contains(user)) {
-            review.removeUpvote(user);
-            review.addDownvote(user);
-        } else {
-            review.addDownvote(user);
+        review = reviewService.findByID(review.getID());
+
+        boolean alreadyVoted = false;
+        for (User alreadyVotedUser: review.getDownvoters()) {
+            if (alreadyVotedUser.getID() == user.getID()){
+                review.removeDownvote(alreadyVotedUser);
+                alreadyVoted = true;
+                break;
+            }
         }
+        if (!alreadyVoted){
+            for (User alreadyVotedUser: review.getUpvoters()) {
+                if (alreadyVotedUser.getID() == user.getID()){
+                    review.removeUpvote(alreadyVotedUser);
+                    break;
+                }
+            }
+            review.addDownvote(user);
+            Message msg = Message.builder().setNotification(Notification.builder()
+                            .setTitle("ReitHÍ - Review downvoted")
+                            .setBody("Your review for " + courseName + " has been downvoted!").build())
+                    .setToken(deviceToken)
+                    .putData("body", "Downvote")
+                    .build();
+            String id = fcm.send(msg);
+            ResponseEntity.status(HttpStatus.ACCEPTED).body(id);
+        }
+
         reviewService.save(review);
         return review.getUpvotes();
     }
@@ -113,5 +176,26 @@ public class ViewCourseRESTController {
         courseService.save(selectedCourse);
         reviewService.delete(review);
     }
+
+    public void sendToToken() throws FirebaseMessagingException {
+        // [START send_to_token]
+        // This registration token comes from the client FCM SDKs.
+        String registrationToken = "YOUR_REGISTRATION_TOKEN";
+
+        // See documentation on defining a message payload.
+        Message message = Message.builder()
+                .putData("score", "850")
+                .putData("time", "2:45")
+                .setToken(registrationToken)
+                .build();
+
+        // Send a message to the device corresponding to the provided
+        // registration token.
+        String response = FirebaseMessaging.getInstance().send(message);
+        // Response is a message ID string.
+        System.out.println("Successfully sent message: " + response);
+        // [END send_to_token]
+    }
+
 
 }
