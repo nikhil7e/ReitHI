@@ -110,7 +110,8 @@ public class ViewCourseRESTController {
             Message msg = Message.builder().setNotification(Notification.builder()
                             .setTitle("ReitHÍ - Review upvoted")
                             .setBody("Your review for " + courseName + " has been upvoted!").build())
-                            .setToken(deviceToken)
+                            //.setToken(deviceToken)
+                            .setTopic(user.getUserName())
                             .putData("body", "Upvote")
                             .build();
             String id = fcm.send(msg);
@@ -149,7 +150,7 @@ public class ViewCourseRESTController {
             Message msg = Message.builder().setNotification(Notification.builder()
                             .setTitle("ReitHÍ - Review downvoted")
                             .setBody("Your review for " + courseName + " has been downvoted!").build())
-                    .setToken(deviceToken)
+                    .setTopic(user.getUserName())
                     .putData("body", "Downvote")
                     .build();
             String id = fcm.send(msg);
