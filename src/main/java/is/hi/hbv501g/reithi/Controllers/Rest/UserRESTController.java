@@ -89,9 +89,26 @@ public class UserRESTController {
     @RequestMapping(value = "/api/updatetoken", method = RequestMethod.POST)
     public User updateDeviceTokenPOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        User user = objectMapper.readValue(json.get("user"), User.class);
+        Long userID  = objectMapper.readValue(json.get("userID"), Long.class);
+        User user = userService.findByID(userID);
+        if (user == null) {
+            throw new IllegalArgumentException("User with ID " + userID + " not found.");
+        }
         String token = objectMapper.readValue(json.get("deviceToken"), String.class);
         user.setDeviceToken(token);
+        return userService.save(user);
+    }
+
+    @RequestMapping(value = "/api/updateSchool", method = RequestMethod.POST)
+    public User updateEnrolledSchoolPOST(@RequestBody Map<String, String> json) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Long userID  = objectMapper.readValue(json.get("userID"), Long.class);
+        User user = userService.findByID(userID);
+        if (user == null) {
+            throw new IllegalArgumentException("User with ID " + userID + " not found.");
+        }
+        String school = objectMapper.readValue(json.get("enrolledSchoolOrFaculty"), String.class);
+        user.setEnrolledSchoolOrFaculty(school);
         return userService.save(user);
     }
 
