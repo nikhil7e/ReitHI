@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import is.hi.hbv501g.reithi.Persistence.Entities.Course;
+import is.hi.hbv501g.reithi.Persistence.Entities.Review;
 import is.hi.hbv501g.reithi.Persistence.Entities.User;
 import is.hi.hbv501g.reithi.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,10 +63,16 @@ public class UserRESTController {
     }
 
     @RequestMapping(value = "/api/getuserbyid", method = RequestMethod.GET)
-    public User genericGET(@RequestParam("id") int id ) {
+    public User genericGET(@RequestParam("id") int id) {
         return userService.findByID(id);
     }
 
+    @RequestMapping(value = "/api/deleteuser/", method = RequestMethod.POST)
+    public void deleteUserPOST(@RequestParam("id") int id){
+        User user = userService.findByID(id);
+
+        userService.delete(user);
+    }
 
     /**
      * Logs a user in if the user account exists
