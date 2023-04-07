@@ -67,9 +67,9 @@ public class UserRESTController {
         return userService.findByID(id);
     }
 
-    @RequestMapping(value = "/api/deleteuser/", method = RequestMethod.POST)
-    public void deleteUserPOST(@RequestParam("id") int id){
-        User user = userService.findByID(id);
+    @RequestMapping(value = "/api/deleteuser/", method = RequestMethod.GET)
+    public void deleteUserPOST(@RequestParam("username") String username){
+        User user = userService.findByUserName(username);
 
         userService.delete(user);
     }
