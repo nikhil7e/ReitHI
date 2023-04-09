@@ -16,7 +16,7 @@ public class User {
     private long ID;
     private String userName;
     private String password;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = false)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     //@Column(nullable = true)
     //@JsonIdentityReference(alwaysAsId = true)
     @JsonManagedReference("userReference")
